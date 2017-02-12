@@ -4,14 +4,15 @@ $category = $if ? $data['category'] : null;
 ?>
 <div class="formPage row">
     <form action="/admin/category/<?= $if ? $category['category_id'] : 'new' ?>" method="<?= $data['action'] ?>">
+        <input name="need_redirect" type="hidden" value="1">
         <h1 class="pageTitle"><?= $if ? 'Редактирование' : 'Добавление' ?> категории</h1>
         <div class="col m6">
             <h2>Данные</h2>
             <div class="textField inputBox">
-                <input placeholder="Название RU" id="category_ru" name="category_title_ru" type="text" value="<?= $if ? $category['category_title_ru'] : '' ?>" pattern="text" required>
+                <input placeholder="Название RU" name="category_title_ru" type="text" value="<?= $if ? $category['category_title_ru'] : '' ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Название UA" id="category_ua" name="category_title_ua" type="text" value="<?= $if ? $category['category_title_ua'] : '' ?>" pattern="text" required>
+                <input placeholder="Название UA" name="category_title_uk" type="text" value="<?= $if ? $category['category_title_uk'] : '' ?>" pattern="text" required>
             </div>
             <div class="selectField inputBox">
                 <label class="title">Родительская категория</label>
