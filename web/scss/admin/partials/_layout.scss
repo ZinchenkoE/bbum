@@ -1,0 +1,78 @@
+header{
+	height: 75px; position: fixed; top: 0; left: 0; width: 100%; z-index: 10;
+	background-color: #ffc94b;
+	ul{ float: right; }
+	li{
+		border-left: 1px solid #cca13c; display: inline-block; padding: 21px 30px 23px; cursor: pointer; position: relative;
+		span.count{
+			position: absolute; width: 20px; height: 20px; line-height: 20px; border-radius: 50%;
+			background-color: #ff1c27; color: #fff; right: 20px; top: 15px; font-size: 9px; text-align: center;
+			font-family: 'museo_sans_cyrl500', sans-serif;
+		}
+		&:last-child{
+			i{ margin-right: 10px; vertical-align: middle; }
+			span{vertical-align: -webkit-baseline-middle;}
+		}
+		&:hover{  background: #fed168; }
+	}
+	i.icon{height: 30px; width: 30px;}
+	span{ text-transform: uppercase; color: #141e29; font-family: 'museo_sans_cyrl500', sans-serif;}
+}
+nav{
+	height: 100vh;
+	background-color: #141e29;
+	width: 100px;
+	position: fixed;
+	left: 0; top: 0; z-index: 20;
+	transition: all .3s;
+
+	.logo{
+		padding: 15px 30px;
+		width: 75px;
+		overflow: hidden;
+		box-sizing: border-box;
+		transition: width .3s;
+	}
+	> ul > li{
+		padding: 20px 0 20px 30px; white-space: nowrap;  border-bottom: 1px solid transparent;
+		span{
+			color: #ffc94b; opacity: 0; line-height: 30px; transition: all .3s; display: inline-block;
+			padding-left: 10px; cursor: pointer; -webkit-user-select: none; width: 0; overflow-x: hidden;
+			vertical-align: top;
+		}
+		i.icon{height: 30px; width: 40px;}
+		> ul{
+			display: none;
+			a{color: #ffc94b; padding-left: 65px; line-height: 30px;  display: inline-block; font-size: 14px; }
+		}
+	}
+	&:hover{
+		width: 240px;
+		.logo{ width: 240px; }
+		span{ opacity: 1;}
+		> ul > li{border-bottom: 1px solid #434b54; }
+		> ul > li span{ width: 100%; overflow-x: hidden;}
+	}
+}
+.userMenuBox{
+	.openUserMenuBtn{
+		width: 60px; height: 60px; cursor: pointer;
+		border-radius: 50%; background-color: #ffc94b; position: absolute; bottom: 20px; left: 20px; text-align: center;
+		i.icon{
+			width: 30px; height: 30px; padding-top: 25px;
+		}
+
+	}
+	.userMenu{
+		position: absolute; bottom: 0; left: 0; background-color: #ffc94b; display: none;
+		height: 130px; width: 240px; padding-top: 40px; box-sizing: border-box;
+		.icon-cross{
+			position: absolute; bottom: 55px; left: 200px; width: 15px; height: 15px;
+		}
+		p{
+			padding-left: 40px; margin-bottom: 20px; font-size: 16px; cursor: pointer;
+			font-family: 'museo_sans_cyrl500', sans-serif;
+		}
+	}
+}
+

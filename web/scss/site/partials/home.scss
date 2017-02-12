@@ -1,0 +1,72 @@
+a.category{
+	display: block; position: relative;
+	box-sizing: border-box; margin-bottom: 30px;
+	box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
+	background: #adcbd1;
+	&:hover{
+		box-shadow: 0 4px 5px 2px rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
+	}
+	&.girl{   background: url(/img/site/girl.png) center center / cover no-repeat; }
+	&.boy{    background: url(/img/site/boy.png) center center / cover no-repeat; }
+	h2{
+		position: absolute; bottom: 130px; left: 50px; color: #191919; text-transform: uppercase;
+		font-family: latobold, sans-serif; font-size: 36px; width: 260px; line-height: 1.2;
+	}
+	.btn{
+		position: absolute; bottom: 50px; left: 50px; text-align: center; text-transform: uppercase; font-size: 14px;
+		width: 230px; background: #fff; line-height: 60px; font-family: latobold, sans-serif;
+	}
+	&.half{ width: 570px; height: 570px; }
+	&.с-3{
+		float: left; width: 370px; height: 370px; margin-right: 30px;
+		h2{ bottom: 50px; }
+		&:last-child{ margin-right: 0; }
+	}
+}
+
+
+.recommend{
+	position: relative;
+	h3{ font-family: latobold, sans-serif; text-transform: uppercase; font-size: 22px; text-align: center; margin: 70px 0 50px;}
+	.slider{
+		overflow: hidden;
+		.sliderInner{ width: 5000px; transition: 1s all; }
+		.item{
+			float: left; width: 270px; margin-right: 30px; display: inline-block; position: relative;
+			&.new:after{
+				position: absolute; top: 0; right: 0; width: 100px; height: 100px; content: '';
+				background: url(/img/site/new-product.png) center center / contain no-repeat;
+			}
+		}
+		.imgBox{
+			height: 370px; margin-bottom: 15px; background: #e1e1e1; border: 1px solid #e1e1e1; box-sizing: border-box;
+			position: relative;
+
+			&:hover .substrate{ opacity: 1; }
+		}
+		.substrate{
+			opacity: 0; transition: all .3s;
+			height: 120px; width: 100%; bottom: 0; left: 0; position: absolute; background: rgba(255,255,255,.5);
+			text-align: center; box-sizing: border-box; padding-top: 40px;
+			button{
+				background: #000; color: #fff; text-transform: uppercase; width: 50%; line-height: 40px;
+				outline: none; border: none; cursor: pointer;
+			}
+		}
+
+
+		h4{ font-family: latoheavy, sans-serif; text-transform: uppercase; margin-bottom: 10px; }
+		h5{ color: #b5b5b5; margin-bottom: 10px;}
+		.price{ font-family: latobold, sans-serif; color: #68899a; font-size: 18px; }
+
+
+
+
+	}
+	.sliderBtn{
+		background: url(/img/site/slider-arrow.svg) center center / contain no-repeat;
+		position: absolute; top: 50%; height: 60px; width: 50px; margin-top: -30px; cursor: pointer;
+		&.next{ right: -50px; }
+		&.prev{ left: -50px; transform: rotate(180deg); display: none; }
+	}
+}

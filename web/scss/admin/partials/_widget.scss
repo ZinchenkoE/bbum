@@ -1,0 +1,110 @@
+.choiceWidget{
+	position: fixed; top: 50%; left: 50%; border-radius: 5px; z-index: 20; display: none;
+	width: 300px; margin-top: -180px; margin-left: -150px;
+	ul li{
+		background-color: #ffc94b; text-transform: uppercase;
+		font-family: 'museo_sans_cyrl700', sans-serif; text-align: center; font-size: 14px;
+		line-height: 40px; border-bottom: 1px solid #ffd166; cursor: pointer;
+		&:last-child{ border-bottom: none; }
+		&:hover{ background-color: #ffd166; }
+	}
+}
+.widget{
+	border: 1px solid #e1e1e1; margin-bottom: 10px; border-radius: 4px;
+	.head{
+		background-color: #ebebeb; height: 60px; line-height: 60px; padding: 0 30px;
+		.icon{ width: 20px; height: 20px; }
+		span.title{ text-transform: uppercase; font-family: 'museo_sans_cyrl500', sans-serif; font-size: 15px; padding-left: 10px; }
+		> i.icon{ background-color: #ffc94b; border-radius: 50%; width: 36px; height: 36px; background-size: 60%; }
+		i.icon-cross{ background-size: 70%; margin-left: 10px; }
+		.btns{ float: right; }
+	}
+	.body{ background-color: #fff; box-sizing: border-box; padding: 20px 40px; }
+	.col{ float: left;}
+	.widgetTitle{
+		width: 400px;
+		//margin: 0 auto;
+		.title{
+			font-family: 'museo_sans_cyrl900', sans-serif;
+			font-size: 12px; color: #141e29; text-transform: uppercase;
+		}
+	}
+}
+.wText{
+	textarea{
+		width: 100%; height: 200px; box-sizing: border-box; resize: none; border: none; outline: none; padding: 10px;
+		border-top: 1px solid #e1e1e1;
+	}
+	.body{ padding: 20px 0 0 0; }
+	.widgetTitle{ margin-left: 40px; }
+}
+.wParams{
+	.col:nth-child(1){ width: 40%; max-width: 400px; margin-right: 90px;}
+	.col:nth-child(2){ width: 40%; max-width: 400px; margin-right: 20px;}
+	.icon-cross{ width: 15px; height: 15px; margin-left: 10px; margin-top: 10px; }
+	.js-plusRow{
+		width: 30px; height: 30px; background-color: #ffc94b; border-radius: 50%; text-align: center;
+		line-height: 30px; font-size: 20px; color: #fff; cursor: pointer;
+		box-shadow: 0 2px 10px 0 rgba(0,0,0,0.12);
+	}
+}
+.wImage{
+	.fileField{ margin: 0 auto 20px;}
+	p{ text-align: center; }
+}
+.wVideo{
+	.col:nth-child(1){ line-height: 36px; margin-right: 10px;}
+	.col:nth-child(2){ width: 400px;}
+}
+.wGraph{
+	.widgetTitle{ margin-left: 20px; }
+	.body{ padding: 20px 0 0 0; background: #f7f7f7; }
+	.col{ padding: 20px; box-sizing: border-box; }
+	.col:nth-child(1){ width: 20%; }
+	.col:nth-child(2){ width: 80%; }
+	table{
+		tr{ height: auto; }
+		tr:hover{ background-color: transparent;}
+		th, td{
+			padding: 0; height: 40px; border-left: 1px solid #e1e1e1; border-top: 1px solid #e1e1e1;
+			&:first-of-type{}
+			&:last-of-type{ border-left: none; border-right: 1px solid #e1e1e1;}
+		}
+		input{
+			height: 40px; line-height: 40px; outline: none; border: none; width: 100%; background: #f7f7f7;
+			padding: 0 20px; box-sizing: border-box;
+			&[disabled]{  background: #f1f1f1; }
+		}
+		.icon-cross{ width: 10px; height: 10px; margin-left: 10px; margin-top: 10px; }
+	}
+	.js-plusRow{
+		width: 30px; height: 30px; background-color: #ffc94b; border-radius: 50%; text-align: center;
+		line-height: 30px; font-size: 20px; color: #fff; cursor: pointer;
+		box-shadow: 0 2px 10px 0 rgba(0,0,0,0.12);
+	}
+}
+.wGallery{
+	.fileField{ display: inline-block; margin-right: 20px; }
+}
+.wImageCompare{
+	font-family: 'museo_sans_cyrl300', sans-serif; font-size: 12px; user-select: none;
+	.row{ width: 560px; margin: 0 auto; }
+	.col:nth-child(1){ width: 400px; margin-right: 20px;}
+	.fileField{ display: inline-block; margin-right: 20px; }
+	p{ margin-bottom: 10px;}
+	input[type="radio"]{ display: none; }
+	label{
+		display: block; cursor: pointer; margin-bottom: 10px;
+		span{ line-height: 16px; display: inline-block; text-transform: uppercase; }
+		span:before{
+			content: ''; display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 1px solid #ffc94b;
+			vertical-align: bottom; margin-right: 5px;
+		}
+	}
+	input[type="radio"]:checked + span:before{ background-color: #ffc94b; }
+}
+.wFiles{
+	.head > i.icon.icon-wFiles{ background-size: 45%; }
+	.fileField{ display: inline-block; margin-right: 20px; }
+
+}

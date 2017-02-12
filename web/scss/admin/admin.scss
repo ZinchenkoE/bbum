@@ -1,0 +1,110 @@
+@import "./partials/reset";
+@import "./partials/grid";
+@import "./partials/fonts";
+@import "./partials/login";
+@import "./partials/form_elements";
+@import "./partials/layout";
+@import "./partials/table";
+@import "./partials/modal";
+@import "./partials/widget";
+@import "./partials/index";
+
+i.icon{display: inline-block; vertical-align: middle; cursor: pointer;}
+.icon-product{        background: url(/img/admin/product.svg)        center center / contain no-repeat;}
+.icon-page{ 	      background: url(/img/admin/page.svg)           center center / contain no-repeat;}
+.icon-news{ 	      background: url(/img/admin/news.svg)           center center / contain no-repeat;}
+.icon-contact{        background: url(/img/admin/contact.svg)        center center / contain no-repeat;}
+.icon-statistic{      background: url(/img/admin/statistic.svg)      center center / contain no-repeat;}
+.icon-users{ 	      background: url(/img/admin/users.svg)          center center / contain no-repeat;}
+.icon-user{ 	      background: url(/img/admin/user.svg)           center center / contain no-repeat;}
+.icon-settings{       background: url(/img/admin/settings.svg)       center center / contain no-repeat;}
+.icon-phone{          background: url(/img/admin/phone.svg)          center center / contain no-repeat;}
+.icon-phone-orange{   background: url(/img/admin/phone-orange.svg)   center center / contain no-repeat;}
+.icon-phone-green{    background: url(/img/admin/phone-green.svg)    center center / contain no-repeat;}
+.icon-phone-white{    background: url(/img/admin/phone-white.svg)    center center / contain no-repeat;}
+.icon-notification{   background: url(/img/admin/notification.svg)   center center / contain no-repeat;}
+.icon-mail{           background: url(/img/admin/mail.svg)           center center / contain no-repeat;}
+.icon-mail-orange{    background: url(/img/admin/mail-orange.svg)    center center / contain no-repeat;}
+.icon-mail-green{     background: url(/img/admin/mail-green.svg)     center center / contain no-repeat;}
+.icon-mail-gray{      background: url(/img/admin/mail-gray.svg)      center center / contain no-repeat;}
+.icon-mail-white{     background: url(/img/admin/mail-white.svg)     center center / contain no-repeat;}
+.icon-mail{           background: url(/img/admin/mail.svg)           center center / contain no-repeat;}
+.icon-home{           background: url(/img/admin/home.svg)           center center / contain no-repeat;}
+.icon-cross{          background: url(/img/admin/cross.svg)          center center / contain no-repeat;}
+.icon-settings-black{ background: url(/img/admin/settings-black.svg) center center / contain no-repeat;}
+.icon-trash{  		  background: url(/img/admin/trash.svg)          center center / contain no-repeat;}
+.icon-trash-black{    background: url(/img/admin/trash-black.svg)    center center / contain no-repeat;}
+.icon-trash-white{    background: url(/img/admin/trash-white.svg)    center center / contain no-repeat;}
+.icon-camera{  		  background: url(/img/admin/camera.svg)         center center / contain no-repeat;}
+.icon-check{  		  background: url(/img/admin/check.svg)          center center / contain no-repeat;}
+.icon-msgBox-S{       background: url(/img/admin/msgBox-S.svg)       center center / contain no-repeat;}
+.icon-msgBox-N{  	  background: url(/img/admin/msgBox-N.svg)       center center / contain no-repeat;}
+.icon-msgBox-E{  	  background: url(/img/admin/msgBox-E.svg)       center center / contain no-repeat;}
+.icon-wFiles{  	      background: url(/img/admin/wFiles.svg)         center center / contain no-repeat;}
+.icon-wImage{  	      background: url(/img/admin/wImage.svg)         center center / contain no-repeat;}
+.icon-wParams{  	  background: url(/img/admin/wParams.svg)        center center / contain no-repeat;}
+.icon-wText{  	      background: url(/img/admin/wText.svg)          center center / contain no-repeat;}
+.icon-wVideo{  	      background: url(/img/admin/wVideo.svg)         center center / contain no-repeat;}
+.icon-wGraph{  	      background: url(/img/admin/wGraph.svg)         center center / contain no-repeat;}
+.icon-refresh{  	  background: url(/img/admin/refresh.svg)        center center / contain no-repeat;}
+.icon-history{  	  background: url(/img/admin/history.svg)        center center / contain no-repeat;}
+
+body{ font-family: 'museo_sans_cyrl300', sans-serif; color: #141e29; min-height: calc( 100vh - 60px ); }
+main{ padding-left: 100px; padding-top: 75px;}
+h1.pageTitle{
+	position: fixed; z-index: 11;
+	top: 30px; left: 130px; font-family: 'museo_sans_cyrl900', sans-serif; font-size: 18px;
+}
+h2{ font-family: 'museo_sans_cyrl900', sans-serif; font-size: 12px; text-transform: uppercase; margin-bottom: 18px; }
+a{ display: block; }
+table a{ display: inline-block; }
+.row:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+.leftCol, .rightCol{ width: 35%;  }
+.leftCol{ float: left; width: 50%; }
+.rightCol{ float: right;  margin-right: 10%; }
+.formPage{ padding: 65px 60px;}
+.content{ border: 2px dashed #e1e1e1; padding: 10px; }
+.addPositionPage{
+	span.title{ width: 350px; }
+	.textRatio{ font-family: 'museo_sans_cyrl700', sans-serif; line-height: 36px; font-size: 12px; display: block; margin-bottom: 18px;}
+	.switches.leftCol{ width: 50%; }
+	.textRatio span{ display: none;  }
+}
+.technicalSettingPage{
+	h2{ width: 400px; float: left; line-height: 36px; margin-bottom: 0;}
+	.textField{
+		width: 400px; float: left;
+		input{ margin-bottom: 0;}
+	}
+	.selectField{ width: 170px; float: left;}
+	.selectField:first-of-type{ margin-right: 60px;}
+	.row{ margin-bottom: 40px;}
+	.lever{ float: left; }
+	.viewBox{ margin-bottom: 0;}
+	ul.dropdownBox{ top: 36px;}
+}
+
+ul.pagination{
+	margin: 50px 0 100px; text-align: center;
+	li{
+		display: inline-block; color: #141e29; line-height: 20px; font-size: 14px;
+		width: 28px; height: 20px; border-radius: 4px;
+		&.prev,&.next,&.active{
+			border: 1px solid #d7d7d7; box-shadow: 0 0 15px 0 rgba(1, 1, 1, 0.1); color: #ffc94b;
+		}
+		&.first, &.last{
+			width: auto; padding: 0 10px; cursor: pointer;
+			border: 1px solid #d7d7d7; box-shadow: 0 0 15px 0 rgba(1, 1, 1, 0.1);
+			&.disabled{ background: #dedede; color: #7b7b7b; }
+		}
+		&:active{ background: #f3f3f3; }
+	}
+}
+
+td.categoryName{ padding-left: 50px; }
+
+
+
+
+

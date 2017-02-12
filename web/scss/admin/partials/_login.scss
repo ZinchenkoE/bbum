@@ -1,0 +1,67 @@
+.LoginPage{
+	height: 100vh;
+	background: #fff url(/img/admin/bg-login.jpg) top left / cover no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: -75px;
+	margin-left: -100px;
+	form{
+		width: 460px;
+		h1{ color: #ffc94b; font-size: 48px; text-align: center; margin-bottom: 40px;}
+		input:-webkit-autofill {-webkit-box-shadow: inset 0 0 0 50px #001c46!important; -webkit-text-fill-color: #fff; }
+		input::-webkit-input-placeholder {color: #ffc94b!important;}
+		input::-moz-placeholder          {color: #ffc94b!important;}
+		input:-moz-placeholder           {color: #ffc94b!important;}
+		input:-ms-input-placeholder      {color: #ffc94b!important;}
+
+		input:focus::-webkit-input-placeholder    {color: transparent!important;}
+		input:focus::-moz-placeholder             {color: transparent!important;}
+		input:focus:-moz-placeholder              {color: transparent!important;}
+		input:focus:-ms-input-placeholder         {color: transparent!important;}
+		input{
+			background-color: transparent; text-align: center; color: #ffc94b;
+			font-family: 'museo_sans_cyrl100', sans-serif;
+			width: 100%; height: auto;
+			display: block;
+			border: none; outline: none;
+			border-bottom: 1px solid #8f9294;
+			font-size: 24px; line-height: 2;
+		}
+		a{ text-align: right; color: #ffc94b; padding-bottom: 20px; }
+		.submitBox{ text-align: center; }
+		button[type="submit"] {
+			background-color: transparent;
+			outline: none;
+			padding: 20px 85px;
+			font-size: 20px;
+			border-radius: 80px;
+			box-sizing: border-box;
+			width: auto;
+			cursor: pointer;
+			font-family: 'museo_sans_cyrl700', sans-serif;
+			position: relative;
+			overflow: hidden;
+			display: inline-block;
+			transition: all .2s ease-in-out;
+			border: 2px solid #fff; color: #fff;
+			text-transform: uppercase;
+			height: auto;
+			&:before {
+				background: #fff;transition: all 150ms ease-in-out;
+				content: ''; position: absolute; top: 0;left: 0;width: 100%;height: 0;
+			}
+			&:hover {
+				color: #000;
+				&:before { height: 100%; }
+			}
+			& > span { position: relative; z-index: 1; }
+		}
+	}
+	&.passRecovery{
+		form{ width: 550px; }
+		.textField{ margin-bottom: 30px; }
+
+	}
+}
