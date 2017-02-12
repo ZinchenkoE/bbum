@@ -101,6 +101,8 @@ var $A = {
 
 
 
+
+
 $(window).ready(function(){
     localStorage.ggDisplay == 'block' ?  $('#gg').show() : $('#gg').hide();
     if(localStorage.ggPos) $('#gg').css('background-position-y', localStorage.ggPos);

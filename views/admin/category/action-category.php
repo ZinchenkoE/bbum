@@ -38,3 +38,8 @@ $category = $if ? $data['category'] : null;
         <button class="fixedSubmit" type="submit"><?= $if ? 'Редактировать' : 'Добавить' ?></button>
     </form>
 </div>
+
+
+
+
+
