@@ -46,10 +46,10 @@ var $A = {
         ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
         ".js-addBlock:click"                    : function() { if(!$('.js-overlay').length) $('<div class="js-overlay"></div>').appendTo('body'); $(this).prev().fadeIn(200); },
         ".js-delRowParams:click"                : function() { $(this).closest('.row').remove();  },
-        ".js-delWidget:click"                   : function() { $A.delWidget(this); },
-        ".js-renderTable:change"                : function() { console.log(33); $A.renderWidgetTable(this); },
         ".js-delTableRow:click"                 : function() { $(this).closest('tr').remove(); },
         '#search:input'                         : function() { $A.search(this);  }, // Поиск в таблицах
+        ".js-delCategory:click"                 : function() { $A.delCategoryClick(this); },
+        ".categoryTablePage input:change"       : function(){ $A.categoryTableInputChange(this); }
     },
     updateView: function() {
         $A.upgradeElements();
@@ -60,12 +60,8 @@ var $A = {
     },
     MessageBox: function(type, msg) {
         var key = msg.slice(0, 2);
-        if     (key == 'S:') type = 'S';
-        else if(key == 'N:') type = 'N';
-        else if(key == 'E:') type = 'E';
-        msg = msg.replace('S:', '');
-        msg = msg.replace('N:', '');
-        msg = msg.replace('E:', '');
+        if (key == 'S:') type = 'S'; else if(key == 'N:') type = 'N'; else if(key == 'E:') type = 'E';
+        msg = msg.replace('S:', '').replace('N:', '').replace('E:', '');
         var messageBox =  $('<div class="messageBox ' + type + '"><i class="icon-cross js-closeMessageBox"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
         messageBox.appendTo('body');
         messageBox.addClass('show');
@@ -174,5 +170,21 @@ var $A = {
     plusPrevInputBoxBtn: function(el) {
         var prevInputBox = $(el).parent().prev();
         prevInputBox.clone().insertBefore($(el).parent());
+    },
+    delCategoryClick: function(el){
+        var categoryId = $(el).closest('tr').attr('category-id');
+        $A.ConfirmBox({
+            title: 'Вы дествительно хотите удалить эту категорию?',
+            action: '/admin/category/' + categoryId
+        });
+    },
+    categoryTableInputChange: function(el){
+        var categoryId = $(el).closest('tr').attr('category-id');
+        var parentId = $(el).closest('tr').attr('parent-id');
+        var fd = new FormData();
+        fd.append('category_title_ru', $(el).closest('tr').find('[name="category_title_ru"]').val());
+        fd.append('category_title_uk', $(el).closest('tr').find('[name="category_title_uk"]').val());
+        fd.append('parent_id', parentId);
+        $A.Query.put({url: '/admin/category/' + categoryId, data: fd});
     }
 };

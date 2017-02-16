@@ -24,7 +24,7 @@ class Category extends Model  implements ModelInterface
                 'tooLong' => 'Длина не более 50 символов',
             ],
             [
-                ['category_title_ru', 'category_title_uk'], 'required',
+                ['category_title_ru', 'category_title_uk', 'parent_id'], 'required',
                 'message' => 'Поле не может быть пустым'
             ],
 //            [
@@ -114,7 +114,8 @@ class Category extends Model  implements ModelInterface
                 parent_id=:parent_id, 
                 image=" . (isset($src) ? "'{$src}'" : 'image') . " 
                 WHERE category_id=:id")->bindValues($v)->execute();
-            $this->grest->setCode(302, 'Данные успешно обновлены', '/admin/category');
+            $code = \Yii::$app->request->post('need_redirect') == 1 ? 302 : 200;
+            $this->grest->setCode($code, 'Данные успешно обновлены', '/admin/category');
         } else {
             $this->grest->backData['error'] = $this->getErrors();
             $this->grest->setCode(400, 'Данные не могут быть обновлены');
