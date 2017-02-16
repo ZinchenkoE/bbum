@@ -1,0 +1,14 @@
+.productPage{
+	font-size: 18px; line-height: 1.2;
+	.leftPart, .rightPart{ width: 50%; float: left; }
+	.rightPart{ padding: 0 50px; box-sizing: border-box; }
+	p{ margin-bottom: 20px; }
+}
+
+.lSSlideWrapper  {
+	border: 1px solid #e1e1e1;
+	img{ width: 100%;  }
+}
+.lg-backdrop {
+	background-color: rgba(0,0,0, .5);
+}

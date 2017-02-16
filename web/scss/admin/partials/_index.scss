@@ -1,0 +1,63 @@
+.indexPage{
+	width: 1080px; margin: 50px auto;
+}
+
+.indexWidget{
+	width: 500px; height: 300px; border: 1px solid #dedede; margin-bottom: 40px;
+	box-shadow: 0 0 20px 10px rgba(0,0,0,.05); display: inline-block;
+
+	&:nth-child(1){ margin-right: 60px; }
+	.icon{ width: 20px; height: 20px; }
+	.head{
+		height: 50px; line-height: 50px; padding-left: 30px; border-bottom: 1px solid #dedede;
+		span.title{ text-transform: uppercase; font-family: 'museo_sans_cyrl500', sans-serif; font-size: 15px; }
+		.icon-refresh{ float: right; margin-top: 15px; margin-right: 10px; }
+	}
+	.body{
+		height: calc( 100% - 50px ); box-sizing: border-box; overflow: auto;
+	}
+	.item{
+		height: 50px; border-bottom: 1px solid #dedede;
+
+		.textBox{
+			white-space: nowrap; overflow: hidden; font-size: 12px; margin-top: 10px;
+			.username{font-family: 'museo_sans_cyrl700', sans-serif; }
+			.text{ line-height: 25px;}
+		}
+		.dateTime{
+			line-height: 1; text-align: center; margin-top: 15px;
+			color: #7d8c9e; font-size: 10px;
+		}
+		i.icon-trash{ background-size: 80%; }
+		.col{float: left;}
+		.col:nth-child(1){
+			width: 60px; text-align: center;
+			i.icon{
+				border-radius: 50%; width: 36px; height: 36px; background-size: 50%; margin-top: 10px; position: relative;
+			}
+		}
+		.col:nth-child(2){ width: 340px;}
+		.col:nth-child(3){ width: 50px;}
+		.col:nth-child(4){ width: 30px; line-height: 50px; text-align: center;}
+		&.active{
+			background: #ebebeb;
+			i.icon:before{
+				content: ''; position: absolute; right: 2px; top: 0; background: #fff; width: 10px; height: 10px;
+				border-radius: 50%;
+			}
+			i.icon:after{
+				content: ''; position: absolute; right: 4px; top: 2px; background: #ed1c24; width: 6px; height: 6px;
+				border-radius: 50%;
+			}
+		}
+	}
+	&.feedBack{
+		i.icon-mail-white{ background-color: #4b81ff; }
+	}
+	&.callBack{
+		i.icon-phone-white{ background-color: #3cb878; }
+	}
+	&.history{
+		i.icon-history{ background-color: #ffc94b; }
+	}
+}

@@ -1,0 +1,38 @@
+body{ font-family: latoregular, sans-serif; font-size: 14px; color: #111; font-weight: normal; margin-bottom: 100px; }
+main{ padding-top: 30px; }
+.container{ width: 1170px; margin: 0 auto; }
+header{  }
+#logo{
+	float: left;
+	background: url(/img/site/logo.png) center center / contain no-repeat;
+	height: 100px; width: 270px;
+}
+nav {
+	border-top: 1px solid #e1e1e1; border-bottom: 1px solid #e1e1e1;
+	background: #f4f4f4; text-align: center;
+	> ul{
+		display: inline-block; color: #111; text-transform: uppercase;
+		>li{
+			display: inline-block; position: relative;
+			&:hover{ transition: all .3s; color: #555; background: #ddd; }
+			> a{ padding: 0 30px; line-height: 70px; display: inline-block; }
+			> ul{
+				display: none; position: absolute; z-index: 100;  background: #f4f4f4;
+				> li{
+					text-align: left; font-size: 12px;
+					&:hover{ transition: all .3s; color: #555; background: #ddd; }
+					> a{ line-height: 30px; display: block; padding: 0 20px;  }
+				}
+			}
+		}
+	}
+}
+.contacts{
+	float: right; font-size: 12px; margin-top: 25px; border: 2px solid #ddd; padding: 5px 20px; color: #111;
+	font-family: latobold, sans-serif;
+	img{ height: 15px; width: auto; vertical-align: middle; margin-right: 10px; }
+	span{ line-height: 20px; }
+	.left{ margin-right: 40px; }
+	.right p{ margin-top: 8px; }
+}
+footer{}
