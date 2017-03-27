@@ -1,17 +1,17 @@
-$A.InputFile = {
+a.InputFile = {
     fileAccept: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .pdf, .docx',
     obj:{},
     fileField: undefined,
     change: function(fileField, files) {     // Функция для события выбора файлов
-        $A.InputFile.fileField = $(fileField);
+        a.InputFile.fileField = $(fileField);
         if (/^image\//.test(files[0].type)) {    // Если картинка
-            if($A.InputFile.fileField.attr('data-crop-img')) $A.InputFile.cropWithJcrop(files[0]);
-            else $A.InputFile.cropWithCanvas (files[0]); // Сжимаем картинку чтоб большая сторона была не больше 1600пх
+            if(a.InputFile.fileField.attr('data-crop-img')) a.InputFile.cropWithJcrop(files[0]);
+            else a.InputFile.cropWithCanvas (files[0]); // Сжимаем картинку чтоб большая сторона была не больше 1600пх
         } else {
-            $A.InputFile.obj[$A.InputFile.fileField[0].name] = files[0];
-            if(files[0].type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')      $A.InputFile.showFilePreview('doc', files[0].name);
-            else if(files[0].type == 'application/pdf')                                                         $A.InputFile.showFilePreview('pdf', files[0].name);
-            else if(files[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')       $A.InputFile.showFilePreview('xls', files[0].name);
+            a.InputFile.obj[a.InputFile.fileField[0].name] = files[0];
+            if(files[0].type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')      a.InputFile.showFilePreview('doc', files[0].name);
+            else if(files[0].type == 'application/pdf')                                                         a.InputFile.showFilePreview('pdf', files[0].name);
+            else if(files[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')       a.InputFile.showFilePreview('xls', files[0].name);
         }
     },
     cropWithCanvas: function (fileImg) {
@@ -36,14 +36,14 @@ $A.InputFile = {
             ctx.fillStyle = "rgb(255, 255, 255)";
             ctx.fillRect(0, 0, width, height);
             ctx.drawImage(img, 0, 0, width, height);
-            $A.InputFile.saveImg(canvas);
+            a.InputFile.saveImg(canvas);
         }
     },
     cropWithJcrop: function(fileImg) {
         var img = new Image();
         var reader = new FileReader();
-        var cutSize = $A.InputFile.fileField.attr('data-crop-img');
-        var aspectRadio = $A.InputFile.fileField.attr('data-aspect-radio') ? $A.InputFile.fileField.attr('aspect-radio') : 1;
+        var cutSize = a.InputFile.fileField.attr('data-crop-img');
+        var aspectRadio = a.InputFile.fileField.attr('data-aspect-radio') ? a.InputFile.fileField.attr('aspect-radio') : 1;
         
         img.id = 'targetCrop';
         reader.onload = function(e) { img.src = e.target.result;};
@@ -52,7 +52,7 @@ $A.InputFile = {
         img.onload = function() {
             var getCropParam = function(c) {cropParam = {x: c.x, y: c.y, w: c.w, h: c.h};};
             var cropParam = {x: 0, y: 0, w: 200, h:200};
-            $A.ModalBox({
+            a.ModalBox({
                 title: 'Обрезка изображения',
                 content: img.outerHTML,
                 classModal: 'jcrop',
@@ -69,9 +69,9 @@ $A.InputFile = {
                     viewImgW*cutSize*aspectRadio/cropParam.w,
                     viewImgH*cutSize/cropParam.h
                 );
-                $A.InputFile.saveImg(canvas);
-                $A.InputFile.fileField.val('');
-                $A.closeModal();
+                a.InputFile.saveImg(canvas);
+                a.InputFile.fileField.val('');
+                a.closeModal();
             });
             var targetCrop = $('#targetCrop');
             var viewImgW = targetCrop.width();
@@ -86,31 +86,31 @@ $A.InputFile = {
         var sData = atob(aBase64[1]);
         var aBufferView = new Uint8Array(sData.length);
         for (var i = 0; i < aBufferView.length; i++) { aBufferView[i] = sData.charCodeAt(i); }
-        $A.InputFile.obj[$A.InputFile.fileField[0].name] = new Blob([aBufferView], {type : 'image/jpeg'});
-        $A.InputFile.showPreview(data);
+        a.InputFile.obj[a.InputFile.fileField[0].name] = new Blob([aBufferView], {type : 'image/jpeg'});
+        a.InputFile.showPreview(data);
     },
     showPreview: function(data) {
-        var label = $A.InputFile.fileField.parent();
+        var label = a.InputFile.fileField.parent();
         label.find('.preview').remove();
         label.before('<div class="preview"><img src="' + data + '"><i class="icon icon-trash js-delPreview"></i></div>');
-        if($A.InputFile.fileField.hasClass('js-addNextFileField')){
-            var widgetIndex = $A.InputFile.fileField.closest('.widget').index();
-            var fieldIndex = $A.InputFile.fileField.closest('.widget').find('.fileField:last').index() + 1;
-            $('<div class="fileField"><label><input name="w[' + widgetIndex + '][wGallery][' + fieldIndex + ']" type="file" class="js-addNextFileField" accept="image/jpeg, image/png"></label></div>').insertAfter($A.InputFile.fileField.closest('.fileField'));
+        if(a.InputFile.fileField.hasClass('js-addNextFileField')){
+            var widgetIndex = a.InputFile.fileField.closest('.widget').index();
+            var fieldIndex = a.InputFile.fileField.closest('.widget').find('.fileField:last').index() + 1;
+            $('<div class="fileField"><label><input name="w[' + widgetIndex + '][wGallery][' + fieldIndex + ']" type="file" class="js-addNextFileField" accept="image/jpeg, image/png"></label></div>').insertAfter(a.InputFile.fileField.closest('.fileField'));
         }
     },
     showFilePreview: function(format, fileName) {
-        var label = $A.InputFile.fileField.parent();
+        var label = a.InputFile.fileField.parent();
         label.find('.preview').remove();
         label.before('<div class="preview"><img src="/img/admin/' + format + '.png"><p>' + fileName + '</p><i class="icon icon-trash js-delPreview"></i></div>');
-        if($A.InputFile.fileField.hasClass('js-addNextFileField')){
-            var widgetIndex = $A.InputFile.fileField.closest('.widget').index();
-            var fieldIndex = $A.InputFile.fileField.closest('.widget').find('.fileField:last').index() + 1;
+        if(a.InputFile.fileField.hasClass('js-addNextFileField')){
+            var widgetIndex = a.InputFile.fileField.closest('.widget').index();
+            var fieldIndex = a.InputFile.fileField.closest('.widget').find('.fileField:last').index() + 1;
             $('<div class="fileField file">' +
                 '<label>' +
-                    '<input name="w[' + widgetIndex + '][wFiles][' + fieldIndex + ']" type="file" class="js-addNextFileField" accept="' + $A.InputFile.fileAccept + '">' +
+                    '<input name="w[' + widgetIndex + '][wFiles][' + fieldIndex + ']" type="file" class="js-addNextFileField" accept="' + a.InputFile.fileAccept + '">' +
                 '</label>' +
-            '</div>').insertAfter($A.InputFile.fileField.closest('.fileField'));
+            '</div>').insertAfter(a.InputFile.fileField.closest('.fileField'));
         }
     },
     delPreview: function(el) {
@@ -120,7 +120,7 @@ $A.InputFile = {
             $('<input type="hidden" name="removeImg[]" value="' + input.attr('data-img-src') + '">').insertAfter(input);
             input.removeAttr('data-img-src');
         }
-        $(el).remove(); $A.InputFile.obj = {};
+        $(el).remove(); a.InputFile.obj = {};
     },
     buildField: function(el) {
         var random = (Math.random() * 100000).toFixed(0);
@@ -128,7 +128,7 @@ $A.InputFile = {
             $('<div class="preview"><img src="' + $(el).attr('data-img-src') + '?v=' + random + '"><i class="icon icon-trash js-delPreview"></i></div>').insertBefore($(el).parent());
         }
         if($(el).closest('.fileField').hasClass('file')){
-            $(el).attr('accept', $A.InputFile.fileAccept);
+            $(el).attr('accept', a.InputFile.fileAccept);
         } else {
             $(el).attr('accept', 'image/jpeg, image/png');
         }

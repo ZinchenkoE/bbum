@@ -1,26 +1,26 @@
 <?php
-$if = $data['action'] == 'put';
-$product    = $if ? $data['product'] : null;
+$isPut = $data['action'] == 'put';
+$product    = $isPut ? $data['product'] : null;
 ?>
 <style>
     .fileField{ display: inline-block; }
 </style>
 <div class="formPage">
-    <form class="formLogin" action="/admin/product/<?= $if ? $product['product_id'] : 'new' ?>" method="<?= $data['action'] ?>">
-        <h1 class="pageTitle"><?= $if ? 'Редактирование' : 'Добавление' ?> товара</h1>
+    <form class="formLogin" action="/admin/product/<?= $isPut ? $product['product_id'] : 'new' ?>" method="<?= $data['action'] ?>">
+        <h1 class="pageTitle"><?= $isPut ? 'Редактирование' : 'Добавление' ?> товара</h1>
         <div class="leftCol">
             <h2>Данные продукта № <?= $product['product_id']?></h2>
             <div class="textField inputBox">
-                <input placeholder="Название RU" id="title_ru" name="title_ru" type="text" value="<?= $if ? $product['title_ru'] : '' ?>" pattern="text" required>
+                <input placeholder="Название RU" id="title_ru" name="title_ru" type="text" value="<?= $isPut ? $product['title_ru'] : '' ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Название UA" id="title_ua" name="title_ua" type="text" value="<?= $if ? $product['title_ua'] : '' ?>" pattern="text" required>
+                <input placeholder="Название UA" id="title_ua" name="title_ua" type="text" value="<?= $isPut ? $product['title_ua'] : '' ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $if ? $product['description_ru'] : '' ?></textarea>
+                <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $isPut ? $product['description_ru'] : '' ?></textarea>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание UA" id="description_ua" name="description_ua" pattern="text" required><?= $if ? $product['description_ua'] : '' ?></textarea>
+                <textarea placeholder="Описание UA" id="description_ua" name="description_ua" pattern="text" required><?= $isPut ? $product['description_ua'] : '' ?></textarea>
             </div>
             <div class="selectField inputBox">
                 <label class="title">Категория</label>
@@ -79,9 +79,9 @@ $product    = $if ? $data['product'] : null;
                 </label>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Цена" id="price" name="price" type="text" value="<?= $if ? $product['price'] : '' ?>" pattern="integer" required>
+                <input placeholder="Цена" id="price" name="price" type="text" value="<?= $isPut ? $product['price'] : '' ?>" pattern="integer" required>
             </div>
         </div>
-        <button class="fixedSubmit" type="submit"><?= $if ? 'Редактировать' : 'Добавить' ?></button>
+        <button class="fixedSubmit" type="submit"><?= $isPut ? 'Редактировать' : 'Добавить' ?></button>
     </form>
 </div>

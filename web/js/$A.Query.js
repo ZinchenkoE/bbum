@@ -1,4 +1,4 @@
-$A.Query = {
+a.Query = {
     defaultParam : {
         afterSuccess : function(){},
         cache : false,
@@ -20,7 +20,7 @@ $A.Query = {
                 var clearUrl = urlArr[0] + Url.removeParam(['_'], '?' + urlArr[1]);
                 if(location.pathname + location.search !== clearUrl) history.pushState('', '', clearUrl);
             }
-            if(rd.flash){ $A.MessageBox('S', rd.flash); }
+            if(rd.flash){ a.MessageBox('S', rd.flash); }
             if(rd.renders){
                 for(key in rd.renders){
                     if (rd.renders.hasOwnProperty(key)) {
@@ -34,7 +34,7 @@ $A.Query = {
                         }
                     }
                 }
-                $A.updateView();
+                a.updateView();
             }
             if(rd.meta){
                 for(key in rd.meta){
@@ -53,12 +53,12 @@ $A.Query = {
             try {
                 if(xhro.responseText){
                     var res = JSON.parse(xhro.responseText);
-                    if(res.backData){ $A.Validator.serverErrors(res.backData); }
+                    if(res.backData){ a.Validator.serverErrors(res.backData); }
                 }
             } catch (e) {
-                $A.MessageBox('E', 'Ошибка сервера');
+                a.MessageBox('E', 'Ошибка сервера');
                 console.log(e);
-                $A.iR = true;
+                a.iR = true;
             }
         },
         statusCode:{
@@ -67,44 +67,44 @@ $A.Query = {
             },
             302: function(xhro){
                 var res = JSON.parse(xhro.responseText);
-                if(res && res.flash){ $A.MessageBox('S', res.flash); }
+                if(res && res.flash){ a.MessageBox('S', res.flash); }
                 if(xhro.getResponseHeader('X-Redirect')){
-                    $A.iR = true;
-                    $A.Query.get({url: xhro.getResponseHeader('X-Redirect'), preloader: false, writeHistory: true});
+                    a.iR = true;
+                    a.Query.get({url: xhro.getResponseHeader('X-Redirect'), preloader: false, writeHistory: true});
                 }
             },
             400: function(xhro) {
                 var res = JSON.parse(xhro.responseText);
-                if(res && res.flash){ $A.MessageBox('N', res.flash);}
+                if(res && res.flash){ a.MessageBox('N', res.flash);}
             },
             500: function(xhro) {
                 var res = JSON.parse(xhro.responseText);
-                if(res && res.flash){ $A.MessageBox('E', res.flash);}
+                if(res && res.flash){ a.MessageBox('E', res.flash);}
             }
         },
         beforeSend: function() {
-            $A.iR = false;
+            a.iR = false;
             if(this.preloader) $('#preloader').fadeIn(300);
         },
         complete: function() {
-            $A.iR = true;
+            a.iR = true;
             $('#preloader').fadeOut(300);
         }
     },
     get : function (p) {
-        if (p.notBlock) {$.ajax(p); $A.iR = true; return;}
-        if ($A.iR){
-            clearTimeout($A.sT);
-            $A.sT = setTimeout(function() {$.ajax(p)}, 300);
+        if (p.notBlock) {$.ajax(p); a.iR = true; return;}
+        if (a.iR){
+            clearTimeout(a.sT);
+            a.sT = setTimeout(function() {$.ajax(p)}, 300);
         }
     },
     post : function (p) {
         p.type = 'POST';
         p.data.append('_csrf', $('meta[name="csrf-token"]').attr("content"));
-        if(p.notBlock) {$.ajax(p); $A.iR = true; return;}
-        if($A.iR){
-            clearTimeout($A.sT);
-            $A.sT = setTimeout(function() {$.ajax(p)}, 300);
+        if(p.notBlock) {$.ajax(p); a.iR = true; return;}
+        if(a.iR){
+            clearTimeout(a.sT);
+            a.sT = setTimeout(function() {$.ajax(p)}, 300);
         }
     },
     create : function(p){ p.data.append('_rm',"create"); this.post(p); },
@@ -116,8 +116,8 @@ $A.Query = {
         e.preventDefault();
         var $submitBtn = $(submitBtn);
         var form = $submitBtn.closest('form');
-        $A.$lastSubmitForm = form;
-        var fd = $A.Validator.validateAllField(form);
+        a.$lastSubmitForm = form;
+        var fd = a.Validator.validateAllField(form);
         var repeatedClick = $submitBtn.hasClass('stop');
         if( !form.attr('method') ) { console.log('Не указан method отправки формы'); return;}
         var method = form.attr('method').toLowerCase();
@@ -125,10 +125,10 @@ $A.Query = {
         if(fd){
             $submitBtn.addClass('stop');
             if(!repeatedClick) {
-                $A.Query[method]({url: form.attr('action'), data: fd,
+                a.Query[method]({url: form.attr('action'), data: fd,
                     afterSuccess: function(res) {
                         $submitBtn.removeClass('stop');
-                        try{ $A[submitFunc[0]][submitFunc[1]](res); }catch(e){}
+                        try{ a[submitFunc[0]][submitFunc[1]](res); }catch(e){}
                     }
                 });
                 setTimeout(function() { $submitBtn.removeClass('stop'); }, 300);
@@ -142,7 +142,7 @@ $A.Query = {
         if( url.slice(0, 4) != 'http'){
             e.preventDefault();
             if(url[0] !="#"){
-                $A.Query.get({url: url, writeHistory: true});
+                a.Query.get({url: url, writeHistory: true});
                 console.log('Get запрос на ', url);
                 if(!$link.is('[data-not-scroll]')) $('html, body').animate({scrollTop: 0},300);
             }
@@ -150,7 +150,7 @@ $A.Query = {
     }
 };
 
-$A.Query.init();
+a.Query.init();
 
 var Url = {
     setParam: function (obj, fullSearch) {

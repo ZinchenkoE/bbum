@@ -2,23 +2,20 @@
 namespace app\components\traits;
 
 use yii\web\BadRequestHttpException;
+use Yii;
 
 trait ModelTrait
 {
-    /**
-     * @var \yii\db\Connection
-     */
+    /** * @var \yii\db\Connection */
     private $db;
    
-    /**
-     * @var \app\components\extensions\Grest
-     */
+    /** * @var \app\components\extensions\Grest */
     private $grest;
 
     public function __construct()
     {
-        $this->db = &\Yii::$app->db;        
-        $this->grest = &\Yii::$app->grest;
+        $this->db = &Yii::$app->db;        
+        $this->grest = &Yii::$app->grest;
     }
 
     public function __destruct()
@@ -33,16 +30,16 @@ trait ModelTrait
 
     public function run($key, $id)
     {
-        if (!\Yii::$app->request->isAjax && !\Yii::$app->request->isGet){
+        if (!Yii::$app->request->isAjax && !Yii::$app->request->isGet){
             throw new BadRequestHttpException('Request type denided');
         }
 
         $callMethod = 'get';
 
-        if (\Yii::$app->request->isAjax){
-            if (\Yii::$app->request->isPost){
-                if (\Yii::$app->request->post('_rm')){
-                    $callMethod = \Yii::$app->request->post('_rm');
+        if (Yii::$app->request->isAjax){
+            if (Yii::$app->request->isPost){
+                if (Yii::$app->request->post('_rm')){
+                    $callMethod = Yii::$app->request->post('_rm');
                 } else $callMethod = 'post';
             }
         }
@@ -56,8 +53,8 @@ trait ModelTrait
 
     protected function post()
     {
-        if (\Yii::$app->request->post('_prm')) {
-            $callMethod = (\Yii::$app->request->post('_prm'))."Post";
+        if (Yii::$app->request->post('_prm')) {
+            $callMethod = (Yii::$app->request->post('_prm'))."Post";
             if (method_exists($this, $callMethod)){
                 $this->$callMethod();
             } else {
@@ -70,7 +67,7 @@ trait ModelTrait
 
     protected function notFormValid($errors = false)
     {
-        $this->grest->setCode(500, null);
+        $this->grest->setCode(499, null);
         $this->grest->backData['error'] = $errors;
     }
 

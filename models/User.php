@@ -39,10 +39,6 @@ class User extends Object implements IdentityInterface
         return null;
     }
 
-    /**
-     * @param string $username
-     * @return static|null
-     */
     public static function findByUsername($username)
     {
         foreach (self::$users as $user) {
@@ -53,35 +49,19 @@ class User extends Object implements IdentityInterface
         return null;
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
+    public function getId() { return $this->id; }
 
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
+    public function getAuthKey() { return $this->authKey; }
 
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
+    public function validateAuthKey($authKey) { return $this->authKey === $authKey; }
 
-    /**
-     * Validates password
-     * @param string $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-    }
+    public function validatePassword($password) { return $this->password === $password; }
 
     public static function loginPost() {
-        $post = Yii::$app->request->post();
-        $user = self::findByUsername($post['email']);
-        if($user && $user->validatePassword($post['password'])){
+        $email    = Yii::$app->request->post('email');
+        $password = Yii::$app->request->post('password');
+        $user = self::findByUsername($email);
+        if($user && $user->validatePassword($password)){
             Yii::$app->user->login($user, 3600 * 24 * 30);
             return Yii::$app->controller->redirect('/admin', 301);
         } else {

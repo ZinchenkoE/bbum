@@ -1,6 +1,6 @@
-var $A = {
+var app = {
     sT: undefined, iR: true, vHandlers: {}, $lastSubmitForm: undefined, canPagination: true, 
-    init:function(){$(document).ready($A.ready);},
+    init:function(){$(document).ready(a.ready);},
     regHandlers: function(hs,on){
         for(var h in hs){
             if (hs.hasOwnProperty(h)) {
@@ -10,51 +10,51 @@ var $A = {
         }
     },
     ready:function(){
-        window.addEventListener("popstate", function(){ $A.Query.get({url: location, writeHistory: false}); } );
-        $A.regHandlers($A.handlers,true);
-        $A.updateView();
-        $(window).resize($A.windowResize);
-        $(window).scroll($A.windowScroll);
-        if($('span.flashError').length > 0)  { $A.MessageBox('E', $('span.flashError').text());  }
+        window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
+        a.regHandlers(a.handlers,true);
+        a.updateView();
+        $(window).resize(a.windowResize);
+        $(window).scroll(a.windowScroll);
+        if($('span.flashError').length > 0)  { a.MessageBox('E', $('span.flashError').text());  }
     },
     handlers : {
-        "[href]:click"                          : function(e){ $A.Query.clickHref(e, this);}, // Переход по ссылкам
-        "[type='submit']:click"                 : function(e){ $A.Query.clickSubmitBtn(e, this);}, // Отправка формы
-        "body:click"                            : function(e){ $A.clickBody(e); },
+        "[href]:click"                          : function(e){ a.Query.clickHref(e, this);}, // Переход по ссылкам
+        "[type='submit']:click"                 : function(e){ a.Query.clickSubmitBtn(e, this);}, // Отправка формы
+        "body:click"                            : function(e){ a.clickBody(e); },
         "body:keyup"                            : function(e){ if(e.charCode==27) AppJS.closeModal(); },
-        ".js-logout:click"                      : function() { var fd = new FormData(); fd.append('_prm', 'logout'); $A.Query.post({url: '/admin/logout', data: fd})},
+        ".js-logout:click"                      : function() { var fd = new FormData(); fd.append('_prm', 'logout'); a.Query.post({url: '/admin/logout', data: fd})},
         "nav:mouseleave"                        : function() { $('nav ul ul').slideUp(200); $('.js-userMenu').hide();},
         "nav .js-showSubMenu:click"             : function() { $(this).next().slideToggle(200); },
-        "[required]:focusout"                   : function() { $A.Validator.checkRequiredVal(this); },
-        "[pattern]:focusout"                    : function() { $A.Validator.checkFieldToPattern(this); },
-        "[data-only-pattern]:keypress"          : function(e){ $A.Validator.inputOnlyPattern(e, this); },
-        "[name='confirm_password']:focusout"    : function() { $A.Validator.confirmPassword(this); },
+        "[required]:focusout"                   : function() { a.Validator.checkRequiredVal(this); },
+        "[pattern]:focusout"                    : function() { a.Validator.checkFieldToPattern(this); },
+        "[data-only-pattern]:keypress"          : function(e){ a.Validator.inputOnlyPattern(e, this); },
+        "[name='confirm_password']:focusout"    : function() { a.Validator.confirmPassword(this); },
         ".js-openUserMenuBtn:click"             : function() { $('.js-userMenu').show(); },
         ".js-userMenu .icon-cross:click"        : function() { $('.js-userMenu').hide(); },
-        ".selectField .viewBox:click"           : function() { $A.selectViewBoxClick(this); },
-        ".selectField li:click"                 : function() { $A.selectLiClick(this); },
+        ".selectField .viewBox:click"           : function() { a.selectViewBoxClick(this); },
+        ".selectField li:click"                 : function() { a.selectLiClick(this); },
         ".invalid select:change"                : function() { $(this).closest('.invalid').removeClass('invalid').find('p.error').remove(); }, // Убираем ошибку селекта при вводе
         ".js-openDropmenu:click"                : function() { $(this).next().slideToggle(200); },
-        ".js-closeModal:click"                  : function() { $A.closeModal(this);},
-        ".js-overlay, .js-closeConfirmBox:click": function() { $A.closeModal(); },
-        "input[type='file']:change"             : function(e){ $A.InputFile.change(this, e.target.files);},
+        ".js-closeModal:click"                  : function() { a.closeModal(this);},
+        ".js-overlay, .js-closeConfirmBox:click": function() { a.closeModal(); },
+        "input[type='file']:change"             : function(e){ a.InputFile.change(this, e.target.files);},
         ".fileField:dragover"                   : function(e){ e.preventDefault(); e.stopPropagation(); return false;}, // Это нада шоб работал драгендроп
         ".fileField:dragleave"                  : function(e){ e.preventDefault(); e.stopPropagation(); return false;}, // Это нада шоб работал драгендроп
-        ".fileField:drop"                       : function(e){ e.preventDefault(); e.stopPropagation(); $A.InputFile.change($(this).find('input')[0], e.originalEvent.dataTransfer.files);return false;},
-        ".fileField .preview:click"             : function() { $A.InputFile.delPreview(this) },
-        ".js-plusPrevInputBoxBtn:click"         : function() { $A.plusPrevInputBoxBtn(this); },
+        ".fileField:drop"                       : function(e){ e.preventDefault(); e.stopPropagation(); a.InputFile.change($(this).find('input')[0], e.originalEvent.dataTransfer.files);return false;},
+        ".fileField .preview:click"             : function() { a.InputFile.delPreview(this) },
+        ".js-plusPrevInputBoxBtn:click"         : function() { a.plusPrevInputBoxBtn(this); },
         ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
         ".js-addBlock:click"                    : function() { if(!$('.js-overlay').length) $('<div class="js-overlay"></div>').appendTo('body'); $(this).prev().fadeIn(200); },
         ".js-delRowParams:click"                : function() { $(this).closest('.row').remove();  },
         ".js-delTableRow:click"                 : function() { $(this).closest('tr').remove(); },
-        '#search:input'                         : function() { $A.search(this);  }, // Поиск в таблицах
-        ".js-delCategory:click"                 : function() { $A.delCategoryClick(this); },
-        ".categoryTablePage input:change"       : function(){ $A.categoryTableInputChange(this); }
+        '#search:input'                         : function() { a.search(this);  }, // Поиск в таблицах
+        ".js-delCategory:click"                 : function() { a.delCategoryClick(this); },
+        ".categoryTablePage input:change"       : function(){ a.categoryTableInputChange(this); }
     },
     updateView: function() {
-        $A.upgradeElements();
-        $A.InputFile.obj = {};
-        $A.closeModal();
+        a.upgradeElements();
+        a.InputFile.obj = {};
+        a.closeModal();
         if($('.ProductTablePage').length) $('.search.textField').addClass('active');
         else $('.search.textField').removeClass('active');
     },
@@ -72,15 +72,15 @@ var $A = {
         if( $(el).val().length > 0 ) {
             var searchStr = $(el).val().replace(/#/g, '');
             if(/^[a-zA-Zа-яА-Я0-9 ёЁЇїІіЄєҐґ\(\)\.\,\;\-\s\:\_]+$/.test(searchStr)){
-                $A.Query.get({
+                a.Query.get({
                     url: Url.removeParam(['per-page', 'page']).setParam({search: searchStr}).getSearch(),
                     writeHistory: true, notBlock: true, preloader: false
                 });
             }else{
-                $A.messageBox('N', 'Недопустимые символы');
+                a.messageBox('N', 'Недопустимые символы');
             }
         } else {
-            $A.Query.get({url: Url.removeParam(['per-page', 'page', 'search']).getSearch() || location.pathname, writeHistory: true, notBlock: true});
+            a.Query.get({url: Url.removeParam(['per-page', 'page', 'search']).getSearch() || location.pathname, writeHistory: true, notBlock: true});
         }
     },
     ConfirmBox: function(p) {
@@ -139,9 +139,9 @@ var $A = {
                 $('<label class="title">' + $(this).attr("placeholder") + '</label>').insertBefore(this);
             }
         });
-        $('input:file:not(.initialized)').each(function(){ $A.InputFile.buildField(this); });
+        $('input:file:not(.initialized)').each(function(){ a.InputFile.buildField(this); });
         $('[data-mask]').each(function(){ $(this).mask($(this).attr('data-mask')); });
-        $A.ckeditorInit();
+        a.ckeditorInit();
     },
     ckeditorInit: function() {
         $('.js-ckeditor:not(.ckeditorInit)').each(function(){
@@ -173,7 +173,7 @@ var $A = {
     },
     delCategoryClick: function(el){
         var categoryId = $(el).closest('tr').attr('category-id');
-        $A.ConfirmBox({
+        a.ConfirmBox({
             title: 'Вы дествительно хотите удалить эту категорию?',
             action: '/admin/category/' + categoryId
         });
@@ -185,6 +185,6 @@ var $A = {
         fd.append('category_title_ru', $(el).closest('tr').find('[name="category_title_ru"]').val());
         fd.append('category_title_uk', $(el).closest('tr').find('[name="category_title_uk"]').val());
         fd.append('parent_id', parentId);
-        $A.Query.put({url: '/admin/category/' + categoryId, data: fd});
+        a.Query.put({url: '/admin/category/' + categoryId, data: fd});
     }
 };

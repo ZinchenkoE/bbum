@@ -6,7 +6,7 @@ use app\components\interfaces\ModelInterface;
 use app\components\traits\ModelTrait;
 use yii\base\Model;
 use yii\data\Pagination;
-use yii;
+use Yii;
 
 
 class Product extends Model implements ModelInterface
@@ -30,15 +30,8 @@ class Product extends Model implements ModelInterface
         return [
             [
                 [
-                    'title_ru',
-                    'title_uk',
-                    'description_ru',
-                    'description_uk',
-                    'price',
-                    'gender',
-                    'category',
-                    'status',
-                    'producer',
+                    'title_ru', 'title_uk', 'description_ru', 'description_uk', 'price', 'gender',
+                    'category', 'status', 'producer'
                 ], 'filter',
                 'filter' => 'trim',
             ],
@@ -47,17 +40,14 @@ class Product extends Model implements ModelInterface
                 'tooShort' => 'Длина не менее 3-х символов',
                 'tooLong' => 'Длина не более 50 символов',
             ],
-            [
-                ['title_ru', 'title_uk', 'description_ru'], 'required',
-                'message' => 'Поле не может быть пустым'
-            ],
-            [
-                'removeImg', 'each',
-                'rule' => ['string']
-            ]
+            [ ['title_ru', 'title_uk', 'description_ru'], 'required', 'message' => 'Поле не может быть пустым' ],
+            [ 'removeImg', 'each', 'rule' => ['string'] ]
         ];
     }
 
+    /**
+     * @param $key
+     */
     protected function get($key)
     {
         $this->grest->data['categories'] = Category::getCategories();
@@ -76,8 +66,8 @@ class Product extends Model implements ModelInterface
             }
 
         } else {
-            $search = (string)\Yii::$app->request->get('search');
-			$page   = (int)   \Yii::$app->request->get('page');
+            $search = (string)Yii::$app->request->get('search');
+			$page   = (int)   Yii::$app->request->get('page');
 
 			$offset = $page == 0 || $page == 1? '' : 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
 
@@ -85,6 +75,7 @@ class Product extends Model implements ModelInterface
 //            $search_part_query = 'WHERE category = 0';
 
 			$count = $this->db->createCommand("SELECT COUNT(*) FROM bs_product $search_part_query")->queryScalar();
+
             $products = $this->db->createCommand("
                 SELECT * FROM bs_product p
                 LEFT JOIN bs_category c ON p.category = c.category_id
@@ -101,7 +92,7 @@ class Product extends Model implements ModelInterface
 
     protected function create()
     {
-        $this->attributes = \Yii::$app->request->post();
+        $this->attributes = Yii::$app->request->post();
         if ($this->validate()) {
             $key = $this->db->createCommand("SELECT AUTO_INCREMENT FROM information_schema.tables WHERE TABLE_NAME = 'bs_product';")->queryScalar();
             for ($i = 0; $i < 6; $i++){
@@ -135,7 +126,7 @@ class Product extends Model implements ModelInterface
 
     protected function put($key)
     {
-        $this->attributes = \Yii::$app->request->post();
+        $this->attributes = Yii::$app->request->post();
         if ($this->validate()) {
             $this->db->createCommand()->update('bs_product', [
                 'title_ru'       => $this->title_ru,
@@ -197,12 +188,12 @@ class Product extends Model implements ModelInterface
 
     public static function getProduct($id)
     {
-        return \Yii::$app->db->createCommand("SELECT * FROM bs_product WHERE product_id = :id")->bindValue(':id', $id)->queryOne();
+        return Yii::$app->db->createCommand("SELECT * FROM bs_product WHERE product_id = :id")->bindValue(':id', $id)->queryOne();
     }
 
     protected function setCategoryPost(){ // Назначение категории к товару с таблицы
-        $key =  \Yii::$app->request->get('key');
-        $category =  \Yii::$app->request->post('category');
+        $key =  Yii::$app->request->get('key');
+        $category =  Yii::$app->request->post('category');
         $this->db->createCommand()->update('bs_product', ['category' => $category], 'product_id = :id')->bindValue(':id', $key)->execute();
         $this->grest->setCode(200, 'Продукт успешно обновлен');
     }

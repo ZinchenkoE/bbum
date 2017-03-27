@@ -1,10 +1,9 @@
-$A.Validator = {
+a.Validator = {
     patterns: {
         fullname: /^[а-яА-ЯёЁa-zA-Z\s-]{2,100}$/,
         email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,
         login: /^[aA-zZ0-9аА-яЯ ]+$/,
-        text: /^[aA-zZ0-9аА-яЯ ёЁЇїІіЄє,\.\s\-\+\(\)"\!\№\$\%\*\;\s\:\—\?]+|^$/,
-        // text: /^[aA-zZ0-9аА-яЯ ёЁЇїІіЄєҐґ\.\s\-\+\(]+$/,
+        text: /^[\wаА-яЯ ёЁЇїІіЄє,.\s\-+()"!№$%*;:?]+|^$/,
         ip: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/,
         integer: /^[0-9]+$/,
         float: /^\d+(\.?|,?)\d*$/
@@ -34,30 +33,30 @@ $A.Validator = {
     checkRequiredVal: function(el) {
         var inputBox = $(el).closest('.inputBox');
         if ($(el).val().trim() === "") {
-            $A.Validator.addError($A.Validator.message.emptyField, inputBox);
+            a.Validator.addError(a.Validator.message.emptyField, inputBox);
         }  else {
-            $A.Validator.removeError(el);
+            a.Validator.removeError(el);
         }
     },
     checkFieldToPattern: function(el) {
         var inputBox = $(el).closest('.inputBox');
         var pattern = $(el).attr('pattern');
-        if (!$A.Validator.patterns[pattern].test($(el).val())) {
-            $A.Validator.addError($A.Validator.message[pattern], inputBox);
+        if (!a.Validator.patterns[pattern].test($(el).val())) {
+            a.Validator.addError(a.Validator.message[pattern], inputBox);
         } else {
-            $A.Validator.removeError(el);
+            a.Validator.removeError(el);
         }
     },
     inputOnlyPattern: function(e, el) {
         var inputBox = $(el).closest('.inputBox');
         var pattern = $(el).attr('only-pattern');
         var val = $(el).val() + String.fromCharCode(e.charCode);
-        var test = $A.Validator.patterns[pattern].test(val);
+        var test = a.Validator.patterns[pattern].test(val);
         if (!test) {
-            $A.Validator.addError($A.Validator.message[pattern], inputBox);
+            a.Validator.addError(a.Validator.message[pattern], inputBox);
             e.preventDefault();
         }  else {
-            $A.Validator.removeError(el);
+            a.Validator.removeError(el);
         }
     },
     confirmPassword: function(el) {
@@ -65,9 +64,9 @@ $A.Validator = {
         var confirmValue = $(el).val();
         var newPass = $(el).closest('form').find('[name="password"]').val();
         if ( confirmValue !== newPass ) {
-            $A.Validator.addError($A.Validator.message['passVerification'], inputBox);
+            a.Validator.addError(a.Validator.message['passVerification'], inputBox);
         } else {
-            $A.Validator.removeError(el);
+            a.Validator.removeError(el);
         }
     },
     validateAllField: function ($form) {
@@ -85,7 +84,7 @@ $A.Validator = {
             }else if( elType === "radio" ){
                 if(this.checked){ fd.append(this.name, this.value);}
             }else if( elType === "file" ){
-                if($A.InputFile.obj[this.name]) fd.append(this.name,  $A.InputFile.obj[this.name]);
+                if(a.InputFile.obj[this.name]) fd.append(this.name,  a.InputFile.obj[this.name]);
             }else {
                 fd.append(this.name, this.value);
             }
@@ -96,17 +95,17 @@ $A.Validator = {
     },
     serverErrors: function (obj) {
          console.log(obj);
-        if($A.$lastSubmitForm){
-            if(obj.error && $A.$lastSubmitForm){
+        if(a.$lastSubmitForm){
+            if(obj.error && a.$lastSubmitForm){
                 $.each(obj.error, function(key, val){
                     console.log('C сервера пришла ошибка: ', key, val[0]);
-                    var el = $A.$lastSubmitForm.find('[name="'+ key +'"], [name="'+ key +'[]"]');
+                    var el = a.$lastSubmitForm.find('[name="'+ key +'"], [name="'+ key +'[]"]');
                     var inputBox = el.closest('.inputBox');
                     inputBox.find('p.error').remove();
-                    $A.Validator.addError(val[0], inputBox);
+                    a.Validator.addError(val[0], inputBox);
                 });
             }
-            $A.$lastSubmitForm.find('.js-step').hide().first().show();
+            a.$lastSubmitForm.find('.js-step').hide().first().show();
         }
-    },
+    }
 };

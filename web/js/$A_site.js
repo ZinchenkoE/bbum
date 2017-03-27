@@ -1,6 +1,6 @@
-var $A = {
+var a = {
     sT: undefined, iR: true, vHandlers: {}, $lastSubmitForm: undefined, canPagination: true, priceRangeInit: false,
-    init:function(){$(document).ready($A.ready);},
+    init:function(){$(document).ready(a.ready);},
     regHandlers:function(hs,on){  for(var h in hs){
         if (hs.hasOwnProperty(h)) {
             var k = h.split(":", 2); var _k0 = k[0].replace(new RegExp('--','g'), ':');
@@ -8,24 +8,24 @@ var $A = {
         }
     },
     ready:function(){
-        window.addEventListener("popstate", function(){ $A.Query.get({url: location, writeHistory: false}); } );
-        $A.regHandlers($A.handlers,true);
-        $A.updateView();
-        $(window).resize($A.windowResize);
-        $(window).scroll($A.windowScroll);
+        window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
+        a.regHandlers(a.handlers,true);
+        a.updateView();
+        $(window).resize(a.windowResize);
+        $(window).scroll(a.windowScroll);
     },
     handlers : {
-        "[href]:click"                : function(e){ $A.Query.clickHref(e, this); }, // Переход по ссылкам
-        "[type='submit']:click"       : function(e){ $A.Query.clickSubmitBtn(e, this); }, // Отправка формы
+        "[href]:click"                : function(e){ a.Query.clickHref(e, this); }, // Переход по ссылкам
+        "[type='submit']:click"       : function(e){ a.Query.clickSubmitBtn(e, this); }, // Отправка формы
         "body:click"                  : function(e){  },
-        ".sliderBtn.next:click"       : function() { $A.sliderBtnNextClick(this); },
-        ".sliderBtn.prev:click"       : function() { $A.sliderBtnPrevClick(this); },
-        "nav > ul > li:click"         : function(e){ $A.dropdownMenuClick(e, this); },
-        ".genderFilter:change"        : function() { $A.addGenderFilter(this); },
+        ".sliderBtn.next:click"       : function() { a.sliderBtnNextClick(this); },
+        ".sliderBtn.prev:click"       : function() { a.sliderBtnPrevClick(this); },
+        "nav > ul > li:click"         : function(e){ a.dropdownMenuClick(e, this); },
+        ".genderFilter:change"        : function() { a.addGenderFilter(this); },
     },
     updateView: function() {
-        $A.initLightSlider();
-        $A.initRange();
+        a.initLightSlider();
+        a.initRange();
     },
     messageBox: function(type, msg) { console.log(type, msg); },
     windowResize: function() {},
@@ -70,14 +70,14 @@ var $A = {
         if(el.checked){
             var p = {};
             p[el.id] = 1;
-            $A.Query.get({url: Url.setParam(p) || location.pathname, writeHistory: true });
+            a.Query.get({url: Url.setParam(p) || location.pathname, writeHistory: true });
         }else{
-            $A.Query.get({url: Url.removeParam([el.id]) || location.pathname, writeHistory: true });
+            a.Query.get({url: Url.removeParam([el.id]) || location.pathname, writeHistory: true });
         }
     },
     initRange: function() {
         var priceRange = $("#priceRange");
-        // if($A.priceRangeInit) return;
+        // if(a.priceRangeInit) return;
         // console.log(77);
         priceRange.slider({
             range: true,
@@ -88,14 +88,14 @@ var $A = {
                 $( "#amount" ).val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
             },
             stop: function(event, ui) {
-                $A.Query.get({url: Url.setParam({
+                a.Query.get({url: Url.setParam({
                     price_from : ui.values[0],
                     price_to   : ui.values[1]
                 }), writeHistory: true });
             }
         });
         $( "#amount" ).val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
-        // $A.priceRangeInit = true;
+        // a.priceRangeInit = true;
     }
 };
 

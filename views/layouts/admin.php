@@ -76,9 +76,9 @@ use yii\helpers\Html;
         <?php endif; ?>
         <main id="contentBox"><?= $content ?></main>
 
-        <?php if(Yii::$app->session->hasFlash('error')){ ?>
+        <?php if(Yii::$app->session->hasFlash('error')): ?>
             <span class="flashError" hidden="hidden"><?=Yii::$app->session->getFlash('error'); ?></span>
-        <?php } ?>
-        <script>$A.init();</script>
+        <?php endif; ?>
+        <script>a.init();</script>
     </body>
 </html>

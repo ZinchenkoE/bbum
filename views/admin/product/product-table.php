@@ -15,8 +15,7 @@
             </tr>
         </thead>
         <tbody>
-        <?php if (isset($data['products'])): ?>
-            <?php foreach($data['products'] as $product): ?>
+            <?php foreach($data['products'] ?? [] as $product): ?>
                 <tr data-product-id="<?= $product['product_id'] ?>">
                     <td><?= $product['product_id'] ?></td>
                     <td><?= $product['title_ru'] ?></td>
@@ -35,14 +34,14 @@
                             <div class="selectField inputBox">
                                 <select name="category">
                                     <option value="0" <?= $product['category'] == 0 ? 'selected' : '' ?>> --- категория не выбрана --- </option>
-                                    <?php if (!empty($data['categories'])): ?>
-                                        <?php foreach ($data['categories'] as $category): ?>
-                                            <?php if (($product['gender']== 1 && $category['parent_category_id'] == 1) || ($product['gender']== 2 && $category['parent_category_id'] == 2) || $product['gender'] == 0 ): ?>
-                                                <option value="<?= $category['category_id'] ?>" <?= $product['category'] == $category['category_id'] ? 'selected' : '' ?>
+                                        <?php foreach ($data['categories'] ?? [] as $category): ?>
+                                            <?php if (($product['gender']== 1 && $category['parent_category_id'] == 1) ||
+                                                ($product['gender']== 2 && $category['parent_category_id'] == 2) || $product['gender'] == 0 ): ?>
+                                                <option value="<?= $category['category_id'] ?>"
+                                                    <?= $product['category'] == $category['category_id'] ? 'selected' : '' ?>
                                                 ><?= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?></option>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
-                                    <?php endif; ?>
                                 </select>
                             </div>
                         </td>
@@ -61,7 +60,6 @@
 					</td>
                 </tr>
             <?php endforeach; ?>
-        <?php endif; ?>
         </tbody>
     </table>
 	<?php if(isset($data['pages'])): ?>
@@ -76,13 +74,13 @@
     <?php endif; ?>
     <div class="plusBtn" href="/admin/product/new">+</div>
     <script>
-        $A.ProductTablePage = {
+        a.ProductTablePage = {
             handlers: {
-                "input.js-changeStatusProduct:change" : function() { $A.ProductTablePage.changeStatus(this); },
+                "input.js-changeStatusProduct:change" : function() { a.ProductTablePage.changeStatus(this); },
                 ".js-delProduct:click"                : function() {
                     var tr = $(this).closest('tr');
                     var productId = tr.attr('data-product-id');
-                    $A.ConfirmBox({
+                    a.ConfirmBox({
                         title: 'Вы дествительно хотите удалить этот товар?',
                         action: '/admin/product/' + productId
                     });
@@ -93,7 +91,7 @@
                     var fd = new FormData();
                     fd.append('_prm', 'setCategory');
                     fd.append('category', this.value);
-                    $A.Query.post({url: '/admin/product/' + productId, data: fd});
+                    a.Query.post({url: '/admin/product/' + productId, data: fd});
                 }
             },
             ready: function() {},
@@ -103,7 +101,7 @@
                 var fd = new FormData();
                 var status = tr.find('input:checkbox').prop('checked');
                 fd.append('status', Number(status));
-                $A.Query.put({url: '/admin/product/' + productId, data: fd});
+                a.Query.put({url: '/admin/product/' + productId, data: fd});
             }
         };
     </script>
