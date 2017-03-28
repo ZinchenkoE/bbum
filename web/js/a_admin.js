@@ -1,5 +1,5 @@
-var app = {
-    sT: undefined, iR: true, vHandlers: {}, $lastSubmitForm: undefined, canPagination: true, 
+var a = {
+    vHandlers: {}, $lastSubmitForm: undefined,
     init:function(){$(document).ready(a.ready);},
     regHandlers: function(hs,on){
         for(var h in hs){
@@ -15,13 +15,13 @@ var app = {
         a.updateView();
         $(window).resize(a.windowResize);
         $(window).scroll(a.windowScroll);
-        if($('span.flashError').length > 0)  { a.MessageBox('E', $('span.flashError').text());  }
+        var flashError = $('span.flashError'); if(flashError.length > 0) a.MessageBox('E::' + flashError.text());
     },
     handlers : {
-        "[href]:click"                          : function(e){ a.Query.clickHref(e, this);}, // Переход по ссылкам
-        "[type='submit']:click"                 : function(e){ a.Query.clickSubmitBtn(e, this);}, // Отправка формы
+        "[href]:click"                          : function(e){ a.Query.clickHref(e, this);},
+        "[type='submit']:click"                 : function(e){ a.Query.clickSubmitBtn(e, this);},
         "body:click"                            : function(e){ a.clickBody(e); },
-        "body:keyup"                            : function(e){ if(e.charCode==27) AppJS.closeModal(); },
+        "body:keyup"                            : function(e){ if(e.charCode == 27) a.closeModal(); },
         ".js-logout:click"                      : function() { var fd = new FormData(); fd.append('_prm', 'logout'); a.Query.post({url: '/admin/logout', data: fd})},
         "nav:mouseleave"                        : function() { $('nav ul ul').slideUp(200); $('.js-userMenu').hide();},
         "nav .js-showSubMenu:click"             : function() { $(this).next().slideToggle(200); },
@@ -38,8 +38,8 @@ var app = {
         ".js-closeModal:click"                  : function() { a.closeModal(this);},
         ".js-overlay, .js-closeConfirmBox:click": function() { a.closeModal(); },
         "input[type='file']:change"             : function(e){ a.InputFile.change(this, e.target.files);},
-        ".fileField:dragover"                   : function(e){ e.preventDefault(); e.stopPropagation(); return false;}, // Это нада шоб работал драгендроп
-        ".fileField:dragleave"                  : function(e){ e.preventDefault(); e.stopPropagation(); return false;}, // Это нада шоб работал драгендроп
+        ".fileField:dragover"                   : function(e){ e.preventDefault(); e.stopPropagation(); return false;},
+        ".fileField:dragleave"                  : function(e){ e.preventDefault(); e.stopPropagation(); return false;},
         ".fileField:drop"                       : function(e){ e.preventDefault(); e.stopPropagation(); a.InputFile.change($(this).find('input')[0], e.originalEvent.dataTransfer.files);return false;},
         ".fileField .preview:click"             : function() { a.InputFile.delPreview(this) },
         ".js-plusPrevInputBoxBtn:click"         : function() { a.plusPrevInputBoxBtn(this); },
@@ -49,7 +49,7 @@ var app = {
         ".js-delTableRow:click"                 : function() { $(this).closest('tr').remove(); },
         '#search:input'                         : function() { a.search(this);  }, // Поиск в таблицах
         ".js-delCategory:click"                 : function() { a.delCategoryClick(this); },
-        ".categoryTablePage input:change"       : function(){ a.categoryTableInputChange(this); }
+        ".categoryTablePage input:change"       : function() { a.categoryTableInputChange(this); }
     },
     updateView: function() {
         a.upgradeElements();
@@ -58,10 +58,9 @@ var app = {
         if($('.ProductTablePage').length) $('.search.textField').addClass('active');
         else $('.search.textField').removeClass('active');
     },
-    MessageBox: function(type, msg) {
-        var key = msg.slice(0, 2);
-        if (key == 'S:') type = 'S'; else if(key == 'N:') type = 'N'; else if(key == 'E:') type = 'E';
-        msg = msg.replace('S:', '').replace('N:', '').replace('E:', '');
+    MessageBox: function(msg) {
+        var type = msg.split('::')[0];
+        msg = msg.replace('S::', '').replace('N::', '').replace('E::', '');
         var messageBox =  $('<div class="messageBox ' + type + '"><i class="icon-cross js-closeMessageBox"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
         messageBox.appendTo('body');
         messageBox.addClass('show');
@@ -71,16 +70,18 @@ var app = {
     search: function(el) {
         if( $(el).val().length > 0 ) {
             var searchStr = $(el).val().replace(/#/g, '');
-            if(/^[a-zA-Zа-яА-Я0-9 ёЁЇїІіЄєҐґ\(\)\.\,\;\-\s\:\_]+$/.test(searchStr)){
+            if(/^[\wA-Zа-яА-ЯёЁЇїІіЄє().,;\-\s:]+$/.test(searchStr)){
+                var url = Url.removeParam(['per-page', 'page']);
+                url     = Url.setParam({search: searchStr}, url);
                 a.Query.get({
-                    url: Url.removeParam(['per-page', 'page']).setParam({search: searchStr}).getSearch(),
-                    writeHistory: true, notBlock: true, preloader: false
+                    url: url,
+                    writeHistory: true, preloader: false
                 });
             }else{
-                a.messageBox('N', 'Недопустимые символы');
+                a.messageBox('N::Недопустимые символы');
             }
         } else {
-            a.Query.get({url: Url.removeParam(['per-page', 'page', 'search']).getSearch() || location.pathname, writeHistory: true, notBlock: true});
+            a.Query.get({url: Url.removeParam(['per-page', 'page', 'search']) || location.pathname, writeHistory: true});
         }
     },
     ConfirmBox: function(p) {

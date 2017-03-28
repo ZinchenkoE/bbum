@@ -23,13 +23,13 @@ $w   = Yii::$app->lng->getDictionary();
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="/css/lightslider.min.css">
     <link rel="stylesheet" href="/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
     <link rel="stylesheet" href="/css/site.css">
 
     <script src="/js/lib/jquery-3.1.1.min.js"></script>
     <script src="/js/lib/lightslider.min.js"></script>
     <script src="/js/lib/lightgallery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/js/lib/jquery-ui.min.js"></script>
     <script src="/js/$A_site.js"></script>
     <script src="/js/$A.Query.js"></script>
 
@@ -84,6 +84,6 @@ $w   = Yii::$app->lng->getDictionary();
         <div class="snackbar__text"></div>
     </div>
     <div id="gg"></div>
-    <script> $A.init(); </script>
+    <script> a.init(); </script>
 </body>
 </html>

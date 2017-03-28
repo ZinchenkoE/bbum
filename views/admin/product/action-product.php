@@ -14,13 +14,13 @@ $product    = $isPut ? $data['product'] : null;
                 <input placeholder="Название RU" id="title_ru" name="title_ru" type="text" value="<?= $isPut ? $product['title_ru'] : '' ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Название UA" id="title_ua" name="title_ua" type="text" value="<?= $isPut ? $product['title_ua'] : '' ?>" pattern="text" required>
+                <input placeholder="Название UA" id="title_uk" name="title_uk" type="text" value="<?= $isPut ? $product['title_uk'] : '' ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
                 <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $isPut ? $product['description_ru'] : '' ?></textarea>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание UA" id="description_ua" name="description_ua" pattern="text" required><?= $isPut ? $product['description_ua'] : '' ?></textarea>
+                <textarea placeholder="Описание UA" id="description_uk" name="description_uk" pattern="text" required><?= $isPut ? $product['description_uk'] : '' ?></textarea>
             </div>
             <div class="selectField inputBox">
                 <label class="title">Категория</label>

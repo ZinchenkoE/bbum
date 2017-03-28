@@ -16,10 +16,10 @@ use yii\helpers\Html;
         <script src="/js/lib/jquery.Jcrop.min.js"></script>
         <script src="/js/lib/ckeditor/ckeditor.js"></script>
         <script src="/js/lib/maskedInput.js"></script>
-        <script src="/js/$A_admin.js"></script>
-        <script src="/js/$A.Query.js"></script>
-        <script src="/js/$A.InputFile.js"></script>
-        <script src="/js/$A.Validator.js"></script>
+        <script src="/js/a_admin.js"></script>
+        <script src="/js/a.Query.js"></script>
+        <script src="/js/a.InputFile.js"></script>
+        <script src="/js/a.Validator.js"></script>
         
         <style>
             .search.textField{display: none;}
