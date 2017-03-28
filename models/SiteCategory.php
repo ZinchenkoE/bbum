@@ -2,12 +2,11 @@
 namespace app\models;
 
 use yii;
-use app\components\interfaces\ModelInterface;
 use app\components\traits\ModelTrait;
 use yii\base\Model;
 use yii\data\Pagination;
 
-class SiteCategory extends Model  implements ModelInterface
+class SiteCategory extends Model
 {
     use ModelTrait;
     const PAGE_LIMIT = 50;

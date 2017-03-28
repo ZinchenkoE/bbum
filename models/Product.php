@@ -2,14 +2,13 @@
 namespace app\models;
 
 use app\components\helpers\File;
-use app\components\interfaces\ModelInterface;
 use app\components\traits\ModelTrait;
 use yii\base\Model;
 use yii\data\Pagination;
 use Yii;
 
 
-class Product extends Model implements ModelInterface
+class Product extends Model
 {
     const PAGE_LIMIT = 50;
     public $title_ru;

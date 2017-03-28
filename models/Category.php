@@ -2,11 +2,10 @@
 namespace app\models;
 
 use app\components\helpers\File;
-use app\components\interfaces\ModelInterface;
 use app\components\traits\ModelTrait;
 use yii\base\Model;
 
-class Category extends Model  implements ModelInterface
+class Category extends Model
 {
     public $category_title_ru;
     public $category_title_uk;

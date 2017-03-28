@@ -7,7 +7,7 @@ use app\components\traits\ModelTrait;
 use yii\base\Model;
 use yii\data\Pagination;
 
-class SiteProduct extends Model implements ModelInterface
+class SiteProduct extends Model
 {
     use ModelTrait;
 

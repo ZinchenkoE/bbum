@@ -2,9 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Product;
-use app\models\SiteProduct;
 use Yii;
+use app\models\SiteProduct;
 use app\models\SiteCategory;
 use yii\web\Controller;
 
@@ -26,19 +25,19 @@ class SiteController extends Controller
     public function actionInfo()
     {
         Yii::$app->grest->render = 'info';
-        return \Yii::$app->grest->render();
+        return Yii::$app->grest->render();
     }
 
     public function actionContacts()
     {
         Yii::$app->grest->render = 'contacts';
-        return \Yii::$app->grest->render();
+        return Yii::$app->grest->render();
     }
 
     public function actionCategory($key = null, $id = null)
     {
         SiteCategory::initModel()->run($key, $id);
-        return \Yii::$app->grest->render();
+        return Yii::$app->grest->render();
     }
 
     public function actionProduct($key = null, $id = null)
