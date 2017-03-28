@@ -55,8 +55,7 @@ var a = {
         a.upgradeElements();
         a.InputFile.obj = {};
         a.closeModal();
-        if($('.ProductTablePage').length) $('.search.textField').addClass('active');
-        else $('.search.textField').removeClass('active');
+        a.toggleSearchInput();
     },
     MessageBox: function(msg) {
         var type = msg.split('::')[0];
@@ -66,6 +65,11 @@ var a = {
         messageBox.addClass('show');
         setTimeout(function() { messageBox.addClass('hide') }, 4000);
         setTimeout(function() { messageBox.remove()         }, 4400);
+    },
+    toggleSearchInput: function(){
+        var search = $('.search.textField');
+        if($('.ProductTablePage').length) search.show();
+        else search.hide();
     },
     search: function(el) {
         if( $(el).val().length > 0 ) {

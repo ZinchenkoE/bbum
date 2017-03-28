@@ -1,5 +1,7 @@
 <?php
 use yii\helpers\Html;
+/** @var $content */
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -22,8 +24,7 @@ use yii\helpers\Html;
         <script src="/js/a.Validator.js"></script>
         
         <style>
-            .search.textField{display: none;}
-            .search.textField.active{ display: inline-block; margin-top: 20px; margin-left: 250px; width: 400px; }
+
         </style>
     </head>
     <body>
@@ -45,25 +46,11 @@ use yii\helpers\Html;
             </div>
             <ul>
                 <li>
-                    <a href="/admin/product">
-                        <i class="icon icon-product"></i>
-                        <span>Товары</span>
-                    </a>
+                    <a href="/admin/product"><i class="icon icon-product"></i><span>Товары</span></a>
                 </li>
                 <li>
-                    <a href="/admin/category">
-                        <i class="icon icon-page"></i>
-                        <span>Категории</span>
-                    </a>
+                    <a href="/admin/category"><i class="icon icon-page"></i><span>Категории</span></a>
                 </li>
-<!--                <li>-->
-<!--                    <i class="icon icon-product"></i>-->
-<!--                    <span class="js-showSubMenu">Продукция</span>-->
-<!--                    <ul>-->
-<!--                        <li><a href="#">Товары</a></li>-->
-<!--                        <li><a href="#">Категории</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
             </ul>
             <div class="userMenuBox">
                 <div class="js-openUserMenuBtn openUserMenuBtn"><i class="icon icon-user"></i></div>

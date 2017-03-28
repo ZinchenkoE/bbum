@@ -11,12 +11,16 @@ header{
 		}
 		&:last-child{
 			i{ margin-right: 10px; vertical-align: middle; }
-			span{vertical-align: -webkit-baseline-middle;}
+			span{vertical-align: middle;}
 		}
 		&:hover{  background: #fed168; }
 	}
 	i.icon{height: 30px; width: 30px;}
 	span{ text-transform: uppercase; color: #141e29; font-family: 'museo_sans_cyrl500', sans-serif;}
+
+	.search.textField{
+		display: inline-block; margin-top: 20px; margin-left: 250px; width: 400px;
+	}
 }
 nav{
 	height: 100vh;
