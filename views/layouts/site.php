@@ -30,8 +30,8 @@ $w   = Yii::$app->lng->getDictionary();
     <script src="/js/lib/lightslider.min.js"></script>
     <script src="/js/lib/lightgallery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
-    <script src="/js/$A_site.js"></script>
-    <script src="/js/$A.Query.js"></script>
+    <script src="/js/a_site.js"></script>
+    <script src="/js/a.Query.js"></script>
 
 </head>
 <body>

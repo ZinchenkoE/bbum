@@ -9,7 +9,7 @@ use app\models\SiteCategory;
 
 class SiteController extends Controller
 {
-    public $layout = 'admin';
+    public $layout = 'site';
 
     public function actionIndex()
     {
