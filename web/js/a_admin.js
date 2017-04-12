@@ -47,7 +47,8 @@ var a = {
         ".js-delTableRow:click"                 : function() { $(this).closest('tr').remove(); },
         '#search:input'                         : function() { a.search(this);  }, // Поиск в таблицах
         ".js-delCategory:click"                 : function() { a.delCategoryClick(this); },
-        ".categoryTablePage input:change"       : function() { a.categoryTableInputChange(this); }
+        ".categoryTablePage input:change"       : function() { a.categoryTableInputChange(this); },
+        ".js-delProduct:click"                  : function() { a.delProduct(this); },
     },
     updateView: function() {
         a.upgradeElements();
@@ -189,5 +190,13 @@ var a = {
         fd.append('category_title_uk', $(el).closest('tr').find('[name="category_title_uk"]').val());
         fd.append('parent_id', parentId);
         a.Query.put({url: '/admin/category/' + categoryId, data: fd});
+    },
+    delProduct: function(el){
+        var tr = $(el).closest('tr');
+        var productId = tr.attr('data-product-id');
+        a.ConfirmBox({
+            title: 'Вы дествительно хотите удалить этот товар?',
+            action: '/admin/product/' + productId
+        });
     }
 };

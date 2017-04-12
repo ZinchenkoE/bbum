@@ -37,7 +37,7 @@ use yii\helpers\Html;
                 <li><i class="icon icon-home"></i><span>Ваш сайт</span></li>
             </ul>
             <div class="textField inputBox search">
-                <input placeholder="Найти ..." id="search" type="text" value="" pattern="text" class="initialized">
+                <input placeholder="Найти ..." id="search" type="text" value="<?= Yii::$app->request->get('search') ?? '' ?>" pattern="text" class="initialized">
             </div>
         </header>
         <nav>

@@ -127,7 +127,8 @@ class Category extends Model
 
     protected function remove($key) 
     {
-        $r = $this->db->createCommand("UPDATE bs_category SET status = 0 WHERE category_id = {$key}")->execute();
+        $r = $this->db->createCommand(
+            "UPDATE bs_category SET status = " . self::STATUS_DELETED . " WHERE category_id = {$key}")->execute();
         if ($r) {
             $this->grest->setCode(302, 'Категория успешно удалена', '/admin/category');
         } else {

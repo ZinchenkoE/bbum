@@ -7,9 +7,15 @@ $price_to   = (int)Yii::$app->request->get('price_to');
 ?>
 <? if($data['show-gender-filter']): ?>
 <div class="row" style="margin-bottom: 50px;">
-    <input class="genderFilter" type="checkbox" id="for_unisex" <?= (bool)Yii::$app->request->get('for_unisex') ? 'checked' : '' ?>><label for="forUnisex"><?= $w['unisex']   ?></label>
-    <input class="genderFilter" type="checkbox" id="for_boy"    <?= (bool)Yii::$app->request->get('for_boy')    ? 'checked' : '' ?>><label for="forBoy"   ><?= $w['for-boy']  ?></label>
-    <input class="genderFilter" type="checkbox" id="for_girl"   <?= (bool)Yii::$app->request->get('for_girl')   ? 'checked' : '' ?>><label for="forGirl"  ><?= $w['for-girl'] ?></label>
+    <input class="genderFilter" type="checkbox" id="for_unisex"
+        <?= (bool)Yii::$app->request->get('for_unisex') ? 'checked' : '' ?>
+    ><label for="forUnisex"><?= $w['unisex']   ?></label>
+    <input class="genderFilter" type="checkbox" id="for_boy"
+        <?= (bool)Yii::$app->request->get('for_boy')    ? 'checked' : '' ?>
+    ><label for="forBoy"   ><?= $w['for-boy']  ?></label>
+    <input class="genderFilter" type="checkbox" id="for_girl"
+        <?= (bool)Yii::$app->request->get('for_girl')   ? 'checked' : '' ?>
+    ><label for="forGirl"  ><?= $w['for-girl'] ?></label>
 </div>
 <? endif; ?>
 

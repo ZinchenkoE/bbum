@@ -77,7 +77,7 @@
         a.ProductTablePage = {
             handlers: {
                 "input.js-changeStatusProduct:change" : function() { a.ProductTablePage.changeStatus(this); },
-                ".js-delProduct:click"                : function() {
+                ".js-delProduct:click" : function() {
                     var tr = $(this).closest('tr');
                     var productId = tr.attr('data-product-id');
                     a.ConfirmBox({
@@ -100,7 +100,7 @@
                 var productId = tr.attr('data-product-id');
                 var fd = new FormData();
                 var status = tr.find('input:checkbox').prop('checked');
-                fd.append('status', Number(status));
+                fd.append('status', status);
                 a.Query.put({url: '/admin/product/' + productId, data: fd});
             }
         };
