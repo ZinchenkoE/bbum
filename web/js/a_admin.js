@@ -3,10 +3,8 @@ var a = {
     init:function(){$(document).ready(a.ready);},
     regHandlers: function(hs,on){
         for(var h in hs){
-            if (hs.hasOwnProperty(h)) {
-                var k = h.split(":", 2); var _k0 = k[0].replace(new RegExp('--','g'), ':');
-                on ? $(document).on(k[1],_k0, hs[h]) : $(document).off(k[1],k[0], hs[h]);
-            }
+            var k = h.split(":", 2); var _k0 = k[0].replace(new RegExp('--','g'), ':');
+            on ? $(document).on(k[1],_k0, hs[h]) : $(document).off(k[1],k[0], hs[h]);
         }
     },
     ready:function(){
@@ -63,8 +61,8 @@ var a = {
         var messageBox =  $('<div class="messageBox ' + type + '"><i class="icon-cross js-closeMessageBox"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
         messageBox.appendTo('body');
         messageBox.addClass('show');
-        setTimeout(function() { messageBox.addClass('hide') }, 4000);
-        setTimeout(function() { messageBox.remove()         }, 4400);
+        setTimeout(function() { messageBox.addClass('hide') }, 3000);
+        setTimeout(function() { messageBox.remove()         }, 3400);
     },
     toggleSearchInput: function(){
         var search = $('.search.textField');

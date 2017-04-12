@@ -1,11 +1,11 @@
 <?php
 namespace app\models;
 
-use app\components\helpers\File;
-use app\components\traits\ModelTrait;
+use Yii;
 use yii\base\Model;
 use yii\data\Pagination;
-use Yii;
+use app\components\helpers\File;
+use app\components\traits\ModelTrait;
 
 
 class Product extends Model

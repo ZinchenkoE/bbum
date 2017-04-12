@@ -3,10 +3,10 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Controller;
 use app\models\Product;
 use app\models\Category;
 use app\models\User;
-use yii\web\Controller;
 
 class AdminController extends Controller
 {

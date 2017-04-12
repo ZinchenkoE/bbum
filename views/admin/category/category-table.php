@@ -1,5 +1,5 @@
 <?php ?>
-<div class="categoryTablePage" data-objs="CategoryTablePage">
+<div class="categoryTablePage" data-objs="CategoryTablePage" style="margin-bottom: 200px;">
     <h1 class="pageTitle">Категории</h1>
         <?php foreach($data['parent_categories'] ?? [] as $parent): ?>
             <table>

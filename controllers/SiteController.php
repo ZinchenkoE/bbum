@@ -3,12 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+use yii\web\Controller;
 use app\models\SiteProduct;
 use app\models\SiteCategory;
-use yii\web\Controller;
 
 class SiteController extends Controller
 {
+    public $layout = 'admin';
+
     public function actionIndex()
     {
         Yii::$app->grest->data['product_recommend'] = Yii::$app->db->createCommand("

@@ -1385,9 +1385,9 @@ table {
 .messageBox {
   border-left: 10px solid #000;
   width: 280px;
-  height: 170px;
+  height: 100px;
   position: fixed;
-  bottom: 20px;
+  top: 100px;
   right: 20px;
   background: #fff;
   padding: 20px;

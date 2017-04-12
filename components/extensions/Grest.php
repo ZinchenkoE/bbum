@@ -42,7 +42,7 @@ class Grest
                 Yii::$app->controller->redirect($url, $code);
             }
         }
-
+        return null;
     }
 
     public function render()

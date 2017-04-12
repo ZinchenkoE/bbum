@@ -23,7 +23,7 @@ a.Query = {
             if(rd.renders){
                 for(var key in rd.renders){
                     var $key = $(key);
-                    if(      rd.renders[key].type == "rp"){
+                    if(        rd.renders[key].type == "rp"){
                         $key.html(rd.renders[key].render);
                     } else if (rd.renders[key].type == "ap"){
                         $key.append(rd.renders[key].render);
@@ -35,7 +35,7 @@ a.Query = {
             }
             if(rd.meta){
                 for(var key2 in rd.meta){
-                    if(key == "title"){ $(key).html(rd.meta[key2]); }
+                    if(key2 == "title"){ $(key2).html(rd.meta[key2]); }
                     else{
                         var m = $("meta[name='" + key2 + "']");
                         if ( m.length ) m.attr("content", rd.meta[key2]);

@@ -1,7 +1,7 @@
 <?php
 namespace app\models;
 
-use yii;
+use Yii;
 use app\components\traits\ModelTrait;
 use yii\base\Model;
 use yii\data\Pagination;
@@ -88,13 +88,17 @@ class SiteCategory extends Model
     public static function getCategories()
     {
         return Yii::$app->db->createCommand("
-            SELECT * FROM bs_category c LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id ORDER BY category_title_ru")->queryAll();
+            SELECT * FROM bs_category c 
+            LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
+            ORDER BY category_title_ru"
+        )->queryAll();
     }
 
     public static function getCategoriesForMenu()
     {
         return Yii::$app->db->createCommand("
-            SELECT pc.*,  c.*, c.parent_id, c.category_id, COUNT(p.product_id) AS count_product  FROM bs_category c 
+            SELECT pc.*,  c.*, c.parent_id, c.category_id, COUNT(p.product_id) AS count_product  
+            FROM bs_category c 
             LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
             INNER JOIN bs_product p ON p.category = c.category_id  
             GROUP BY c.category_id
