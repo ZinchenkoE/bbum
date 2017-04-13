@@ -52,6 +52,10 @@ class Grest
         }
         if (Yii::$app->request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
+            if(Yii::$app->request->get('get-data-as') == 'json'){
+                Yii::$app->response->data = $this->data;
+                return Yii::$app->response;
+            }
             if ($this->render != 'empty' && Yii::$app->request->isGet){
                 Yii::$app->response->data['renders']['main']['render'] = Yii::$app->controller->renderPartial($this->render,['data'=>$this->data]);
                 Yii::$app->response->data['renders']['main']['type'] = RP;

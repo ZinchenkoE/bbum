@@ -1,5 +1,5 @@
 <div class="LoginPage">
-    <form class="formLogin" action="/admin/login" method="post">
+    <form action="/admin/login" method="post">
         <input type="hidden" name="_prm" value="login">
         <h1>Вход</h1>
         <div class="textField inputBox">

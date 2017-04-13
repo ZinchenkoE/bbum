@@ -24,12 +24,14 @@ a.Query = {
                 for(var key in rd.renders){
                     var $key = $(key);
                     if(        rd.renders[key].type == "rp"){
+                        $key.find('[objs]').each(function() { a.desV($(this).attr('objs')); });
                         $key.html(rd.renders[key].render);
                     } else if (rd.renders[key].type == "ap"){
                         $key.append(rd.renders[key].render);
                     } else if (rd.renders[key].type == "pp"){
                         $key.prepend(rd.renders[key].render);
                     }
+                    $key.find('[objs]').each(function() { a.regV($(this).attr('objs')); });
                 }
                 a.updateView();
             }
@@ -136,6 +138,11 @@ var Url = {
             }
         }
         return search;
+    },
+    addParam: function(key, value, url){
+        url = url || location.href;
+        url += (url.indexOf('?') == -1 ? '?' : '&') + (key + '=' + value);
+        return url;
     },
     getParam: function (getParam, fullSearch) {
         var search = fullSearch || this.search || location.search;

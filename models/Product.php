@@ -12,9 +12,9 @@ class Product extends Model
 {
     const PAGE_LIMIT = 50;
 
+    const STATUS_NOT_ACTIVE = 0;
     const STATUS_ACTIVE     = 1;
-    const STATUS_DELETED    = 0;
-    const STATUS_NOT_ACTIVE = 2;
+    const STATUS_DELETED    = 2;
 
     public $title_ru;
     public $title_uk;
@@ -44,7 +44,8 @@ class Product extends Model
                 'tooShort' => 'Длина не менее 3-х символов',
                 'tooLong' => 'Длина не более 50 символов',
             ],
-            [ ['title_ru', 'title_uk', 'description_ru'], 'required', 'message' => 'Поле не может быть пустым' ],
+            [ ['title_ru', 'title_uk', 'description_ru', 'description_uk', 'price'], 'required',
+                'message' => 'Поле не может быть пустым' ],
             [ 'removeImg', 'each', 'rule' => ['string'] ]
         ];
     }
@@ -54,12 +55,13 @@ class Product extends Model
      */
     protected function get($key)
     {
-        $this->grest->data['categories'] = Category::getCategories();
+        $this->grest->data['categories']        = Category::getCategories();
+        $this->grest->data['parent_categories'] = Category::getParentCategories();
         if ($key == 'new') {
             $this->grest->data['action'] = 'create';
             $this->grest->render         = 'product/action-product';
         } elseif ($key) {
-            $product = Product::getProduct($key);
+            $product = Product::getProductById($key);
             if (!$product) {
                 $this->grest->setCode(302, 'Продукт не найден', '/admin/product');
             } else {
@@ -159,7 +161,7 @@ class Product extends Model
         }
     }
 
-    public static function getProduct($id)
+    public static function getProductById($id)
     {
         return Yii::$app->db->createCommand("SELECT * FROM bs_product WHERE product_id = {$id}")->queryOne();
     }

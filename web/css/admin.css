@@ -1965,16 +1965,13 @@ table a {
   clear: both;
   visibility: hidden; }
 
-.leftCol, .rightCol {
-  width: 35%; }
-
 .leftCol {
   float: left;
   width: 50%; }
 
 .rightCol {
   float: right;
-  margin-right: 10%; }
+  width: 45%; }
 
 .formPage {
   padding: 65px 60px; }

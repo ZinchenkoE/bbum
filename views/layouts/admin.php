@@ -22,10 +22,9 @@ use yii\helpers\Html;
         <script src="/js/a.Query.js"></script>
         <script src="/js/a.InputFile.js"></script>
         <script src="/js/a.Validator.js"></script>
-        
-        <style>
 
-        </style>
+		<script src="/js/devTools.js"></script>
+        
     </head>
     <body>
         <?php if(!Yii::$app->user->isGuest): ?>

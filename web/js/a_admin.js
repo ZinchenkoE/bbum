@@ -7,7 +7,25 @@ var a = {
             on ? $(document).on(k[1],_k0, hs[h]) : $(document).off(k[1],k[0], hs[h]);
         }
     },
+    regV: function(v){
+        if(!v || !window[v]) return null;
+        console.log('Добавлена вьюха: ', v);
+        $(document).ready(window[v].ready);
+        a.vHandlers[v] = window[v].handlers;
+        delete window[v].handlers;
+        a.regHandlers(a.vHandlers[v],true);
+    },
+    desV: function(v){
+        if(!v) return null;
+        console.log('Удалена вьюха: ', v);
+        if(a.vHandlers[v]){
+            a.regHandlers(a.vHandlers[v], false);
+            delete a.vHandlers[v];
+        }
+        if(window[v]) delete window[v];
+    },
     ready:function(){
+        $('[objs]').each(function(){ a.regV($(this).attr('objs'));});
         window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
         a.regHandlers(a.handlers,true);
         a.updateView();
@@ -134,7 +152,7 @@ var a = {
             var selectBox = $(this).closest('.selectField');
             var dropdownBox = '';
             var selectedText = $(this).find('option:selected').text();
-            selectBox.find('select option').each(function() { dropdownBox += '<li>'+$(this).text()+'</li>'; });
+            selectBox.find('select option').each(function() { dropdownBox += '<li class="' + $(this).attr('class') + '">'+$(this).text()+'</li>'; });
             $('<div class="viewBox">' + selectedText +'</div><ul class="dropdownBox">' + dropdownBox + '</ul>').appendTo(selectBox);
             $(this).addClass('initialized');
         });

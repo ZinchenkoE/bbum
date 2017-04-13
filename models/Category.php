@@ -9,9 +9,9 @@ use app\components\traits\ModelTrait;
 class Category extends Model
 {
 
+    const STATUS_NOT_ACTIVE = 0;
     const STATUS_ACTIVE     = 1;
-    const STATUS_DELETED    = 0;
-    const STATUS_NOT_ACTIVE = 2;
+    const STATUS_DELETED    = 2;
 
     public $category_title_ru;
     public $category_title_uk;
@@ -49,9 +49,8 @@ class Category extends Model
 
     protected function get($key)
     {
-        $this->grest->data['categories'] = Category::getCategories();
-        $this->grest->data['parent_categories'] = $this->db->createCommand("SELECT * FROM bs_parent_category")->queryAll();
-
+        $this->grest->data['categories']        = Category::getCategories();
+        $this->grest->data['parent_categories'] = Category::getParentCategories();
         if ($key == 'new') {
             $this->grest->data['action']   = 'create';
             $this->grest->render           = 'category/action-category';
@@ -136,11 +135,16 @@ class Category extends Model
         }
     }
 
+    public static function getParentCategories()
+    {
+        return Yii::$app->db->createCommand("SELECT * FROM bs_parent_category")->queryAll();
+    }
+
     public static function getCategories()
     {
         return Yii::$app->db->createCommand("
             SELECT * FROM bs_category c 
             LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
-            WHERE c.status <> " . self::STATUS_DELETED. " ORDER BY category_title_ru")->queryAll();
+            WHERE c.status != " . self::STATUS_DELETED. " ORDER BY category_title_ru")->queryAll();
     }
 }
