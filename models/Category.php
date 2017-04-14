@@ -5,6 +5,7 @@ use Yii;
 use yii\base\Model;
 use app\components\helpers\File;
 use app\components\traits\ModelTrait;
+use app\components\helpers\Logginer;
 
 class Category extends Model
 {
@@ -57,7 +58,7 @@ class Category extends Model
         } elseif ($key) {
             $this->grest->data['action']   = 'put';
             $this->grest->data['category'] = $this->db->createCommand(
-                "SELECT * FROM bs_category WHERE category_id = {$key} AND status != " . self::STATUS_DELETED)->queryOne();
+                "SELECT * FROM bs_category WHERE category_id = {$key} AND category_status != " . self::STATUS_DELETED)->queryOne();
             $this->grest->render           = 'category/action-category';
         } else {
             $this->grest->render           = 'category/category-table';
@@ -127,7 +128,7 @@ class Category extends Model
     protected function remove($key) 
     {
         $r = $this->db->createCommand(
-            "UPDATE bs_category SET status = " . self::STATUS_DELETED . " WHERE category_id = {$key}")->execute();
+            "UPDATE bs_category SET category_status = " . self::STATUS_DELETED . " WHERE category_id = {$key}")->execute();
         if ($r) {
             $this->grest->setCode(302, 'Категория успешно удалена', '/admin/category');
         } else {
@@ -145,6 +146,18 @@ class Category extends Model
         return Yii::$app->db->createCommand("
             SELECT * FROM bs_category c 
             LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
-            WHERE c.status != " . self::STATUS_DELETED. " ORDER BY category_title_ru")->queryAll();
+            WHERE c.category_status != " . self::STATUS_DELETED. " ORDER BY category_title_ru")->queryAll();
+    }
+
+    protected function changeStatusPost(){
+        try{
+            $category_id =  Yii::$app->request->get('key');
+            $status =  Yii::$app->request->post('category_status');
+            $this->db->createCommand()->update('bs_category', ['category_status' => $status], 'category_id = '.$category_id)->execute();
+            $this->grest->setCode(200, 'Статус успешно обновлен');
+        }catch (\Exception $e){
+            $this->grest->setCode(400, 'Ошибка при изменении статуса');
+            Logginer::logException($e, 'Ошибка при изменении статуса категории');
+        }
     }
 }

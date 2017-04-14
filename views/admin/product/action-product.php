@@ -6,10 +6,10 @@ $new_product = [
 		'title_uk'       => '',
 		'description_ru' => '',
 		'description_uk' => '',
-		'status'         => 1,
+		'product_status' => 1,
 		'gender'         => 0,
 		'producer'       => 0,
-		'price'          => 0,
+		'price'          => '',
 		'category'       => 0
 ];
 $product    = $is_put ? $data['product'] : $new_product;
@@ -39,7 +39,7 @@ $product    = $is_put ? $data['product'] : $new_product;
 			<div class="switch withLabel">
 				<label>
 					<span class="title">Статус</span>
-					<input name="status" type="checkbox" <?= $product['status'] ? 'checked' : '' ?>>
+					<input name="product_status" type="checkbox" <?= $product['product_status'] ? 'checked' : '' ?>>
 					<span class="lever"></span>
 				</label>
 			</div>

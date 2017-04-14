@@ -23,7 +23,7 @@ class Product extends Model
     public $price;
     public $gender;
     public $category;
-    public $status;
+    public $product_status;
     public $producer;
     public $removeImg;
 
@@ -35,7 +35,7 @@ class Product extends Model
             [
                 [
                     'title_ru', 'title_uk', 'description_ru', 'description_uk', 'price', 'gender',
-                    'category', 'status', 'producer'
+                    'category', 'product_status', 'producer'
                 ], 'filter',
                 'filter' => 'trim',
             ],
@@ -77,12 +77,13 @@ class Product extends Model
 			$offset = $page == 0 || $page == 1 ? '' : 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
             $search_part_query = $search ? " AND title_ru LIKE '%{$search}%' " : ' ';
 			$count    = $this->db->createCommand(
-			    "SELECT COUNT(*) FROM bs_product WHERE status != ".self::STATUS_DELETED. $search_part_query )->queryScalar();
+			    "SELECT COUNT(*) FROM bs_product WHERE product_status != ".self::STATUS_DELETED. $search_part_query )->queryScalar();
             $products = $this->db->createCommand("
-                SELECT * FROM bs_product p
+                SELECT *
+                FROM bs_product p
                 LEFT JOIN bs_category c ON p.category = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id  
-                WHERE p.status != ".self::STATUS_DELETED." {$search_part_query}  
+                WHERE p.product_status != ".self::STATUS_DELETED." {$search_part_query}  
                 ORDER BY p.product_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset} 
                 ")->queryAll();
 
@@ -121,7 +122,7 @@ class Product extends Model
                 'price'           => $this->price,
                 'gender'          => $this->gender,
                 'category'        => $this->category,
-                'status'          => $this->status,
+                'product_status'  => $this->product_status,
                 'producer'        => $this->producer,
             ])->execute();
         $this->grest->setCode(302, 'Новый продукт успешно добавлен', '/admin/product');
@@ -142,7 +143,7 @@ class Product extends Model
             'price'          => $this->price,
             'gender'         => $this->gender,
             'category'       => $this->category,
-            'status'         => $this->status,
+            'product_status' => $this->product_status,
             'producer'       => $this->producer
         ], 'product_id = '.$key )->execute();
         $this->grest->setCode(302, 'Данные успешно обновлены', '/admin/product');
@@ -151,9 +152,7 @@ class Product extends Model
     protected function remove($key)
     {
         $result = $this->db->createCommand(
-            "UPDATE bs_product     SET status = ".self::STATUS_DELETED." WHERE product_id = {$key}")->execute();
-        $this->db->createCommand(
-            "UPDATE bs_product_img SET status = ".self::STATUS_DELETED." WHERE product_id = {$key};")->execute();
+            "UPDATE bs_product SET product_status = ".self::STATUS_DELETED." WHERE product_id = {$key}")->execute();
         if ($result) {
             $this->grest->setCode(302, 'Продукт успешно удален', '/admin/product');
         } else {
@@ -172,4 +171,12 @@ class Product extends Model
         $this->db->createCommand()->update('bs_product', ['category' => $category], 'product_id = '.$key)->execute();
         $this->grest->setCode(200, 'Продукт успешно обновлен');
     }
+
+     protected function changeStatusPost(){
+        $product_id =  Yii::$app->request->get('key');
+        $status =  Yii::$app->request->post('product_status');
+        $this->db->createCommand()->update('bs_product', ['product_status' => $status], 'product_id = '.$product_id)->execute();
+        $this->grest->setCode(200, 'Статус успешно обновлен');
+    }
+
 }

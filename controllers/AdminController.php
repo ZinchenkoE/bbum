@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
+use app\components\helpers\Logginer;
 use app\models\Product;
 use app\models\Category;
 use app\models\User;
@@ -11,6 +12,16 @@ use app\models\User;
 class AdminController extends Controller
 {
     public $layout = 'admin';
+
+    public function beforeAction($action)
+    {
+        return parent::beforeAction($action);
+    }
+
+    public function afterAction($action, $result)
+    {
+        return parent::afterAction($action, $result);
+    }
 
     public function actionLogin()
     {

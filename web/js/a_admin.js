@@ -18,10 +18,7 @@ var a = {
     desV: function(v){
         if(!v) return null;
         console.log('Удалена вьюха: ', v);
-        if(a.vHandlers[v]){
-            a.regHandlers(a.vHandlers[v], false);
-            delete a.vHandlers[v];
-        }
+        if(a.vHandlers[v]){ a.regHandlers(a.vHandlers[v], false); delete a.vHandlers[v]; }
         if(window[v]) delete window[v];
     },
     ready:function(){
@@ -58,15 +55,8 @@ var a = {
         ".fileField:dragleave"                  : function(e){ e.preventDefault(); e.stopPropagation(); return false;},
         ".fileField:drop"                       : function(e){ e.preventDefault(); e.stopPropagation(); a.InputFile.change($(this).find('input')[0], e.originalEvent.dataTransfer.files);return false;},
         ".fileField .preview:click"             : function() { a.InputFile.delPreview(this) },
-        ".js-plusPrevInputBoxBtn:click"         : function() { a.plusPrevInputBoxBtn(this); },
-        ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
-        ".js-addBlock:click"                    : function() { if(!$('.js-overlay').length) $('<div class="js-overlay"></div>').appendTo('body'); $(this).prev().fadeIn(200); },
-        ".js-delRowParams:click"                : function() { $(this).closest('.row').remove();  },
-        ".js-delTableRow:click"                 : function() { $(this).closest('tr').remove(); },
         '#search:input'                         : function() { a.search(this);  }, // Поиск в таблицах
-        ".js-delCategory:click"                 : function() { a.delCategoryClick(this); },
-        ".categoryTablePage input:change"       : function() { a.categoryTableInputChange(this); },
-        ".js-delProduct:click"                  : function() { a.delProduct(this); },
+        ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
     },
     updateView: function() {
         a.upgradeElements();
@@ -77,7 +67,7 @@ var a = {
     MessageBox: function(msg) {
         var type = msg.split('::')[0];
         msg = msg.replace('S::', '').replace('N::', '').replace('E::', '');
-        var messageBox =  $('<div class="messageBox ' + type + '"><i class="icon-cross js-closeMessageBox"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
+        var messageBox =  $('<div class="messageBox js-closeMessageBox ' + type + '"><i class="icon-cross"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
         messageBox.appendTo('body');
         messageBox.addClass('show');
         setTimeout(function() { messageBox.addClass('hide') }, 3000);
@@ -85,7 +75,7 @@ var a = {
     },
     toggleSearchInput: function(){
         var search = $('.search.textField');
-        if($('.ProductTablePage').length) search.show();
+        if($('#ProductTablePage').length) search.show();
         else search.hide();
     },
     search: function(el) {
@@ -94,10 +84,7 @@ var a = {
             if(/^[\wA-Zа-яА-ЯёЁЇїІіЄє().,;\-\s:]+$/.test(searchStr)){
                 var url = Url.removeParam(['per-page', 'page']);
                 url     = Url.setParam({search: searchStr}, url);
-                a.Query.get({
-                    url: url,
-                    writeHistory: true, preloader: false
-                });
+                a.Query.get({url: url, writeHistory: true, preloader: false });
             }else{
                 a.messageBox('N::Недопустимые символы');
             }
@@ -189,32 +176,4 @@ var a = {
         $('ul.dropdownBox').not(thisSelect).slideUp(200).closest('.selectField').removeClass('active');
         thisSelect.slideToggle(200).closest('.selectField').toggleClass('active');
     },
-    plusPrevInputBoxBtn: function(el) {
-        var prevInputBox = $(el).parent().prev();
-        prevInputBox.clone().insertBefore($(el).parent());
-    },
-    delCategoryClick: function(el){
-        var categoryId = $(el).closest('tr').attr('category-id');
-        a.ConfirmBox({
-            title: 'Вы дествительно хотите удалить эту категорию?',
-            action: '/admin/category/' + categoryId
-        });
-    },
-    categoryTableInputChange: function(el){
-        var categoryId = $(el).closest('tr').attr('category-id');
-        var parentId = $(el).closest('tr').attr('parent-id');
-        var fd = new FormData();
-        fd.append('category_title_ru', $(el).closest('tr').find('[name="category_title_ru"]').val());
-        fd.append('category_title_uk', $(el).closest('tr').find('[name="category_title_uk"]').val());
-        fd.append('parent_id', parentId);
-        a.Query.put({url: '/admin/category/' + categoryId, data: fd});
-    },
-    delProduct: function(el){
-        var tr = $(el).closest('tr');
-        var productId = tr.attr('data-product-id');
-        a.ConfirmBox({
-            title: 'Вы дествительно хотите удалить этот товар?',
-            action: '/admin/product/' + productId
-        });
-    }
 };

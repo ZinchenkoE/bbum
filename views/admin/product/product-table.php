@@ -1,7 +1,7 @@
 <?php
-//echo '<pre>'; print_r($data['categories']);die;
+//echo '<pre>'; print_r($data['products'] );die;
 ?>
-<div class="ProductTablePage" data-objs="ProductTablePage">
+<div id="ProductTablePage" objs="ProductTablePage">
     <h1 class="pageTitle">Товары</h1>
     <table>
         <thead>
@@ -10,13 +10,13 @@
                 <th class="productName">НАЗВАНИЕ</th>
                 <th class="category">Пол</th>
                 <th class="category">КАТЕГОРИЯ</th>
-                <!-- <th class="status">СТАТУС</th> -->
+                <th class="status">СТАТУС</th>
                 <th class="btns">НАСТРОЙКИ</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach($data['products'] ?? [] as $product): ?>
-                <tr data-product-id="<?= $product['product_id'] ?>">
+                <tr product-id="<?= $product['product_id'] ?>">
                     <td><?= $product['product_id'] ?></td>
                     <td><?= $product['title_ru'] ?></td>
                     <td>
@@ -46,14 +46,16 @@
                             </div>
                         </td>
                     <? endif; ?>
-                    <!-- <td class="status">
+                    <td class="status">
                        <div class="switch">
                            <label>
-                               <input class="js-changeStatusProduct" type="checkbox" <//?= $product['status'] ? 'checked' : '' ?>>
+                               <input class="js-changeStatus" type="checkbox"
+								   <?= $product['product_status'] == \app\models\Product::STATUS_ACTIVE ? 'checked' : '' ?>
+							   >
                                <span class="lever"></span>
                            </label>
                        </div>
-                   </td> -->
+                    </td>
 					<td class="btns">
                         <a href="/admin/product/<?= $product['product_id'] ?>"><i class="icon icon-settings-black"></i></a>
                         <i class="icon icon-trash-black js-delProduct"></i>
@@ -74,35 +76,31 @@
     <?php endif; ?>
     <div class="plusBtn" href="/admin/product/new">+</div>
     <script>
-        a.ProductTablePage = {
+        ProductTablePage = {
             handlers: {
-                "input.js-changeStatusProduct:change" : function() { a.ProductTablePage.changeStatus(this); },
-                ".js-delProduct:click" : function() {
-                    var tr = $(this).closest('tr');
-                    var productId = tr.attr('data-product-id');
+                "#ProductTablePage .js-delProduct:click" : function() {
+                    var productId = $(this).closest('tr').attr('product-id');
                     a.ConfirmBox({
                         title: 'Вы дествительно хотите удалить этот товар?',
                         action: '/admin/product/' + productId
                     });
                 },
-                "[name='category']:change": function() {
-                    var tr = $(this).closest('tr');
-                    var productId = tr.attr('data-product-id');
+                "#ProductTablePage .js-changeStatus:change" : function() {
+                    var productId = $(this).closest('tr').attr('product-id');
+                    var fd = new FormData();
+                    var status = +$(this).prop('checked');
+                    fd.append('_prm', 'changeStatus');
+                    fd.append('product_status', status);
+                    a.Query.post({url: '/admin/product/' + productId, data: fd});
+				},
+                "#ProductTablePage [name='category']:change": function() {
+                    var productId = $(this).closest('tr').attr('product-id');
                     var fd = new FormData();
                     fd.append('_prm', 'setCategory');
                     fd.append('category', this.value);
                     a.Query.post({url: '/admin/product/' + productId, data: fd});
                 }
             },
-            ready: function() {},
-            changeStatus: function(el) {
-                var tr = $(el).closest('tr');
-                var productId = tr.attr('data-product-id');
-                var fd = new FormData();
-                var status = tr.find('input:checkbox').prop('checked');
-                fd.append('status', status);
-                a.Query.put({url: '/admin/product/' + productId, data: fd});
-            }
         };
     </script>
 </div>

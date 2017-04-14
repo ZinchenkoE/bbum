@@ -51,7 +51,8 @@ a.Query = {
             try {
                 if(x.responseText){
                     var res = JSON.parse(x.responseText);
-                    if(res.backData){ a.Validator.serverErrors(res.backData); }
+                    if(res.backData) a.Validator.serverErrors(res.backData);
+                    if(res.flash) a.MessageBox('E::' + res.flash);
                 }
             } catch (e) {
                 a.MessageBox('E::Ошибка сервера');
