@@ -83,7 +83,7 @@ class Product extends Model
                 LEFT JOIN bs_category c ON p.category = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id  
                 WHERE p.status != ".self::STATUS_DELETED." {$search_part_query}  
-                ORDER BY p.product_id  LIMIT " . self::PAGE_LIMIT. " {$offset} 
+                ORDER BY p.product_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset} 
                 ")->queryAll();
 
 			$this->grest->data['products'] = $products;

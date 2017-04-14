@@ -134,7 +134,7 @@ span.label{
 	}
 }
 .fileField{
-	width: 150px; height: 150px; border: 1px solid #ddd; position: relative;
+	width: 150px; height: 150px; border: 1px solid #ddd; position: relative; vertical-align: top;
 	input[type="file"]{display: none;}
 	.preview{
 		position: relative; height: 100%; padding: 5px 0; box-sizing: border-box; z-index: 2;

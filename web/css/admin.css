@@ -962,7 +962,8 @@ span.label {
   width: 150px;
   height: 150px;
   border: 1px solid #ddd;
-  position: relative; }
+  position: relative;
+  vertical-align: top; }
   .fileField input[type="file"] {
     display: none; }
   .fileField .preview {
