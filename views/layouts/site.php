@@ -33,6 +33,8 @@ $w   = Yii::$app->lng->getDictionary();
     <script src="/js/a_site.js"></script>
     <script src="/js/a.Query.js"></script>
 
+    <script src="/js/devTools.js"></script>
+
 </head>
 <body>
     <header>

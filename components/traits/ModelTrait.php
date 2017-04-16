@@ -28,7 +28,7 @@ trait ModelTrait
         return new static();
     }
 
-    public function run($key, $id)
+    public function run($key = null, $id = null)
     {
         if (!Yii::$app->request->isAjax && !Yii::$app->request->isGet){
             throw new BadRequestHttpException('Request type denided');

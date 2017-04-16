@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\components\helpers\Logginer;
+use app\components\helpers\Logger;
 use app\models\Product;
 use app\models\Category;
 use app\models\User;
@@ -21,6 +21,12 @@ class AdminController extends Controller
     public function afterAction($action, $result)
     {
         return parent::afterAction($action, $result);
+    }
+
+    public function actionLogJs()
+    {
+        if(!Yii::$app->request->isAjax) return $this->redirect('/login', 301);
+        Logger::logJs(Yii::$app->request->post('var'));
     }
 
     public function actionLogin()

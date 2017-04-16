@@ -4,8 +4,10 @@ $w   = Yii::$app->lng->getDictionary();
 
 $price_from = (int)Yii::$app->request->get('price_from');
 $price_to   = (int)Yii::$app->request->get('price_to');
+
+//echo '<pre>'; var_dump($data); die;
 ?>
-<? if($data['show-gender-filter']): ?>
+<? if($data['show_gender_filter']): ?>
 <div class="row" style="margin-bottom: 50px;">
     <input class="genderFilter" type="checkbox" id="for_unisex"
         <?= (bool)Yii::$app->request->get('for_unisex') ? 'checked' : '' ?>
@@ -22,10 +24,10 @@ $price_to   = (int)Yii::$app->request->get('price_to');
 <div class="row" style="margin-bottom: 50px;">
     <div id="priceRange"
          style="width: 500px; margin-bottom: 20px;"
-         data-min="<?= $data['min-price'] ?>"
-         data-max="<?= $data['max-price'] ?>"
+         data-min="<?= $data['min_price'] ?>"
+         data-max="<?= $data['max_price'] ?>"
          data-value-min="<?= $price_from ? $price_from : 0 ?>"
-         data-value-max="<?= $price_to   ? $price_to   : $data['max-price'] ?>"
+         data-value-max="<?= $price_to   ? $price_to   : $data['max_price'] ?>"
     ></div>
     <p>
         <label for="amount">Укажите размах цен:</label>

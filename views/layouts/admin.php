@@ -1,7 +1,6 @@
 <?php
 use yii\helpers\Html;
 /** @var $content */
-
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -33,7 +32,7 @@ use yii\helpers\Html;
                 <li><span class="count"></span><i class="icon icon-phone"></i></li>
                 <li><span class="count"></span><i class="icon icon-notification"></i></li>
                 <li><span class="count"></span><i class="icon icon-mail"></i></li>
-                <li><i class="icon icon-home"></i><span>Ваш сайт</span></li>
+                <li><a href="<?= Yii::$app->request->hostInfo ?>" target="_blank"><i class="icon icon-home"></i><span>Ваш сайт</span></a></li>
             </ul>
             <div class="textField inputBox search">
                 <input placeholder="Найти ..." id="search" type="text" value="<?= Yii::$app->request->get('search') ?? '' ?>" pattern="text" class="initialized">

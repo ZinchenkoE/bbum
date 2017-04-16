@@ -4,7 +4,7 @@ namespace app\components\helpers;
 
 use Yii;
 
-final class Logginer
+final class Logger
 {
     const FILE_NAME = "log.txt";
 

@@ -12,15 +12,10 @@
 .left{ float: left; }
 .right{ float: right; }
 
-
-
-#gg{
-	width: 100%; position: fixed; border-top: 1px solid #000;
-	height: 10000px; left: 0; z-index: 1000; top: 55vh;
-	//display: block;
-	display: none;
-	background: url('/css/gg.jpg') center  0.2vw / contain no-repeat;
-}
+.icon-msgBox-S{       background: url(/img/admin/msgBox-S.svg)       center center / contain no-repeat;}
+.icon-msgBox-N{  	  background: url(/img/admin/msgBox-N.svg)       center center / contain no-repeat;}
+.icon-msgBox-E{  	  background: url(/img/admin/msgBox-E.svg)       center center / contain no-repeat;}
+.icon-cross{          background: url(/img/admin/cross.svg)          center center / contain no-repeat;}
 
 ul.pagination{
 	margin: 50px 0 100px; text-align: center;

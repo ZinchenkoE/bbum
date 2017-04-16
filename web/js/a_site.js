@@ -27,7 +27,15 @@ var a = {
         a.initLightSlider();
         a.initRange();
     },
-    messageBox: function(type, msg) { console.log(type, msg); },
+    MessageBox: function(msg) {
+        var type = msg.split('::')[0];
+        msg = msg.replace('S::', '').replace('N::', '').replace('E::', '');
+        var messageBox =  $('<div class="messageBox js-closeMessageBox ' + type + '"><i class="icon-cross"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
+        messageBox.appendTo('body');
+        messageBox.addClass('show');
+        setTimeout(function() { messageBox.addClass('hide') }, 3000);
+        setTimeout(function() { messageBox.remove()         }, 3400);
+    },
     windowResize: function() {},
     windowScroll: function() {},
     initLightSlider: function() {
@@ -96,32 +104,27 @@ var a = {
         });
         $( "#amount" ).val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
         // a.priceRangeInit = true;
-    }
+    },
+    log: function(str) {
+        var ctrl = '';
+        if(     !location.pathname.search('/company') && location.pathname.search('/company-registration') ) ctrl = '/company';
+        else if(!location.pathname.search('/sudo'))    ctrl = '/sudo';
+        var browser = (function() {
+            var N= navigator.appName, ua= navigator.userAgent, tem;
+            var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+            if(M && (tem= ua.match(/version\/([.\d]+)/i))!= null) M[2]= tem[1];
+            M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+            return JSON.stringify(M)
+        })();
+        var hw = '; width: ' + $(window).width()  + ' - height: ' + $(window).height();
+        str += ' ; ' + location.href + "; browser: " + browser + hw;
+        var fd = new FormData();
+        fd.append('var', str);
+        a.Query.post({url: ctrl + '/log-js', data: fd, notBlock: true, preloader: false, success: function() {}, error: function() {}});
+    },
 };
 
-
-
-$(window).ready(function(){
-    localStorage.ggDisplay == 'block' ?  $('#gg').show() : $('#gg').hide();
-    if(localStorage.ggPos) $('#gg').css('background-position-y', localStorage.ggPos);
-    $('.sliderBox').width($('.sliderItem').length*33 + 'vw');
-    if($('.projectsPage').length){
-        $('.projectsPage .item p').each(function(){
-            $(this).attr('data-height', $(this).height()/$(window).width());
-            if($(this).height()/$(window).width() > 0.1){
-                $(this).addClass('hidePart');
-            }
-        });
-    }
-});
-$(document).on('keydown', function(e){
-    var gg = $('#gg');
-    var pos = parseInt($('#gg').css('background-position-y'));
-    if(e.which==219) { $('#gg').css('background-position-y', pos + 10 + 'px'); }
-    if(e.which==221) { $('#gg').css('background-position-y', pos - 10 + 'px'); }
-    if(e.which==222) {
-        if(localStorage.ggDisplay == 'none'){ gg.show(); localStorage.ggDisplay = 'block'; }
-        else{ gg.hide(); localStorage.ggDisplay = 'none'; }
-    }
-    localStorage.ggPos = gg.css('background-position-y');
-});
+window.onerror = function(msg, url, line) {
+    if(msg.toLowerCase().indexOf("script error") > -1) return false;
+    a.log( "window.onerror говорит ->  msg: " + msg + "; url: " + url + "; line: " + line );
+};

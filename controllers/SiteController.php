@@ -4,7 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\components\helpers\Logginer;
+use app\components\helpers\Logger;
+use app\models\SiteIndex;
 use app\models\SiteProduct;
 use app\models\SiteCategory;
 
@@ -12,16 +13,25 @@ class SiteController extends Controller
 {
     public $layout = 'site';
 
+    public function beforeAction($action)
+    {
+        return parent::beforeAction($action);
+    }
+
+    public function afterAction($action, $result)
+    {
+        return parent::afterAction($action, $result);
+    }
+
+    public function actionLogJs()
+    {
+        if(!Yii::$app->request->isAjax) return $this->redirect('/login', 301);
+        Logger::logJs(Yii::$app->request->post('var'));
+    }
+
     public function actionIndex()
     {
-        Yii::$app->grest->data['product_recommend'] = Yii::$app->db->createCommand("
-                SELECT p.*, c.*, MIN(p_i.src) AS img_src  FROM bs_product_recommend pr
-                LEFT JOIN bs_product p       ON pr.product_recommend_id = p.product_id
-                LEFT JOIN bs_category c      ON p.category = c.category_id
-                LEFT JOIN bs_product_img p_i ON p.product_id  = p_i.product_id 
-                GROUP BY  p.product_id
-                ")->queryAll();
-
+        SiteIndex::initModel()->run();
         return Yii::$app->grest->render();
     }
 

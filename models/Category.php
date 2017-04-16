@@ -5,7 +5,7 @@ use Yii;
 use yii\base\Model;
 use app\components\helpers\File;
 use app\components\traits\ModelTrait;
-use app\components\helpers\Logginer;
+use app\components\helpers\Logger;
 
 class Category extends Model
 {
@@ -157,7 +157,7 @@ class Category extends Model
             $this->grest->setCode(200, 'Статус успешно обновлен');
         }catch (\Exception $e){
             $this->grest->setCode(400, 'Ошибка при изменении статуса');
-            Logginer::logException($e, 'Ошибка при изменении статуса категории');
+            Logger::logException($e, 'Ошибка при изменении статуса категории');
         }
     }
 }

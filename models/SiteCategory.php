@@ -34,64 +34,56 @@ class SiteCategory extends Model
 
         $offset = $page == 0 || $page == 1 ? 0 :  ($page-1)*self::PAGE_LIMIT;
 //        $search_part_query = $search ? " WHERE title_ru LIKE '%$search%' " : ' ';
-        $this->grest->data['show-gender-filter'] = true;
+        $show_gender_filter = true;
         $where = 'WHERE 1';
-
-
 
         if ($id) { // Вывод товаров категории второго уровня
             $where = 'WHERE c.category_id = ' . (int)$id;
-            $this->grest->data['show-gender-filter'] = false;
+            $show_gender_filter = false;
         } elseif ($key) {  // Вывод товаров категории первого уровня
             $where = 'WHERE pc.parent_category_id = ' . (int)$key;
-            $this->grest->data['show-gender-filter'] = false;
+            $show_gender_filter = false;
         } elseif ($tag) {
             $where = "WHERE c.tag = '{$tag}'";
         } elseif ($categories) {
             $where = "WHERE p.category IN ({$categories})";
         }
 
-        $this->grest->data['min-price'] = $this->db->createCommand("
-                SELECT  MIN(p.price)  FROM bs_product p
+        $prices = $this->db->createCommand("
+                SELECT  
+                  MIN(p.price) AS min_price, 
+                  MAX(p.price) AS max_price
+                FROM bs_product p
                 LEFT JOIN bs_category c         ON p.category = c.category_id
-                LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryScalar();
-
-        $this->grest->data['max-price'] = $this->db->createCommand("
-                SELECT  MAX(p.price)  FROM bs_product p
-                LEFT JOIN bs_category c         ON p.category = c.category_id
-                LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryScalar();
-
+                LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryOne();
         $where .= $gender_filter.$price_filter;
 
         $count = $this->db->createCommand("
-                SELECT  COUNT(p.product_id)  FROM bs_product p
+                SELECT  COUNT(p.product_id)     FROM bs_product p
                 LEFT JOIN bs_category c         ON p.category = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryScalar();
 
-        $this->grest->data['products'] = $this->db->createCommand("
+        $products = $this->db->createCommand("
                 SELECT p.*, MIN(p_i.src) AS img_src, c.*  FROM bs_product p
                 LEFT JOIN bs_category c         ON p.category = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id
                 LEFT JOIN bs_product_img p_i    ON p.product_id  = p_i.product_id 
-                $where
+                $where AND p.product_status = ".Product::STATUS_ACTIVE."
                 GROUP BY  p.product_id
                 ORDER BY p.product_id  LIMIT :limit OFFSET :offset
                 ")->bindValues([
             ':limit'  => self::PAGE_LIMIT,
             ':offset' => $offset
         ])->queryAll();
-
         $pages = new Pagination([ 'totalCount' => $count, 'pageSize' => self::PAGE_LIMIT ]);
-        $this->grest->data['pages'] = $pages;
+        $this->grest->data = [
+            'pages'              => $pages,
+            'products'           => $products,
+            'min_price'          => $prices['min_price'],
+            'max_price'          => $prices['max_price'],
+            'show_gender_filter' => $show_gender_filter,
+        ];
         $this->grest->render = 'category';
-    }
-    public static function getCategories()
-    {
-        return Yii::$app->db->createCommand("
-            SELECT * FROM bs_category c 
-            LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
-            ORDER BY category_title_ru"
-        )->queryAll();
     }
 
     public static function getCategoriesForMenu()
@@ -101,6 +93,7 @@ class SiteCategory extends Model
             FROM bs_category c 
             LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
             INNER JOIN bs_product p ON p.category = c.category_id  
+            WHERE c.category_status = ".Category::STATUS_ACTIVE."
             GROUP BY c.category_id
             ORDER BY c.category_title_ru")->queryAll();
     }

@@ -48,6 +48,7 @@ a.Query = {
             this.afterSuccess(rd.backData);
         },
         error: function(x){
+            var t = this;
             try {
                 if(x.responseText){
                     var res = JSON.parse(x.responseText);
@@ -56,6 +57,7 @@ a.Query = {
                 }
             } catch (e) {
                 a.MessageBox('E::Ошибка сервера');
+                a.log( "Query error catch говорит -> : " + e + ';\n requestUrl:' + t.url);
                 console.log(e);
             }
         },
