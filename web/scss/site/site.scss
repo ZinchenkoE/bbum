@@ -7,6 +7,7 @@
 @import "./partials/modal";
 @import "./partials/category";
 @import "./partials/product";
+@import "./partials/cart";
 
 .row:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .left{ float: left; }

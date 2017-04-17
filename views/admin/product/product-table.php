@@ -1,7 +1,7 @@
 <?php
 //echo '<pre>'; print_r($data['products'] );die;
 ?>
-<div id="ProductTablePage" objs="ProductTablePage">
+<div id="ProductTablePage" data-objs="ProductTablePage">
     <h1 class="pageTitle">Товары</h1>
     <table>
         <thead>

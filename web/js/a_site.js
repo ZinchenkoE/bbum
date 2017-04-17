@@ -14,6 +14,20 @@ var a = {
         $(window).resize(a.windowResize);
         $(window).scroll(a.windowScroll);
     },
+    regV: function(v){
+        if(!v || !window[v]) return null;
+        console.log('Добавлена вьюха: ', v);
+        $(document).ready(window[v].ready);
+        a.vHandlers[v] = window[v].handlers;
+        delete window[v].handlers;
+        a.regHandlers(a.vHandlers[v],true);
+    },
+    desV: function(v){
+        if(!v) return null;
+        console.log('Удалена вьюха: ', v);
+        if(a.vHandlers[v]){ a.regHandlers(a.vHandlers[v], false); delete a.vHandlers[v]; }
+        if(window[v]) delete window[v];
+    },
     handlers : {
         "[href]:click"                : function(e){ a.Query.clickHref(e, this); }, // Переход по ссылкам
         "[type='submit']:click"       : function(e){ a.Query.clickSubmitBtn(e, this); }, // Отправка формы

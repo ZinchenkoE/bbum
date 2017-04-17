@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 /** @var $content */
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">

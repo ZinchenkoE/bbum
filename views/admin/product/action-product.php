@@ -17,7 +17,7 @@ $product    = $is_put ? $data['product'] : $new_product;
 <style>
     .fileField{ display: inline-block; }
 </style>
-<div class="formPage" objs="ActionProduct" id="ActionProduct">
+<div class="formPage" data-objs="ActionProduct" id="ActionProduct">
     <form action="/admin/product/<?= $is_put ? $product['product_id'] : 'new' ?>" method="<?= $data['action'] ?>">
         <h1 class="pageTitle"><?= $is_put ? 'Редактирование товара №'.$product['product_id'] : 'Добавление товара' ?></h1>
         <div class="leftCol">

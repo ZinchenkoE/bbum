@@ -22,7 +22,7 @@ var a = {
         if(window[v]) delete window[v];
     },
     ready:function(){
-        $('[objs]').each(function(){ a.regV($(this).attr('objs'));});
+        $('[data-objs]').each(function(){ a.regV($(this).attr('data-objs'));});
         window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
         a.regHandlers(a.handlers,true);
         a.updateView();
