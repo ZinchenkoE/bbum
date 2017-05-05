@@ -28,8 +28,12 @@ $w   = Yii::$app->lng->getDictionary();
     <script src="/js/lib/lightgallery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
     <script src="/js/a_site.js"></script>
-    <script src="/js/a.Query.js"></script>
 
+	<script>
+		a.params.lang = '<?= $lng ?>';
+	</script>
+
+	<script src="/js/a.Query.js"></script>
     <script src="/js/devTools.js"></script>
 
 </head>
@@ -46,6 +50,7 @@ $w   = Yii::$app->lng->getDictionary();
                     <p><img src="/img/site/envelope.svg"><span>sale@baby-bum.in.ua</span></p>
                 </div>
             </div>
+
         </div>
         <nav>
             <ul class="container">
@@ -70,7 +75,11 @@ $w   = Yii::$app->lng->getDictionary();
                 </li>
                 <li><a href="/<?= $lng ?>/info"><?= $w['payment-delivery'] ?></a></li>
                 <li><a href="/<?= $lng ?>/contacts"><?= $w['contacts'] ?></a></li>
+				<i class="material-icons" onclick="Cart.show()"
+				   style="vertical-align: middle; cursor: pointer; margin-left: 20px; color: #545454;"
+				>shopping_cart</i>
             </ul>
+
         </nav>
     </header>
     <main class="container"><?= $content ?></main>
