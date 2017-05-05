@@ -8,6 +8,7 @@
 @import "./partials/category";
 @import "./partials/product";
 @import "./partials/cart";
+@import "./partials/form_elements";
 
 .row:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .left{ float: left; }

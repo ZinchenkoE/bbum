@@ -6,7 +6,8 @@ a.category{
 	&:hover{
 		box-shadow: 0 4px 5px 2px rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
 	}
-	&.girl{   background: url(/img/site/girl.png) center center / cover no-repeat; }
+	&.girl{   background: url(/img/site/girl2.jpg) center 5% / cover no-repeat; }
+	background: url(https://ru.babyshop.com/images/354430/1-mayday.jpg) center 5%/cover no-repeat;
 	&.boy{    background: url(/img/site/boy.png) center center / cover no-repeat; }
 	h2{
 		position: absolute; bottom: 130px; left: 50px; color: #191919; text-transform: uppercase;
@@ -48,10 +49,6 @@ a.category{
 			opacity: 0; transition: all .3s;
 			height: 120px; width: 100%; bottom: 0; left: 0; position: absolute; background: rgba(255,255,255,.5);
 			text-align: center; box-sizing: border-box; padding-top: 40px;
-			button{
-				background: #000; color: #fff; text-transform: uppercase; width: 50%; line-height: 40px;
-				outline: none; border: none; cursor: pointer;
-			}
 		}
 
 

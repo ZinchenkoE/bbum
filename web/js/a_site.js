@@ -1,5 +1,5 @@
 var a = {
-    sT: undefined, iR: true, vHandlers: {}, $lastSubmitForm: undefined, canPagination: true, priceRangeInit: false,
+    sT: undefined, iR: true, vHandlers: {}, $lastSubmitForm: undefined, canPagination: true, priceRangeInit: false, params: {},
     init:function(){$(document).ready(a.ready);},
     regHandlers:function(hs,on){  for(var h in hs){
         if (hs.hasOwnProperty(h)) {
@@ -10,6 +10,7 @@ var a = {
     ready:function(){
         window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
         a.regHandlers(a.handlers,true);
+        $('[data-objs]').each(function(){ a.regV($(this).attr('data-objs'));});
         a.updateView();
         $(window).resize(a.windowResize);
         $(window).scroll(a.windowScroll);
@@ -36,6 +37,8 @@ var a = {
         ".sliderBtn.prev:click"       : function() { a.sliderBtnPrevClick(this); },
         "nav > ul > li:click"         : function(e){ a.dropdownMenuClick(e, this); },
         ".genderFilter:change"        : function() { a.addGenderFilter(this); },
+        "#overlay:click"              : function() { a.closeAllModal(); },
+        ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
     },
     updateView: function() {
         a.initLightSlider();
@@ -49,6 +52,9 @@ var a = {
         messageBox.addClass('show');
         setTimeout(function() { messageBox.addClass('hide') }, 3000);
         setTimeout(function() { messageBox.remove()         }, 3400);
+    },
+    closeAllModal: function() {
+        $('#overlay, #Cart').fadeOut(200);
     },
     windowResize: function() {},
     windowScroll: function() {},

@@ -38,7 +38,7 @@ $w   = Yii::$app->lng->getDictionary();
                 <a href="/<?= $lng ?>/product/<?= $product['product_id']?>" class="item <?= $product['product_id']%2==0  ? 'new' : '' ?>">
                     <div class="imgBox" style="background: url(/<?= $product['img_src'] ?>) center center / contain no-repeat;">
                         <div class="substrate">
-                            <button><?= $w['bay'] ?></button>
+                            <button class="blackBtn"><?= $w['bay'] ?></button>
                         </div>
                     </div>
                     <h4 class="title"><?= $product['title_'.$lng] ?></h4>
