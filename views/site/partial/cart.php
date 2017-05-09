@@ -17,7 +17,7 @@
 
             <div class="selectField inputBox">
                 <label class="title">Служба доставки</label>
-                <select id="delivery_id" class="searchSelect" >
+                <select id="delivery_id">
                     <option value="0" selected></option>
                     <option value="1">Новая почта</option>
                     <option value="2">ИнТайм</option>
@@ -134,7 +134,7 @@
                     });
                     var field = '<div class="selectField inputBox">'+
                                 '    <label class="title">Город</label>'+
-                                '    <select id="citySelect">' + h + '</select>'+
+                                '    <select id="citySelect" class="searchSelect">' + h + '</select>'+
                                 '</div>';
                     $(field).insertAfter($deliverySelect.parent());
                     a.upgradeElements();

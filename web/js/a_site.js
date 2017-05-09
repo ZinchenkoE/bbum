@@ -41,7 +41,10 @@ var a = {
         ".js-closeMessageBox:click"   : function() { $(this).closest('.messageBox').remove(); },
         ".selectField .viewBox:click" : function() { a.selectViewBoxClick(this); },
         ".selectField li:click"       : function() { a.selectLiClick(this); },
-        ".invalid select:change"      : function() { $(this).closest('.invalid').removeClass('invalid').find('p.error').remove(); }, // Убираем ошибку селекта при вводе
+        ".invalid select:change"      : function() { $(this).closest('.invalid').removeClass('invalid').find('p.error').remove(); },
+        ".searchSelectInput:click"    : function(e){ e.stopPropagation();},
+        ".searchSelectInput:input"    : function() { a.searchSelectInput($(this)); },
+        ".searchSelectIcon:click"     : function(e){ e.stopPropagation(); $(this).text('search').prev().val('').trigger('input');},
     },
     updateView: function() {
         a.initLightSlider();
@@ -55,7 +58,11 @@ var a = {
             var selectBox = $select.closest('.selectField');
             var dropdownBox = '';
             var selectedText = $select.find('option:selected').text();
-            if($select.hasClass('searchSelect')) dropdownBox += '<input class="searchSelectInput"><i class="material-icons">search</i>';
+            if($select.hasClass('searchSelect'))
+                dropdownBox += '<li class="forSearchSelectInput">' +
+                                    '<input class="searchSelectInput">' +
+                                    '<i class="material-icons searchSelectIcon">search</i>' +
+                               '</li>';
             selectBox.find('select option').each(function() {
                 var $option = $(this);
                 dropdownBox += '<li class="' + ($option.attr('class') || '') + '">' + $option.text() + '</li>';
@@ -68,7 +75,11 @@ var a = {
     MessageBox: function(msg) {
         var type = msg.split('::')[0];
         msg = msg.replace('S::', '').replace('N::', '').replace('E::', '');
-        var messageBox =  $('<div class="messageBox js-closeMessageBox ' + type + '"><i class="icon-cross"></i><i class="icon icon-msgBox-' + type + '"></i><p>' + msg.slice(0, 100) + '</p></div>');
+        var messageBox =  $('<div class="messageBox js-closeMessageBox ' + type + '">' +
+                                '<i class="icon-cross"></i>' +
+                                '<i class="icon icon-msgBox-' + type + '"></i>' +
+                                '<p>' + msg.slice(0, 100) + '</p>' +
+                            '</div>');
         messageBox.appendTo('body');
         messageBox.addClass('show');
         setTimeout(function() { messageBox.addClass('hide') }, 3000);
@@ -178,6 +189,17 @@ var a = {
         $('ul.dropdownBox').not(thisSelect).slideUp(200).closest('.selectField').removeClass('active');
         thisSelect.slideToggle(200).closest('.selectField').toggleClass('active');
     },
+    searchSelectInput: function($input){
+        var searchStr = $input.val().toLowerCase();
+        var selWrap = $input.closest('.inputBox');
+        if(searchStr) $input.next().text('close');
+        else $input.next().text('search');
+        selWrap.find('li:not(:first)').each(function() {
+            var $t = $(this);
+            if( $t.text().toLowerCase().indexOf(searchStr) === -1 ) $t.hide();
+            else $t.show();
+        });
+    }
 };
 
 window.onerror = function(msg, url, line) {

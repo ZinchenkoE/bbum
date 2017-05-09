@@ -39,8 +39,13 @@ button{
 		border: 1px solid #dbdbdb; border-top: none; box-sizing: border-box; z-index: 20;
 		max-height: 500px; overflow: auto;
 		li{
-			line-height: 20px; padding: 0 15px; cursor: pointer; user-select: none;
+			line-height: 30px; padding: 0 15px; cursor: pointer; user-select: none;
 			&:hover{ background-color: #e7e7e7; }
+			&.forSearchSelectInput{
+				padding: 0;
+				input.searchSelectInput{ margin: 0; }
+				input.searchSelectInput + i{ position: absolute; top: 7px; right: 9px; font-size: 23px; z-index: 100; }
+			}
 		}
 	}
 	&.active{
@@ -49,7 +54,5 @@ button{
 			&:after{transform: rotate(180deg)}
 		}
 	}
-	&.searchSelect{
-		input.searchSelectInput + i{ display: none; position: absolute;top: 7px;right: 9px;font-size: 30px;z-index: 10000;}
-	}
+
 }
