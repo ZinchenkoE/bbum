@@ -18,7 +18,6 @@ a.Validator = {
         text: 'Введены недопустимые символы',
         login: 'Недопустимый Логин, только бувквы цыфры _.',
         checkboxField: 'Необходимо отметить',
-        subdomain: 'Недопустимый формат доменa',
         date: 'Неверный формат даты. dd-mm-yyyy',
         ip: 'Неверный формат ip',
         integer: 'Только целые числа',
@@ -49,7 +48,7 @@ a.Validator = {
     },
     inputOnlyPattern: function(e, el) {
         var inputBox = $(el).closest('.inputBox');
-        var pattern = $(el).attr('only-pattern');
+        var pattern = $(el).attr('data-only-pattern');
         var val = $(el).val() + String.fromCharCode(e.charCode);
         var test = a.Validator.patterns[pattern].test(val);
         if (!test) {
@@ -77,7 +76,7 @@ a.Validator = {
         fields.focusout();
         $(fields).each(function () {
             var elType = $(this).attr('type');
-            if($(this).attr('name') == undefined) return; // Отсекаем поля без нейма
+            if(!$(this).attr('name')) return; // Отсекаем поля без нейма
 
             if( elType === "checkbox" ) {
                 fd.append(this.name, (this.checked)? 1 : 0);

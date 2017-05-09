@@ -13,8 +13,6 @@
             <div class="textField inputBox">
                 <input type="text" id="customer_name" placeholder="Телефон" data-mask="+38 (099) 999 99 99">
             </div>
-
-
             <div class="selectField inputBox">
                 <label class="title">Служба доставки</label>
                 <select id="delivery_id">
@@ -26,12 +24,6 @@
                 </select>
             </div>
 
-            <div class="selectField inputBox">
-                <label class="title">Отделение</label>
-                <select id="stockSelect"></select>
-            </div>
-
-
         </div>
         <div class="btnGroup">
             <button class="grayBtn">продолжить покупки</button>
@@ -41,20 +33,14 @@
     <script>
         var Cart = {
             order: [
-//				{
-//                    product_id
-//                    title_ru
-//                    title_uk
-//                    image
-//                    price
-//                    quantity
-//				}
+//				{ product_id, title_ru, title_uk, image, price, quantity}
 			],
             handlers: {
                 "#Cart .cartAmount .plus:click" : function() { Cart.changeQuantity(this, true);  },
                 "#Cart .cartAmount .minus:click": function() { Cart.changeQuantity(this, false); },
                 "#Cart .sendOrder:click"        : function() { Cart.sendOrder(); },
                 "#Cart #delivery_id:change"     : function() { Cart.renderCitySelect($(this)); },
+                "#Cart #citySelect:change"      : function() { Cart.renderStockSelect($(this)); },
             },
             ready: function(){
                 if(localStorage.order) Cart.order = JSON.parse(localStorage.order);
@@ -142,9 +128,43 @@
                 }).fail(function () {
                     console.error('__error__');
                 });
+            },
+            renderStockSelect: function($citySelect){
+                $('#stock').parent().remove();
+                if($('#delivery_id').val() == 1 ){
+                    var params = {
+                        "modelName": "AddressGeneral",
+                        "calledMethod": "getWarehouses",
+                        "methodProperties": {
+                            "CityRef": $('#citySelect').val()  // "db5c88e0-391c-11dd-90d9-001a92567626"
+                        },
+                        "apiKey": "fe6e03d4eecde92caf8c527979c861bf"
+                    };
+                    $.ajax({
+                        url: 'https://api.novaposhta.ua/v2.0/json/?' + $.param(params),
+                        type: 'POST',
+                        dataType: 'jsonp',
+                    }).done(function (res) {
+                        var h = '<option value="" selected></option>';
+                        res.data.forEach(function(item) {
+                            h += '<option value="' + item.Ref + '">' + item.DescriptionRu + '</option>';
+                        });
+                        var field = '<div class="selectField inputBox">'+
+                                    '    <label class="title">Отделение</label>'+
+                                    '    <select id="stock" class="searchSelect">' + h + '</select>'+
+                                    '</div>';
+                        $(field).insertAfter($citySelect.parent());
+                        a.upgradeElements();
+                    }).fail(function () {
+                        console.error('__error__');
+                    });
+                }else{
+                    $('<div class="textField inputBox">'+
+                      '   <input id="stock" placeholder="Номер склада" data-only-pattern="integer" required>'+
+                      '</div>').insertAfter($citySelect.parent());
+                }
+            },
 
-
-            }
         };
     </script>
 </div>

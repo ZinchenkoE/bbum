@@ -32,7 +32,10 @@ var a = {
     handlers : {
         "[href]:click"                : function(e){ a.Query.clickHref(e, this); }, // Переход по ссылкам
         "[type='submit']:click"       : function(e){ a.Query.clickSubmitBtn(e, this); }, // Отправка формы
-        "body:click"                  : function(e){  },
+        "body:click"                  : function(e){ a.clickBody(e); },
+        "[required]:focusout"         : function() { a.Validator.checkRequiredVal(this); },
+        "[pattern]:focusout"          : function() { a.Validator.checkFieldToPattern(this); },
+        "[data-only-pattern]:keypress": function(e){ a.Validator.inputOnlyPattern(e, this); },
         ".sliderBtn.next:click"       : function() { a.sliderBtnNextClick(this); },
         ".sliderBtn.prev:click"       : function() { a.sliderBtnPrevClick(this); },
         "nav > ul > li:click"         : function(e){ a.dropdownMenuClick(e, this); },
@@ -88,6 +91,9 @@ var a = {
     closeAllModal: function() {
         $('#overlay, #Cart').fadeOut(200);
     },
+    clickBody: function(e) {
+        if(!$(e.target).closest('.selectField').length) $('ul.dropdownBox').slideUp(200).closest('.selectField').removeClass('active');
+    },
     windowResize: function() {},
     windowScroll: function() {},
     initLightSlider: function() {
@@ -138,14 +144,13 @@ var a = {
     initRange: function() {
         var priceRange = $("#priceRange");
         // if(a.priceRangeInit) return;
-        // console.log(77);
         priceRange.slider({
             range: true,
             min: +priceRange.attr('data-min'),
             max: +priceRange.attr('data-max'),
             values: [ +priceRange.attr('data-value-min'), +priceRange.attr('data-value-max') ],
             slide: function( event, ui ) {
-                $( "#amount" ).val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
+                $("#amount").val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
             },
             stop: function(event, ui) {
                 a.Query.get({url: Url.setParam({
@@ -154,7 +159,7 @@ var a = {
                 }), writeHistory: true });
             }
         });
-        $( "#amount" ).val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
+        $("#amount").val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
         // a.priceRangeInit = true;
     },
     log: function(str) {
@@ -177,7 +182,7 @@ var a = {
     selectLiClick: function(li) {
         var selectBox = $(li).closest('.selectField');
         var select = selectBox.find('select');
-        var clickIndex = $(li).index();
+        var clickIndex = select.hasClass('searchSelect') ? $(li).index()-1 : $(li).index();
         var targetValue = select.find('option').eq(clickIndex).attr('value');
         selectBox.find('ul.dropdownBox').slideToggle(200).closest('.selectField').toggleClass('active');
         selectBox.find('.viewBox').text($(li).text());

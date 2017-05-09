@@ -28,12 +28,13 @@ $w   = Yii::$app->lng->getDictionary();
     <script src="/js/lib/maskedInput.js"></script>
     <script src="/js/lib/lightgallery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
-    <script src="/js/a_site.js"></script>
 
+    <script src="/js/a_site.js"></script>
 	<script>
 		a.params.lang = '<?= $lng ?>';
 	</script>
 
+    <script src="/js/a.Validator.js"></script>
 	<script src="/js/a.Query.js"></script>
     <script src="/js/devTools.js"></script>
 
