@@ -695,6 +695,105 @@ button {
   background: #777;
   color: #fff; }
 
+.inputBox label.title {
+  margin-bottom: 5px;
+  color: #a1a1a1;
+  font-family: sans-serif;
+  font-size: 12px;
+  display: block; }
+
+.inputBox input, .inputBox textarea, .inputBox .viewBox {
+  display: block;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+  resize: none;
+  font-family: sans-serif;
+  font-size: 12px;
+  border: 1px solid #dbdbdb;
+  border-radius: 2px;
+  height: 36px;
+  color: #141e29;
+  margin-bottom: 18px; }
+
+.inputBox input {
+  line-height: 36px;
+  padding: 0 15px; }
+
+.inputBox textarea {
+  height: 100px;
+  padding: 15px; }
+
+.inputBox p.error {
+  color: #e68a8a;
+  font-family: sans-serif;
+  font-size: 12px;
+  line-height: 1.5; }
+
+.inputBox.invalid input, .inputBox.invalid textarea, .inputBox.invalid .viewBox {
+  margin-bottom: 0; }
+
+.selectField {
+  position: relative;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #141e29; }
+  .selectField select {
+    display: none; }
+  .selectField .viewBox {
+    position: relative;
+    background-color: #fff;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    line-height: 36px;
+    padding: 0 15px; }
+    .selectField .viewBox:after {
+      content: '';
+      display: block;
+      position: absolute;
+      right: 10px;
+      top: 0;
+      background: url(/img/admin/arrow-select.svg) center center/contain no-repeat;
+      width: 10px;
+      height: 36px;
+      transition: all .2s; }
+  .selectField ul.dropdownBox {
+    position: absolute;
+    top: 100%;
+    display: none;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #dbdbdb;
+    border-top: none;
+    box-sizing: border-box;
+    z-index: 20;
+    max-height: 500px;
+    overflow: auto; }
+    .selectField ul.dropdownBox li {
+      line-height: 20px;
+      padding: 0 15px;
+      cursor: pointer;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none; }
+      .selectField ul.dropdownBox li:hover {
+        background-color: #e7e7e7; }
+  .selectField.active .viewBox {
+    border-bottom: none; }
+    .selectField.active .viewBox:after {
+      -ms-transform: rotate(180deg);
+          transform: rotate(180deg); }
+  .selectField.searchSelect input.searchSelectInput + i {
+    display: none;
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    font-size: 30px;
+    z-index: 10000; }
+
 .row:after {
   content: ".";
   display: block;

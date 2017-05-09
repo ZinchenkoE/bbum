@@ -34,7 +34,7 @@ var a = {
         "[href]:click"                          : function(e){ a.Query.clickHref(e, this);},
         "[type='submit']:click"                 : function(e){ a.Query.clickSubmitBtn(e, this);},
         "body:click"                            : function(e){ a.clickBody(e); },
-        "body:keyup"                            : function(e){ if(e.charCode == 27) a.closeModal(); },
+        "body:keyup"                            : function(e){ if(e.charCode === 27) a.closeModal(); },
         ".js-logout:click"                      : function() { var fd = new FormData(); fd.append('_prm', 'logout'); a.Query.post({url: '/admin/logout', data: fd})},
         "nav:mouseleave"                        : function() { $('nav ul ul').slideUp(200); $('.js-userMenu').hide();},
         "nav .js-showSubMenu:click"             : function() { $(this).next().slideToggle(200); },
@@ -86,7 +86,7 @@ var a = {
                 url     = Url.setParam({search: searchStr}, url);
                 a.Query.get({url: url, writeHistory: true, preloader: false });
             }else{
-                a.messageBox('N::Недопустимые символы');
+                a.MessageBox('N::Недопустимые символы');
             }
         } else {
             a.Query.get({url: Url.removeParam(['per-page', 'page', 'search']) || location.pathname, writeHistory: true});

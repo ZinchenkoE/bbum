@@ -1,4 +1,5 @@
 <?php
+/** @var $data array */
 $is_put = $data['action'] == 'put';
 $new_product = [
 		'product_id'     => '',
@@ -99,9 +100,8 @@ $product    = $is_put ? $data['product'] : $new_product;
 		var ActionProduct = {
 		    handlers: {
 		        "#parentCategory:change": function() {
-                    console.log(44);
                    $('#childCategory li').hide();
-                   $('#childCategory .parentCategory_'+this.value).show();
+                   $('#childCategory .parentCategory_' + this.value).show();
                     console.log('#childCategory .parentCategory_'+this.value);
 				},
 			}

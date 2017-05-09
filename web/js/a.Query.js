@@ -23,12 +23,12 @@ a.Query = {
             if(rd.renders){
                 for(var key in rd.renders){
                     var $key = $(key);
-                    if(        rd.renders[key].type == "rp"){
+                    if(        rd.renders[key].type === "rp"){
                         $key.find('[data-objs]').each(function() { a.desV($(this).attr('data-objs')); });
                         $key.html(rd.renders[key].render);
-                    } else if (rd.renders[key].type == "ap"){
+                    } else if (rd.renders[key].type === "ap"){
                         $key.append(rd.renders[key].render);
-                    } else if (rd.renders[key].type == "pp"){
+                    } else if (rd.renders[key].type === "pp"){
                         $key.prepend(rd.renders[key].render);
                     }
                     $key.find('[data-objs]').each(function() { a.regV($(this).attr('data-objs')); });
@@ -37,7 +37,7 @@ a.Query = {
             }
             if(rd.meta){
                 for(var key2 in rd.meta){
-                    if(key2 == "title"){ $(key2).html(rd.meta[key2]); }
+                    if(key2 === "title"){ $(key2).html(rd.meta[key2]); }
                     else{
                         var m = $("meta[name='" + key2 + "']");
                         if ( m.length ) m.attr("content", rd.meta[key2]);
@@ -81,14 +81,16 @@ a.Query = {
         }
     },
     get : function (p) { $.ajax(p) },
-    post : function (p) {
+    post : function (p, _rm) {
         p.type = 'POST';
+        if(!(p.data instanceof FormData)) p.data = new FormData;
+        if(_rm) p.data.append('_rm', _rm);
         p.data.append('_csrf', $('meta[name="csrf-token"]').attr("content"));
         $.ajax(p);
     },
-    create : function(p){ p.data.append('_rm',"create"); this.post(p); },
-    put    : function(p){ p.data.append('_rm',"put");    this.post(p); },
-    remove : function(p){ p.data.append('_rm',"remove"); this.post(p); },
+    create : function(p){ this.post(p, 'create'); },
+    put    : function(p){ this.post(p, 'put'); },
+    remove : function(p){ this.post(p, 'remove'); },
     init   : function() { $.ajaxSetup(this.defaultParam); },
 
     clickSubmitBtn : function(e, submitBtn) {
@@ -113,9 +115,9 @@ a.Query = {
     clickHref : function(e, link) {
         var $link = $(link);
         var url = $link.attr('href');
-        if( url.slice(0, 4) != 'http'){
+        if( url.slice(0, 4) !== 'http'){
             e.preventDefault();
-            if(url[0] !="#"){
+            if(url[0] !== "#"){
                 a.Query.get({url: url, writeHistory: true});
                 // console.log('Get запрос на ', url);
                 if(!$link.is('[data-not-scroll]')) $('html, body').animate({scrollTop: 0},300);
@@ -144,13 +146,13 @@ var Url = {
     },
     addParam: function(key, value, url){
         url = url || location.href;
-        url += (url.indexOf('?') == -1 ? '?' : '&') + (key + '=' + value);
+        url += (url.indexOf('?') === -1 ? '?' : '&') + (key + '=' + value);
         return url;
     },
     getParam: function (getParam, fullSearch) {
         var search = fullSearch || this.search || location.search;
         var regExp = new RegExp( getParam + '=.*?(?=(&|$))', 'i' );
-        var value = false;
+        var value = null;
         if (search.match(regExp)) {
             value = search.match(regExp)[0].split('=')[1];
         }

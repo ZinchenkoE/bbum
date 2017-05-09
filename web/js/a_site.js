@@ -38,11 +38,32 @@ var a = {
         "nav > ul > li:click"         : function(e){ a.dropdownMenuClick(e, this); },
         ".genderFilter:change"        : function() { a.addGenderFilter(this); },
         "#overlay:click"              : function() { a.closeAllModal(); },
-        ".js-closeMessageBox:click"             : function() { $(this).closest('.messageBox').remove(); },
+        ".js-closeMessageBox:click"   : function() { $(this).closest('.messageBox').remove(); },
+        ".selectField .viewBox:click" : function() { a.selectViewBoxClick(this); },
+        ".selectField li:click"       : function() { a.selectLiClick(this); },
+        ".invalid select:change"      : function() { $(this).closest('.invalid').removeClass('invalid').find('p.error').remove(); }, // Убираем ошибку селекта при вводе
     },
     updateView: function() {
         a.initLightSlider();
         a.initRange();
+        a.upgradeElements();
+    },
+    upgradeElements : function() {
+        $('form').each(function(i, el){ $(el).attr({autocomplete: 'off', novalidate: 'novalidate'} ); }); // Запрет автодополнения полей
+        $('select:not(.initialized)').each(function() {
+            var $select = $(this);
+            var selectBox = $select.closest('.selectField');
+            var dropdownBox = '';
+            var selectedText = $select.find('option:selected').text();
+            if($select.hasClass('searchSelect')) dropdownBox += '<input class="searchSelectInput"><i class="material-icons">search</i>';
+            selectBox.find('select option').each(function() {
+                var $option = $(this);
+                dropdownBox += '<li class="' + ($option.attr('class') || '') + '">' + $option.text() + '</li>';
+            });
+            $('<div class="viewBox">' + selectedText +'</div><ul class="dropdownBox">' + dropdownBox + '</ul>').appendTo(selectBox);
+            $(this).addClass('initialized');
+        });
+        $('[data-mask]').each(function(){ $(this).mask($(this).attr('data-mask')); });
     },
     MessageBox: function(msg) {
         var type = msg.split('::')[0];
@@ -141,6 +162,21 @@ var a = {
         var fd = new FormData();
         fd.append('var', str);
         a.Query.post({url: ctrl + '/log-js', data: fd, notBlock: true, preloader: false, success: function() {}, error: function() {}});
+    },
+    selectLiClick: function(li) {
+        var selectBox = $(li).closest('.selectField');
+        var select = selectBox.find('select');
+        var clickIndex = $(li).index();
+        var targetValue = select.find('option').eq(clickIndex).attr('value');
+        selectBox.find('ul.dropdownBox').slideToggle(200).closest('.selectField').toggleClass('active');
+        selectBox.find('.viewBox').text($(li).text());
+        select.val(targetValue);
+        select.change();
+    },
+    selectViewBoxClick: function(viewBox) {
+        var thisSelect = $(viewBox).next();
+        $('ul.dropdownBox').not(thisSelect).slideUp(200).closest('.selectField').removeClass('active');
+        thisSelect.slideToggle(200).closest('.selectField').toggleClass('active');
     },
 };
 

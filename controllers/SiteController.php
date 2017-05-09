@@ -1,10 +1,10 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
 use app\components\helpers\Logger;
+use app\models\Order;
 use app\models\SiteIndex;
 use app\models\SiteProduct;
 use app\models\SiteCategory;
@@ -27,6 +27,7 @@ class SiteController extends Controller
     {
         if(!Yii::$app->request->isAjax) return $this->redirect('/login', 301);
         Logger::logJs(Yii::$app->request->post('var'));
+        return null;
     }
 
     public function actionIndex()
@@ -58,6 +59,13 @@ class SiteController extends Controller
         SiteProduct::initModel()->run($key, $id);
         return Yii::$app->grest->render();
     }
+
+    public function actionOrder($key = null, $id = null)
+    {
+        Order::initModel()->run($key, $id);
+        return Yii::$app->grest->render();
+    }
+
 
     public function actionError()
     {
