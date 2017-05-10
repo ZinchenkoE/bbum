@@ -35,6 +35,7 @@ $w   = Yii::$app->lng->getDictionary();
 	</script>
 
     <script src="/js/a.Validator.js"></script>
+    <script src="/js/a.Select.js"></script>
 	<script src="/js/a.Query.js"></script>
     <script src="/js/devTools.js"></script>
 

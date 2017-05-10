@@ -89,6 +89,7 @@
                 Cart.calcTotalPrice();
 			},
             getProductById: function(pId) {
+                pId = +pId;
                 for (var i=0; i < Cart.order.length; i++) {
                     if (Cart.order[i].product_id === pId) return Cart.order[i];
                 }

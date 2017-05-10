@@ -122,16 +122,19 @@ a.InputFile = {
         }
         $(el).remove(); a.InputFile.obj = {};
     },
-    buildField: function(el) {
-        var random = (Math.random() * 100000).toFixed(0);
-        if( $(el).attr('data-img-src') ){
-            $('<div class="preview"><img src="' + $(el).attr('data-img-src') + '?v=' + random + '"><i class="icon icon-trash js-delPreview"></i></div>').insertBefore($(el).parent());
-        }
-        if($(el).closest('.fileField').hasClass('file')){
-            $(el).attr('accept', a.InputFile.fileAccept);
-        } else {
-            $(el).attr('accept', 'image/jpeg, image/png');
-        }
-        $(el).addClass('initialized');
+    buildField: function() {
+        $('input:file:not(.initialized)').each(function(i, el){
+            var random = (Math.random() * 100000).toFixed(0);
+            if( $(el).attr('data-img-src') ){
+                $('<div class="preview"><img src="' + $(el).attr('data-img-src') + '?v=' + random + '"><i class="icon icon-trash js-delPreview"></i></div>').insertBefore($(el).parent());
+            }
+            if($(el).closest('.fileField').hasClass('file')){
+                $(el).attr('accept', a.InputFile.fileAccept);
+            } else {
+                $(el).attr('accept', 'image/jpeg, image/png');
+            }
+            $(el).addClass('initialized');
+        });
+
     }
 };

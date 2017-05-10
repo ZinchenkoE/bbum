@@ -3,7 +3,7 @@ a.Validator = {
         fullname: /^[а-яА-ЯёЁa-zA-Z\s-]{2,100}$/,
         email: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,
         login: /^[aA-zZ0-9аА-яЯ ]+$/,
-        text: /^[\wаА-яЯ ёЁЇїІіЄє,.\s\-+()"!№$%*;:?]+|^$/,
+        text: /^[\wа-яА-ЯёЁЇїІіЄє,\s\\\/.\-+()$*?;:—%"!№'@#&]{1,255}$/,
         ip: /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/,
         integer: /^[0-9]+$/,
         float: /^\d+(\.?|,?)\d*$/
@@ -104,7 +104,12 @@ a.Validator = {
                     a.Validator.addError(val[0], inputBox);
                 });
             }
-            a.$lastSubmitForm.find('.js-step').hide().first().show();
         }
+    },
+    initHandlers: function() {
+        $(document).on('focusout', '[required]',                function() { a.Validator.checkRequiredVal(this);    });
+        $(document).on('focusout', '[pattern]',                 function() { a.Validator.checkFieldToPattern(this); });
+        $(document).on('keypress', '[data-only-pattern]',       function(e){ a.Validator.inputOnlyPattern(e, this); });
+        $(document).on('focusout', '[name="confirm_password"]', function() { a.Validator.confirmPassword(this);     });
     }
 };

@@ -28,7 +28,7 @@ $w   = Yii::$app->lng->getDictionary();
     </a>
 </div>
 
-<div class="recommend">
+<div class="recommend" data-objs="RecommendBlock">
     <h3><?= $w['recommend'] ?></h3>
     <div class="slider" data-last-page="3" data-position="0">
         <div class="prev sliderBtn"></div>
@@ -49,6 +49,33 @@ $w   = Yii::$app->lng->getDictionary();
             <? endif; ?>
         </div>
         <div class="next sliderBtn"></div>
-    </div> 
+    </div>
+	<script>
+		var RecommendBlock = {
+		    handlers: {
+                ".sliderBtn.next:click": function() { RecommendBlock.sliderBtnNextClick(this); },
+                ".sliderBtn.prev:click": function() { RecommendBlock.sliderBtnPrevClick(this); },
+			},
+			ready: function() {},
+            sliderBtnNextClick: function(el) {
+                var slider     = $(el).closest('.slider');
+                var position   = +slider.attr('data-position');
+                var lastPage   = +slider.attr('data-last-page');
+                slider.attr('data-position', position + 1200);
+                $('.sliderInner').css('transform', 'translateX(-' + (position + 1200) + 'px)');
+                if( (position + 1200) >= lastPage * 1200) $(el).hide();
+                $('.sliderBtn.prev').show();
+            },
+            sliderBtnPrevClick: function(el) {
+                var slider     = $(el).closest('.slider');
+                var position   = +slider.attr('data-position');
+                slider.attr('data-position', position - 1200);
+                $('.sliderInner').css('transform', 'translateX(-' + (position - 1200) + 'px)');
+                if( (position - 1200) <= 0) $(el).hide();
+                $('.sliderBtn.next').show();
+            },
+
+		};
+	</script>
 </div>
 

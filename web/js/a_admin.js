@@ -25,6 +25,8 @@ var a = {
         $('[data-objs]').each(function(){ a.regV($(this).attr('data-objs'));});
         window.addEventListener("popstate", function(){ a.Query.get({url: location, writeHistory: false}); } );
         a.regHandlers(a.handlers,true);
+        a.Select.initHandlers();
+        a.Validator.initHandlers();
         a.updateView();
         $(window).resize(a.windowResize);
         $(window).scroll(a.windowScroll);
@@ -38,15 +40,8 @@ var a = {
         ".js-logout:click"                      : function() { var fd = new FormData(); fd.append('_prm', 'logout'); a.Query.post({url: '/admin/logout', data: fd})},
         "nav:mouseleave"                        : function() { $('nav ul ul').slideUp(200); $('.js-userMenu').hide();},
         "nav .js-showSubMenu:click"             : function() { $(this).next().slideToggle(200); },
-        "[required]:focusout"                   : function() { a.Validator.checkRequiredVal(this); },
-        "[pattern]:focusout"                    : function() { a.Validator.checkFieldToPattern(this); },
-        "[data-only-pattern]:keypress"          : function(e){ a.Validator.inputOnlyPattern(e, this); },
-        "[name='confirm_password']:focusout"    : function() { a.Validator.confirmPassword(this); },
         ".js-openUserMenuBtn:click"             : function() { $('.js-userMenu').show(); },
         ".js-userMenu .icon-cross:click"        : function() { $('.js-userMenu').hide(); },
-        ".selectField .viewBox:click"           : function() { a.selectViewBoxClick(this); },
-        ".selectField li:click"                 : function() { a.selectLiClick(this); },
-        ".invalid select:change"                : function() { $(this).closest('.invalid').removeClass('invalid').find('p.error').remove(); }, // Убираем ошибку селекта при вводе
         ".js-openDropmenu:click"                : function() { $(this).next().slideToggle(200); },
         ".js-closeModal:click"                  : function() { a.closeModal(this);},
         ".js-overlay, .js-closeConfirmBox:click": function() { a.closeModal(); },
@@ -63,6 +58,18 @@ var a = {
         a.InputFile.obj = {};
         a.closeModal();
         a.toggleSearchInput();
+    },
+    upgradeElements : function() {
+        a.Select.upgrade();
+        a.InputFile.buildField();
+        $('form').each(function(){ $(this).attr({autocomplete: 'off', novalidate: 'novalidate'} ); });
+        $('[placeholder]:not(.initialized)').each(function() {
+            if( !$(this).siblings('label').length ){
+                $('<label class="title">' + $(this).attr("placeholder") + '</label>').insertBefore(this);
+            }
+        });
+        $('[data-mask]').each(function(){ $(this).mask($(this).attr('data-mask')); });
+        a.ckeditorInit();
     },
     MessageBox: function(msg) {
         var type = msg.split('::')[0];
@@ -110,13 +117,13 @@ var a = {
     ModalBox: function(p) {
         if(!$('.js-overlay').length) $('<div class="js-overlay"></div>').appendTo('body');
         $('<div class="modalBox ' + p.classModal + '">'+
-          '     <div class="head">'+
-          '         <i class="icon icon-camera"></i>'+
-          '         <span class="title">' + p.title + '</span>'+
-          '         <div class="btns"><i class="icon icon-check js-ok ' + p.classOk + '"></i><i class="icon icon-cross js-closeModal"></i></div>'+
-          '     </div>'+
-          '     <div class="body">' + p.content + '</div>'+
-          ' </div>').appendTo('body');
+          '    <div class="head">'+
+          '        <i class="icon icon-camera"></i>'+
+          '        <span class="title">' + p.title + '</span>'+
+          '        <div class="btns"><i class="icon icon-check js-ok ' + p.classOk + '"></i><i class="icon icon-cross js-closeModal"></i></div>'+
+          '    </div>'+
+          '    <div class="body">' + p.content + '</div>'+
+          '</div>').appendTo('body');
     },
     closeModal: function(el) {
         if(el){
@@ -133,25 +140,6 @@ var a = {
     },
     windowResize: function() {},
     windowScroll: function() {},
-    upgradeElements : function() {
-        $('form').each(function(i, el){ $(el).attr({autocomplete: 'off', novalidate: 'novalidate'} ); }); // Запрет автодополнения полей
-        $('select:not(.initialized)').each(function() {
-            var selectBox = $(this).closest('.selectField');
-            var dropdownBox = '';
-            var selectedText = $(this).find('option:selected').text();
-            selectBox.find('select option').each(function() { dropdownBox += '<li class="' + $(this).attr('class') + '">'+$(this).text()+'</li>'; });
-            $('<div class="viewBox">' + selectedText +'</div><ul class="dropdownBox">' + dropdownBox + '</ul>').appendTo(selectBox);
-            $(this).addClass('initialized');
-        });
-        $('[placeholder]:not(.initialized)').each(function() {
-            if( !$(this).siblings('label').length ){
-                $('<label class="title">' + $(this).attr("placeholder") + '</label>').insertBefore(this);
-            }
-        });
-        $('input:file:not(.initialized)').each(function(){ a.InputFile.buildField(this); });
-        $('[data-mask]').each(function(){ $(this).mask($(this).attr('data-mask')); });
-        a.ckeditorInit();
-    },
     ckeditorInit: function() {
         $('.js-ckeditor:not(.ckeditorInit)').each(function(){
             var textarea = this;
@@ -160,20 +148,5 @@ var a = {
             CKEDITOR.instances[ textarea.id ].on('change', function() { $('textarea#' + textarea.id).val(this.getData()); });
             $(textarea).addClass('ckeditorInit');
         });
-    },
-    selectLiClick: function(li) {
-        var selectBox = $(li).closest('.selectField');
-        var select = selectBox.find('select');
-        var clickIndex = $(li).index();
-        var targetValue = select.find('option').eq(clickIndex).attr('value');
-        selectBox.find('ul.dropdownBox').slideToggle(200).closest('.selectField').toggleClass('active');
-        selectBox.find('.viewBox').text($(li).text());
-        select.val(targetValue);
-        select.change();
-    },
-    selectViewBoxClick: function(viewBox) {
-        var thisSelect = $(viewBox).next();
-        $('ul.dropdownBox').not(thisSelect).slideUp(200).closest('.selectField').removeClass('active');
-        thisSelect.slideToggle(200).closest('.selectField').toggleClass('active');
     },
 };
