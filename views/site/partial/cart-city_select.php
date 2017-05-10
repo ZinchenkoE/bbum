@@ -1,5 +1,5 @@
 <select id="Cart-citySelect" name="city" class="searchSelect">
-	<option value="" selected=""></option>
+	<option value=""></option>
 	<option value="8e1718f5-1972-11e5-add9-005056887b8d">Авангард</option>
 	<option value="d30a9675-7404-11e5-8d8d-005056887b8d">Авиаторское</option>
 	<option value="ebc0eda9-93ec-11e3-b441-0050568002cf">Агрономичное</option>
@@ -1000,7 +1000,7 @@
 	<option value="f7062330-4078-11de-b509-001d92f78698">Устиновка</option>
 	<option value="e221d62b-391c-11dd-90d9-001a92567626">Фастов</option>
 	<option value="e57694f2-14cb-11e5-add9-005056887b8d">Фонтанка</option>
-	<option value="db5c88e0-391c-11dd-90d9-001a92567626">Харьков</option>
+	<option value="db5c88e0-391c-11dd-90d9-001a92567626" selected>Харьков</option>
 	<option value="4bbebe91-310b-11e5-add9-005056887b8d">Хацки</option>
 	<option value="db5c88cc-391c-11dd-90d9-001a92567626">Херсон</option>
 	<option value="66e45fac-34cc-11e3-b441-0050568002cf">Хыров</option>

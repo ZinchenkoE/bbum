@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -34,6 +35,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+
         SiteIndex::initModel()->run();
         return Yii::$app->grest->render();
     }

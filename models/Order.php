@@ -15,12 +15,8 @@ class Order extends Model
     const STATUS_DONE       = 2;
 
     public $order_id;
-    public $products;
     public $total_price;
-    public $quantity;
     public $customer_id;
-    public $customer_name;
-    public $phone;
     public $status;
     public $delivery_id;
     public $city;
@@ -28,13 +24,21 @@ class Order extends Model
     public $create_time;
     public $update_time;
 
+    public $products;
+    public $quantity;
+
+    public $email;
+    public $phone;
+    public $customer_name;
+
+
     use ModelTrait;
 
     public function scenarios()
     {
         return [
             'create' => [
-                'products', 'quantity', 'customer_id', 'customer_name', 'phone', 'delivery_id', 'city', 'stock'
+                'products', 'quantity', 'customer_id', 'email', 'customer_name', 'phone', 'delivery_id', 'city', 'stock'
             ]
         ];
     }
@@ -80,10 +84,17 @@ class Order extends Model
 
         $transaction = $this->db->beginTransaction();
         try{
+            if(!User::findByEmail($this->email)){
+                $user = new User();
+                $user->email    = $this->email;
+                $user->username = $this->customer_name;
+                $user->phone    = $this->phone;
+                $user->save();
+            }
+            echo '<pre>'; var_dump($this->db->getLastInsertID()); die;
+
             $this->db->createCommand()->insert('bs_order', [
                 'customer_id'   => Yii::$app->user->identity->getId() ?? 0,
-                'customer_name' => $this->customer_name,
-                'phone'         => $this->phone,
                 'status'        => Order::STATUS_NEW,
                 'delivery_id'   => $this->delivery_id,
                 'city'          => $this->city,

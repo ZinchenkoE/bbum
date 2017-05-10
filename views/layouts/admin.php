@@ -10,7 +10,6 @@ use yii\helpers\Html;
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
 
-<!--        <link rel='stylesheet' href='https://apimgmtstorelinmtekiynqw.blob.core.windows.net/content/MediaLibrary/Widget/Map/styles/map.css'>-->
         <link rel="stylesheet" href="/css/jquery.Jcrop.min.css">
         <link rel="stylesheet" href="/css/admin.css">
 
@@ -23,7 +22,6 @@ use yii\helpers\Html;
         <script src="/js/a.InputFile.js"></script>
         <script src="/js/a.Validator.js"></script>
 		<script src="/js/a.Select.js"></script>
-
 		<script src="/js/devTools.js"></script>
     </head>
     <body>
@@ -66,6 +64,5 @@ use yii\helpers\Html;
             <span class="flashError" hidden="hidden"><?=Yii::$app->session->getFlash('error'); ?></span>
         <?php endif; ?>
         <script>a.init();</script>
-<!--        <script src='https://apimgmtstorelinmtekiynqw.blob.core.windows.net/content/MediaLibrary/Widget/Map/dist/map.min.js'></script>-->
     </body>
 </html>

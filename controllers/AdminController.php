@@ -16,6 +16,8 @@ class AdminController extends Controller
 
     public function beforeAction($action)
     {
+        if(Yii::$app->user->isGuest && Yii::$app->request->url !== '/login')
+            return $this->redirect('/login', 301);
         return parent::beforeAction($action);
     }
 
