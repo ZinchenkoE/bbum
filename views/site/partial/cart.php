@@ -1,5 +1,5 @@
 <div id="Cart" data-objs="Cart">
-    <div class="firstStep">
+    <form action="/order" method="create">
 		<h2>Корзина</h2>
         <ul class="products"></ul>
         <div class="totalOrderPriceBox">
@@ -7,29 +7,36 @@
 			<div class="totalOrderPrice"><span></span> грн.</div>
         </div>
         <div class="orderinfo">
+			<input type="hidden" id="Cart-customer_id" name="customer_id" value="0">
             <div class="textField inputBox">
-                <input type="text" id="customer_name" placeholder="Имя Фамилия получателя" pattern="text" required>
+                <input type="text" id="Cart-customer_name" name="customer_name" value="Зинченко Евгений"
+					   placeholder="Имя Фамилия" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input type="text" id="customer_name" placeholder="Телефон" data-mask="+38 (099) 999 99 99">
+                <input type="text" id="Cart-phone" name="phone" value="+38 (034) 534 53 45"
+					   placeholder="Телефон" data-mask="+38 (099) 999 99 99" required>
             </div>
             <div class="selectField inputBox">
                 <label class="title">Служба доставки</label>
-                <select id="delivery_id">
-                    <option value="0" selected></option>
-                    <option value="1">Новая почта</option>
+                <select id="Cart-delivery_id" name="delivery_id" required>
+                    <option value="1" selected>Новая почта</option>
                     <option value="2">ИнТайм</option>
                     <option value="3">Деливери</option>
                     <option value="4">Укр. Почта</option>
                 </select>
             </div>
+			<div class="selectField inputBox">
+                <label class="title">Город</label>
+                <?= Yii::$app->controller->renderPartial('/site/partial/cart-city_select'); ?>
+            </div>
 
         </div>
         <div class="btnGroup">
-            <button class="grayBtn">продолжить покупки</button>
-            <button class="blackBtn sendOrder">оформить заказ</button>
+            <button id="Cart-closeCart" class="grayBtn"  type="button">продолжить покупки</button>
+            <button id="Cart-sendOrder" class="blackBtn" type="submit"
+					data-success-submit-func="Cart.successSubmit">оформить заказ</button>
         </div>
-    </div>
+    </form>
     <script>
         var Cart = {
             order: [
@@ -38,24 +45,32 @@
             handlers: {
                 "#Cart .cartAmount .plus:click" : function() { Cart.changeQuantity(this, true);  },
                 "#Cart .cartAmount .minus:click": function() { Cart.changeQuantity(this, false); },
-                "#Cart .sendOrder:click"        : function() { Cart.sendOrder(); },
-                "#Cart #delivery_id:change"     : function() { Cart.renderCitySelect($(this)); },
-                "#Cart #citySelect:change"      : function() { Cart.renderStockSelect($(this)); },
+                "#Cart-closeCart:click"         : function() { Cart.hide(); },
+//                "#Cart-delivery_id:change"      : function() { Cart.renderCitySelect($(this)); },
+                "#Cart-citySelect:change"       : function() { Cart.renderStockSelect($(this)); },
             },
             ready: function(){
                 if(localStorage.order) Cart.order = JSON.parse(localStorage.order);
+                if(!(Cart.order instanceof Array)){
+                    Cart.order = [];
+                    localStorage.order = JSON.stringify(Cart.order);
+                }
             },
 			show: function() {
                 $('#Cart, #overlay').fadeIn(200);
                 Cart.render();
 			},
+			hide: function() {
+                $('#overlay, #Cart').fadeOut(200);
+			},
 			render: function() {
                 var html = '';
                 Cart.order.forEach(function(p) {
                     html += '<li class="product" data-product-id="' + p.product_id + '">'+
+							'<input type="hidden" name="products[]" value="' + p.product_id + '">'+
                         	'    <div class="cartAmount">'+
                         	'        <div class="plus">+</div>'+
-                        	'        <input class="amount" type="text" value="' + p.quantity + '">'+
+                        	'        <input class="amount" type="text" name="quantity[]" value="' + p.quantity + '">'+
                         	'        <div class="minus">-</div>'+
                         	'    </div>'+
                         	'	 <div class="title">' + p['title_' + a.params.lang] + '</div>'+
@@ -90,18 +105,11 @@
 			},
             getProductById: function(pId) {
                 pId = +pId;
+                console.log(pId);
                 for (var i=0; i < Cart.order.length; i++) {
                     if (Cart.order[i].product_id === pId) return Cart.order[i];
                 }
                 return null;
-            },
-            sendOrder: function(){
-                var fd = new FormData();
-                fd.append('products', Cart.order);
-                a.Query.create({
-                    url: '/order',
-                    data: fd
-                });
             },
             renderCitySelect: function($deliverySelect){
                 if($deliverySelect.hasClass('citiesReceived')) return;
@@ -121,7 +129,7 @@
                     });
                     var field = '<div class="selectField inputBox">'+
                                 '    <label class="title">Город</label>'+
-                                '    <select id="citySelect" class="searchSelect">' + h + '</select>'+
+                                '    <select id="Cart-citySelect" name="city" class="searchSelect">' + h + '</select>'+
                                 '</div>';
                     $(field).insertAfter($deliverySelect.parent());
                     a.upgradeElements();
@@ -131,13 +139,13 @@
                 });
             },
             renderStockSelect: function($citySelect){
-                $('#stock').parent().remove();
-                if($('#delivery_id').val() == 1 ){
+                $('#Cart-stock').parent().remove();
+                if($('#Cart-delivery_id').val() == 1 ){
                     var params = {
                         "modelName": "AddressGeneral",
                         "calledMethod": "getWarehouses",
                         "methodProperties": {
-                            "CityRef": $('#citySelect').val()  // "db5c88e0-391c-11dd-90d9-001a92567626"
+                            "CityRef": $('#Cart-citySelect').val()  // "db5c88e0-391c-11dd-90d9-001a92567626"
                         },
                         "apiKey": "fe6e03d4eecde92caf8c527979c861bf"
                     };
@@ -152,7 +160,7 @@
                         });
                         var field = '<div class="selectField inputBox">'+
                                     '    <label class="title">Отделение</label>'+
-                                    '    <select id="stock" class="searchSelect">' + h + '</select>'+
+                                    '    <select id="Cart-stock" name="stock" class="searchSelect">' + h + '</select>'+
                                     '</div>';
                         $(field).insertAfter($citySelect.parent());
                         a.upgradeElements();
@@ -161,10 +169,16 @@
                     });
                 }else{
                     $('<div class="textField inputBox">'+
-                      '   <input id="stock" placeholder="Номер склада" data-only-pattern="integer" required>'+
+                      '   <input id="Cart-stock" name="stock" placeholder="Номер склада" data-only-pattern="integer" required>'+
                       '</div>').insertAfter($citySelect.parent());
                 }
             },
+            successSubmit: function() {
+                Cart.order = [];
+                localStorage.order = JSON.stringify(Cart.order);
+                Cart.hide();
+
+			}
 
         };
     </script>

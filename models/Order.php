@@ -3,8 +3,10 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\components\traits\ModelTrait;
 use yii\db\Exception;
+use yii\helpers\Url;
+use app\components\helpers\Logger;
+use app\components\traits\ModelTrait;
 
 class Order extends Model
 {
@@ -31,7 +33,9 @@ class Order extends Model
     public function scenarios()
     {
         return [
-            'create' => ['product_id', 'quantity', 'customer_id', 'customer_name', 'phone', 'status', 'delivery_id', 'city', 'stock', 'create_time', 'update_time']
+            'create' => [
+                'products', 'quantity', 'customer_id', 'customer_name', 'phone', 'delivery_id', 'city', 'stock'
+            ]
         ];
     }
 
@@ -39,18 +43,27 @@ class Order extends Model
     {
         return [
             [
-                ['product_id', 'quantity', 'customer_id', 'status', 'delivery_id', 'city', 'stock'], 'integer'
+                ['customer_id', 'status', 'delivery_id'], 'integer'
             ],
             [
-                ['customer_name', 'phone'], 'string'
+                ['products', 'quantity'], 'each', 'rule' => ['integer']
             ],
-            [['invoice_id','user_id','work_shift_id','domain_id'], 'required', 'on'=>'create' ],
+            [
+                ['products', 'quantity', 'customer_name', 'phone', 'delivery_id', 'city', 'stock'],
+                'required', 'message' => 'Поле обязательно для заполнения', 'on'=>'create'
+            ],
+            [
+                ['customer_name', 'phone', 'city', 'stock'], 'string', 'min' => 3, 'max' => 100,
+                'tooShort' => 'Длинна не менее 3-х символов',
+                'tooLong' => 'Длинна не более 100 символов'
+            ],
 
         ];
     }
 
     protected function get($key)
     {
+
     }
 
     protected function create()
@@ -58,18 +71,17 @@ class Order extends Model
         $this->scenario = 'create';
         $this->attributes = Yii::$app->request->post();
         $this->create_time = $this->update_time = time();
-
-//        echo '<pre>'; var_dump($this->attributes); die;
+        $this->total_price = 0;
 
         if(!$this->validate()){
+            $this->grest->backData['errors'] = $this->errors;
             return $this->grest->setCode(400, 'N::Проверьте правильность заполнения полей.');
         }
 
-
-        $transaction = $this->db->transaction;
+        $transaction = $this->db->beginTransaction();
         try{
             $this->db->createCommand()->insert('bs_order', [
-                'customer_id'   => Yii::$app->user->identity->getId(),
+                'customer_id'   => Yii::$app->user->identity->getId() ?? 0,
                 'customer_name' => $this->customer_name,
                 'phone'         => $this->phone,
                 'status'        => Order::STATUS_NEW,
@@ -80,20 +92,31 @@ class Order extends Model
                 'update_time'   => $this->update_time,
             ])->execute();
 
-            foreach ($this->products as $product){
-                $this->db->createCommand()->insert('bs_order', [
-                    'product_id'    => $product['product_id'],
-                    'price'         => $product['price'],
-                    'quantity'      => $product['quantity'],
+            $this->order_id =  $this->db->getLastInsertID();
+
+            foreach ($this->products as $key => $product_id){
+                $product = Product::getProductById($product_id);
+                $this->total_price += ($product['price']*$this->quantity[$key]);
+
+                $this->db->createCommand()->insert('bs_order_product', [
+                    'order_id'    => $this->order_id,
+                    'product_id'  => $product_id,
+                    'quantity'    => $this->quantity[$key],
+                    'price'       => $product['price'],
                 ])->execute();
             }
+
+            $this->db->createCommand()->update('bs_order',
+                ['total_price'   => $this->total_price],
+                'order_id = ' . $this->order_id)->execute();
+
             $transaction->commit();
-            return $this->grest->setCode(200, 'S::Ваш заказ успешно оформлен.');
+            return $this->grest->setCode(302, 'S::Ваш заказ успешно оформлен.', Url::previous());
         }catch (Exception $e){
             $transaction->rollBack();
+            Logger::logException($e, 'Ошибка при обработке заказа');
             return $this->grest->setCode(499, 'Ошибка при обработке заказа');
         }
-
 
     }
 

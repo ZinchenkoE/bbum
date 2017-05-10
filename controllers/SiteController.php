@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use app\components\helpers\Logger;
 use app\models\Order;
@@ -20,6 +21,7 @@ class SiteController extends Controller
 
     public function afterAction($action, $result)
     {
+        if(Yii::$app->request->isGet) Url::remember();
         return parent::afterAction($action, $result);
     }
 

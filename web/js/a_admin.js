@@ -30,7 +30,7 @@ var a = {
         a.updateView();
         $(window).resize(a.windowResize);
         $(window).scroll(a.windowScroll);
-        var flashError = $('span.flashError'); if(flashError.length > 0) a.MessageBox('E::' + flashError.text());
+        var flashError = $('span.flashError'); if(flashError.length > 0) a.MessageBox(flashError.text());
     },
     handlers : {
         "[href]:click"                          : function(e){ a.Query.clickHref(e, this);},

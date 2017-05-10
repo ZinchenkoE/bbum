@@ -489,7 +489,8 @@ nav {
   font-family: 'museo_sans_cyrl700', sans-serif;
   font-size: 13px;
   line-height: 1.2;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12); }
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  z-index: 100; }
   .messageBox i.icon-cross {
     position: absolute;
     right: 10px;
@@ -728,7 +729,7 @@ button {
   color: #e68a8a;
   font-family: sans-serif;
   font-size: 12px;
-  line-height: 1.5; }
+  line-height: 2; }
 
 .inputBox.invalid input, .inputBox.invalid textarea, .inputBox.invalid .viewBox {
   margin-bottom: 0; }

@@ -85,13 +85,11 @@ $w   = Yii::$app->lng->getDictionary();
 
         </nav>
     </header>
-    <main class="container"><?= $content ?></main>
-    <footer>
-
-    </footer>
+    <?= Yii::$app->controller->renderPartial('/site/partial/cart')?>
+	<main class="container"><?= $content ?></main>
+    <footer></footer>
     <div id="overlay"></div>
     <?= Yii::$app->controller->renderPartial('/site/partial/preloader')?>
-    <?= Yii::$app->controller->renderPartial('/site/partial/cart')?>
     <script> a.init(); </script>
 </body>
 </html>

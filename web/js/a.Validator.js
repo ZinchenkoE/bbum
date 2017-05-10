@@ -95,8 +95,8 @@ a.Validator = {
     serverErrors: function (obj) {
          console.log(obj);
         if(a.$lastSubmitForm){
-            if(obj.error && a.$lastSubmitForm){
-                $.each(obj.error, function(key, val){
+            if(obj.errors && a.$lastSubmitForm){
+                $.each(obj.errors, function(key, val){
                     console.log('C сервера пришла ошибка: ', key, val[0]);
                     var el = a.$lastSubmitForm.find('[name="'+ key +'"], [name="'+ key +'[]"]');
                     var inputBox = el.closest('.inputBox');

@@ -19,7 +19,7 @@ a.Query = {
                 var clearUrl = urlArr[0] + Url.removeParam(['_'], '?' + urlArr[1]);
                 if(location.pathname + location.search !== clearUrl) history.pushState('', '', clearUrl);
             }
-            if(rd.flash){ a.MessageBox('S::' + rd.flash); }
+            if(rd.flash){ a.MessageBox(rd.flash); }
             if(rd.renders){
                 for(var key in rd.renders){
                     var $key = $(key);
@@ -53,7 +53,7 @@ a.Query = {
                 if(x.responseText){
                     var res = JSON.parse(x.responseText);
                     if(res.backData) a.Validator.serverErrors(res.backData);
-                    if(res.flash) a.MessageBox('E::' + res.flash);
+                    if(res.flash) a.MessageBox(res.flash);
                 }
             } catch (e) {
                 a.MessageBox('E::Ошибка сервера');
@@ -67,10 +67,11 @@ a.Query = {
             },
             302: function(x){
                 var res = JSON.parse(x.responseText);
-                if(res && res.flash){ a.MessageBox('S::'+ res.flash); }
+                if(res && res.flash){ a.MessageBox(res.flash); }
                 if(x.getResponseHeader('X-Redirect')){
                     a.Query.get({url: x.getResponseHeader('X-Redirect'), preloader: false, writeHistory: true});
                 }
+                this.afterSuccess();
             }
         },
         beforeSend: function() {
@@ -106,7 +107,8 @@ a.Query = {
             a.Query[method]({url: form.attr('action'), data: fd,
                 afterSuccess: function(res) {
                     $submitBtn.removeClass('stop');
-                    try{ a[submitFunc[0]][submitFunc[1]](res); }catch(e){}
+                    console.log(window[submitFunc[0]][submitFunc[1]]);
+                    try{ window[submitFunc[0]][submitFunc[1]](res); }catch(e){ console.log('ошибка колбека формы'); }
                 }
             });
             console.log('Форма отправлена на: ', form.attr('action'), ' методом ', form.attr('method'));
