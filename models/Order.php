@@ -82,7 +82,7 @@ class Order extends Model
             return $this->grest->setCode(400, 'N::Проверьте правильность заполнения полей.');
         }
 
-        $transaction = $this->db->beginTransaction();
+//        $transaction = $this->db->beginTransaction();
         try{
             if(!User::findByEmail($this->email)){
                 $user = new User();

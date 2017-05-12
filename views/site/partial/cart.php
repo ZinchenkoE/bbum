@@ -9,15 +9,15 @@
         <div class="orderInfo">
 			<input type="hidden" id="Cart-customer_id" name="customer_id" value="0">
             <div class="textField inputBox">
-                <input type="text" id="Cart-customer_name" name="customer_name" value="Зинченко Евгений"
+                <input type="text" id="Cart-customer_name" name="customer_name" value=""
 					   placeholder="Имя Фамилия" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input type="text" id="Cart-email" name="email" value="380506487966@yandex.ua"
+                <input type="text" id="Cart-email" name="email" value=""
 					   placeholder="E-mail" pattern="email" required>
             </div>
             <div class="textField inputBox">
-                <input type="text" id="Cart-phone" name="phone" value="+38 (034) 534 53 45"
+                <input type="text" id="Cart-phone" name="phone" value=""
 					   placeholder="Телефон" data-mask="+38 (099) 999 99 99" required>
             </div>
             <div class="selectField inputBox">
@@ -41,6 +41,7 @@
         <div class="btnGroup">
             <button id="Cart-closeCart" class="grayBtn"  type="button">продолжить покупки</button>
             <button id="Cart-sendOrder" class="blackBtn" type="submit"
+					data-before-submit-func="Cart.beforeSubmit"
 					data-success-submit-func="Cart.successSubmit">оформить заказ</button>
         </div>
     </form>
@@ -49,18 +50,36 @@
             order: [
                 // { product_id, title_ru, title_uk, image, price, quantity}
             ],
+			orderInfo: {
+                'Cart-customer_name': '',
+                'Cart-email': 		  '',
+                'Cart-phone': 		  '',
+                'Cart-delivery_id':   1,
+                'Cart-citySelect': 	  '',
+			},
             handlers: {
                 "#Cart .cartAmount .plus:click" : function () { Cart.changeQuantity(this, true);},
                 "#Cart .cartAmount .minus:click": function () { Cart.changeQuantity(this, false); },
                 "#Cart-closeCart:click"         : function () { Cart.hide();},
                 "#Cart-citySelect:change"       : function () { Cart.renderStockField($(this));},
+				"#Cart-customer_name, #Cart-email, #Cart-phone, #Cart-delivery_id, #Cart-citySelect:change": function() { Cart.saveOrderInfo(); }
             },
             ready: function () {
-                if (localStorage.order) Cart.order = JSON.parse(localStorage.order);
+                if (localStorage.order)     Cart.order     = JSON.parse(localStorage.order);
+                if (localStorage.orderInfo) Cart.orderInfo = JSON.parse(localStorage.orderInfo);
                 if (!(Cart.order instanceof Array)) {
                     Cart.order = [];
                     localStorage.order = JSON.stringify(Cart.order);
                 }
+                if (!(Cart.orderInfo instanceof Object)) {
+                    Cart.orderInfo = {};
+                    localStorage.orderInfo = JSON.stringify(Cart.order);
+                }
+                $('#Cart-customer_name').val(Cart.orderInfo['Cart-customer_name']);
+                $('#Cart-email').val(Cart.orderInfo['Cart-email']);
+                $('#Cart-phone').val(Cart.orderInfo['Cart-phone']);
+                $('#Cart-delivery_id').setVal(Cart.orderInfo['Cart-delivery_id']);
+                $('#Cart-citySelect').setVal(Cart.orderInfo['Cart-citySelect']);
             },
             show: function () {
                 $('#Cart, #overlay').fadeIn(200);
@@ -150,6 +169,23 @@
                       '</div>').insertAfter($citySelect.parent());
                 }
             },
+			saveOrderInfo: function() {
+                Cart.orderInfo = {
+                    'Cart-customer_name': 	$('#Cart-customer_name').val(),
+					'Cart-email': 			$('#Cart-email').val(),
+                    'Cart-phone': 			$('#Cart-phone').val(),
+					'Cart-delivery_id': 	$('#Cart-delivery_id').val(),
+                    'Cart-citySelect': 		$('#Cart-citySelect').val(),
+				};
+                localStorage.orderInfo = JSON.stringify(Cart.orderInfo);
+			},
+            beforeSubmit: function() {
+                if(!Cart.order.length) {
+                    a.MessageBox('N::Нет продуктов для оформления заказа!');
+                    return false;
+				}
+                return true;
+			},
             successSubmit: function () {
 //                Cart.order = [];
 //                localStorage.order = JSON.stringify(Cart.order);

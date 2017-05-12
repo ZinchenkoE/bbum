@@ -98,21 +98,37 @@ a.Query = {
         e.preventDefault();
         var $submitBtn = $(submitBtn);
         var form = $submitBtn.closest('form');
+        var beforeSubmitFunc = function() { return true; };
         a.$lastSubmitForm = form;
         var fd = a.Validator.validateAllField(form);
         if( !form.attr('method') ) { console.log('Не указан method отправки формы'); return;}
         var method = form.attr('method').toLowerCase();
-        if($submitBtn.attr('data-success-submit-func')){ var submitFunc = $submitBtn.attr('data-success-submit-func').split('.'); }
-        if(fd){
-            a.Query[method]({url: form.attr('action'), data: fd,
-                afterSuccess: function(res) {
-                    $submitBtn.removeClass('stop');
-                    console.log(window[submitFunc[0]][submitFunc[1]]);
-                    try{ window[submitFunc[0]][submitFunc[1]](res); }catch(e){ console.log('ошибка колбека формы'); }
-                }
-            });
-            console.log('Форма отправлена на: ', form.attr('action'), ' методом ', form.attr('method'));
-        }else{console.log('Форма не отправлена! Найдены ошибки: ', form.find('.invalid'));}
+        if($submitBtn.attr('data-success-submit-func')){
+            var submitFunc = $submitBtn.attr('data-success-submit-func').split('.');
+        }
+        if($submitBtn.attr('data-before-submit-func')){
+            var beforeSubmitFuncArr = $submitBtn.attr('data-before-submit-func').split('.');
+            try{
+                beforeSubmitFunc = window[beforeSubmitFuncArr[0]][beforeSubmitFuncArr[1]];
+            }catch(e){
+                console.error('ошибка определения beforeSubmitFunc');
+            }
+        }
+        if(!fd) {
+            console.log('Форма не отправлена! Ошибки в полях: ');
+            form.find('.invalid').each(function() { console.log(this.name); });
+            return;
+        }
+        if(!beforeSubmitFunc()) {
+            console.log('Форма не отправлена! beforeSubmitFunc вернул false.');
+            return;
+        }
+        a.Query[method]({url: form.attr('action'), data: fd,
+            afterSuccess: function(res) {
+                try{ window[submitFunc[0]][submitFunc[1]](res); }catch(e){ console.error('ошибка колбека формы'); }
+            }
+        });
+        console.info('Форма отправлена на: ', form.attr('action'), ' методом ', form.attr('method'));
     },
     clickHref : function(e, link) {
         var $link = $(link);

@@ -45,7 +45,7 @@
                 var select = selectBox.find('select');
                 var clickIndex = select.hasClass(c.searchSelect) ? $li.index() - 1 : $li.index();
                 var targetValue = select.find('option').eq(clickIndex).attr('value');
-                selectBox.find('ul.' + c.dropdownBox).slideToggle(200).closest('.' + c.selectField).toggleClass('active');
+                selectBox.find('ul.' + c.dropdownBox).slideUp(200).closest('.' + c.selectField).removeClass('active');
                 selectBox.find('.' + c.viewBox).text($li.text());
                 select.val(targetValue);
                 select.change();
@@ -77,5 +77,16 @@
                 $(this).text('search').prev().val('').trigger('input');
             });
         }
+    };
+
+    $.fn.setVal = function(value){
+        if(this.length === 0) console.error('Нет элемента по даному селектору.');
+        else if(this.length > 1) console.error('Функция должна применятся только к одному селекту');
+        else if(!this.find('option[value="' + value +'"]').length) console.error('Неверное значение value; option[value="' + value +'"]');
+        else{
+            var i = this.find('option[value="' + value +'"]').index();
+            this.closest('.' + c.selectField).find('li').eq(i).click();
+        }
+        return this;
     };
 }(a);
