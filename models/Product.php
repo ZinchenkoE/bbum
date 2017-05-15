@@ -76,7 +76,7 @@ class Product extends Model
 			$page   = (int)   Yii::$app->request->get('page');
 			$offset = $page == 0 || $page == 1 ? '' : 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
             $search_part_query = $search ? " AND title_ru LIKE '%{$search}%' " : ' ';
-			$count    = $this->db->createCommand(
+			$count  = $this->db->createCommand(
 			    "SELECT COUNT(*) FROM bs_product WHERE product_status != ".self::STATUS_DELETED. $search_part_query )->queryScalar();
             $products = $this->db->createCommand("
                 SELECT *
@@ -125,7 +125,7 @@ class Product extends Model
                 'product_status'  => $this->product_status,
                 'producer'        => $this->producer,
             ])->execute();
-        $this->grest->setCode(302, 'Новый продукт успешно добавлен', '/admin/product');
+        return $this->grest->setCode(302, 'Новый продукт успешно добавлен', '/admin/product');
     }
 
     protected function put($key)
@@ -146,7 +146,7 @@ class Product extends Model
             'product_status' => $this->product_status,
             'producer'       => $this->producer
         ], 'product_id = '.$key )->execute();
-        $this->grest->setCode(302, 'Данные успешно обновлены', '/admin/product');
+        return $this->grest->setCode(302, 'Данные успешно обновлены', '/admin/product');
     }
 
     protected function remove($key)

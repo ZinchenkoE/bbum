@@ -58,11 +58,12 @@
                 'Cart-citySelect': 	  '',
 			},
             handlers: {
+                "#Cart-customer_name, #Cart-email, #Cart-phone, #Cart-delivery_id, #Cart-citySelect:change": function() { Cart.saveOrderInfo(); },
                 "#Cart .cartAmount .plus:click" : function () { Cart.changeQuantity(this, true);},
                 "#Cart .cartAmount .minus:click": function () { Cart.changeQuantity(this, false); },
                 "#Cart-closeCart:click"         : function () { Cart.hide();},
                 "#Cart-citySelect:change"       : function () { Cart.renderStockField($(this));},
-				"#Cart-customer_name, #Cart-email, #Cart-phone, #Cart-delivery_id, #Cart-citySelect:change": function() { Cart.saveOrderInfo(); }
+                "#Cart .delProduct:click"      	: function () { Cart.delProductClick($(this));},
             },
             ready: function () {
                 if (localStorage.order)     Cart.order     = JSON.parse(localStorage.order);
@@ -90,7 +91,7 @@
                 var html = '';
                 Cart.order.forEach(function (p) {
                     html += '<li class="product" data-product-id="' + p.product_id + '">' +
-                            '<input type="hidden" name="products[]" value="' + p.product_id + '">' +
+                            '	<input type="hidden" name="products[]" value="' + p.product_id + '">' +
                             '    <div class="cartAmount">' +
                             '        <div class="plus">+</div>' +
                             '        <input class="amount" type="text" name="quantity[]" value="' + p.quantity + '">' +
@@ -99,6 +100,7 @@
                             '	 <div class="title">' + p['title_' + a.params.lang] + '</div>' +
                             '	 <div class="price">' + p.price + ' грн</div>' +
                             '	 <div class="totalPrice">' + (p.price * p.quantity).toFixed(2) + ' грн</div>' +
+                            '	 <div class="delProduct"><i class="material-icons">clear</i></div>' +
                             '</li>';
                 });
                 $('#Cart .products').html(html);
@@ -185,6 +187,17 @@
                     return false;
 				}
                 return true;
+			},
+            delProductClick: function($el) {
+                var pId = +$el.closest('[data-product-id]').attr('data-product-id');
+                console.log(pId);
+                for (var i = 0; i < Cart.order.length; i++) {
+                    if (Cart.order[i].product_id == pId){
+                        Cart.order.splice(i, 1);
+                        console.log('C заказа удалили продукт, pId - ' + pId);
+                    }
+                }
+                Cart.render();
 			},
             successSubmit: function () {
 //                Cart.order = [];

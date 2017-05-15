@@ -798,6 +798,9 @@ button {
       -ms-transform: rotate(180deg);
           transform: rotate(180deg); }
 
+i {
+  cursor: pointer; }
+
 .row:after {
   content: ".";
   display: block;

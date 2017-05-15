@@ -10,6 +10,7 @@
 @import "./partials/cart";
 @import "./partials/form_elements";
 
+i{ cursor: pointer; }
 .row:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .left{ float: left; }
 .right{ float: right; }

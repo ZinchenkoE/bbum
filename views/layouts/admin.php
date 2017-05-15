@@ -10,6 +10,7 @@ use yii\helpers\Html;
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
 
+		<link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="/css/jquery.Jcrop.min.css">
         <link rel="stylesheet" href="/css/admin.css">
 
