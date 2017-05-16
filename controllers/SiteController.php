@@ -71,9 +71,9 @@ class SiteController extends Controller
         return Yii::$app->grest->render();
     }
 
-    public function actionError()
-    {
-        echo 'Произошла ошибка сервера!';
-//        return Yii::$app->grest->render();
-    }
+//    public function actionError()
+//    {
+//        echo 'Произошла ошибка сервера!';
+////        return Yii::$app->grest->render();
+//    }
 }

@@ -69,12 +69,9 @@ class Order extends Model
 
     protected function get()
     {
-        $search = (string)Yii::$app->request->get('search');
-        $page   = (int)   Yii::$app->request->get('page', 1);
-        $search_part_query = $search ? " AND cstm.customer_name LIKE '%{$search}%' " : ' ';
-        $offset = 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
-        $count  = $this->db->createCommand("SELECT COUNT(*) FROM bs_order " . $search_part_query )->queryScalar();
-        $orders = $this->db->createCommand("
+        $order_id = Yii::$app->request->get('key');
+        if ($order_id) {
+            $order = $this->db->createCommand("
                 SELECT 
                   o.order_id, 
                   cstm.customer_name, 
@@ -82,6 +79,38 @@ class Order extends Model
                   cstm.phone, 
                   ct.city_name, 
                   o.stock, 
+                  o.total_price, 
+                  o.status
+                FROM bs_order o
+                JOIN bs_customer cstm ON o.customer_id = cstm.customer_id
+                JOIN bs_city ct ON o.city = ct.city_id
+                JOIN bs_order_product op ON o.order_id = op.order_id
+                WHERE o.order_id = {$order_id}
+                ")->queryOne();
+            $order_products = $this->db->createCommand("
+                SELECT op.*, p.title_ru, p.price
+                FROM bs_order_product op
+                JOIN bs_product p ON op.product_id = p.product_id
+                WHERE op.order_id = {$order_id}
+                ")->queryAll();
+            $this->grest->data['order']           = $order;
+            $this->grest->data['order_products']  = $order_products;
+            $this->grest->render                  = 'order';
+        } else {
+            $search = (string)Yii::$app->request->get('search');
+            $page   = (int)   Yii::$app->request->get('page', 1);
+            $search_part_query = $search ? " AND cstm.customer_name LIKE '%{$search}%' " : ' ';
+            $offset = 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
+            $count  = $this->db->createCommand("SELECT COUNT(*) FROM bs_order " . $search_part_query )->queryScalar();
+            $orders = $this->db->createCommand("
+                SELECT 
+                  o.order_id, 
+                  cstm.customer_name, 
+                  cstm.email, 
+                  cstm.phone, 
+                  ct.city_name, 
+                  o.stock, 
+                  o.total_price, 
                   o.status
                 FROM bs_order o
                 JOIN bs_customer cstm ON o.customer_id = cstm.customer_id
@@ -90,10 +119,12 @@ class Order extends Model
                 ORDER BY o.order_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset}
                 ")->queryAll();
 
-        $pages = new Pagination([ 'totalCount' => $count, 'pageSize' => self::PAGE_LIMIT ]);
-        $this->grest->data['orders'] = $orders;
-        $this->grest->data['pages'] = $pages;
-        $this->grest->render = 'index';
+            $pages = new Pagination([ 'totalCount' => $count, 'pageSize' => self::PAGE_LIMIT ]);
+            $this->grest->data['orders'] = $orders;
+            $this->grest->data['pages'] = $pages;
+            $this->grest->render = 'index';
+        }
+
     }
 
     protected function create()

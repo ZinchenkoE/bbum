@@ -29,9 +29,9 @@ use yii\helpers\Html;
         <?php if(!Yii::$app->user->isGuest): ?>
         <header>
             <ul>
-                <li><span class="count"></span><i class="icon icon-phone"></i></li>
-                <li><span class="count"></span><i class="icon icon-notification"></i></li>
-                <li><span class="count"></span><i class="icon icon-mail"></i></li>
+                <li><span class="count" style="display: none;"></span><i class="icon icon-phone"></i></li>
+                <li><span class="count" style="display: none;"></span><i class="icon icon-notification"></i></li>
+                <li><span class="count" style="display: none;"></span><i class="icon icon-mail"></i></li>
                 <li><a href="<?= Yii::$app->request->hostInfo ?>" target="_blank"><i class="icon icon-home"></i><span>Ваш сайт</span></a></li>
             </ul>
             <div class="textField inputBox search">
@@ -43,12 +43,9 @@ use yii\helpers\Html;
                 <a href="/admin"><img src="/img/admin/logo.png" style="height: 85px;"></a>
             </div>
             <ul>
-                <li>
-                    <a href="/admin/product"><i class="icon icon-product"></i><span>Товары</span></a>
-                </li>
-                <li>
-                    <a href="/admin/category"><i class="icon icon-page"></i><span>Категории</span></a>
-                </li>
+                <li><a href="/admin/"><i class="icon material-icons">shopping_cart</i><span>Заказы</span></a></li>
+                <li><a href="/admin/product"><i class="icon icon-product"></i><span>Товары</span></a></li>
+                <li><a href="/admin/category"><i class="icon icon-page"></i><span>Категории</span></a></li>
             </ul>
             <div class="userMenuBox">
                 <div class="js-openUserMenuBtn openUserMenuBtn"><i class="icon icon-user"></i></div>

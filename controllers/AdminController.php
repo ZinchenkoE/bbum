@@ -60,6 +60,12 @@ class AdminController extends Controller
         return Yii::$app->grest->render();
     }
 
+    public function actionOrder()
+    {
+        Order::initModel()->run();
+        return Yii::$app->grest->render();
+    }
+
     public function actionProduct($key = null, $id = null)
     {
         Product::initModel()->run($key, $id);
