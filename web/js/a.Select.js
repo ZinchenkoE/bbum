@@ -85,6 +85,7 @@
         else if(!this.find('option[value="' + value +'"]').length) console.error('Неверное значение value; option[value="' + value +'"]');
         else{
             var i = this.find('option[value="' + value +'"]').index();
+            i = this.hasClass('searchSelect') ? ++i : i;
             this.closest('.' + c.selectField).find('li').eq(i).click();
         }
         return this;

@@ -9,6 +9,7 @@ use app\components\helpers\Logger;
 use app\models\Product;
 use app\models\Category;
 use app\models\User;
+use app\models\Order;
 
 class AdminController extends Controller
 {
@@ -44,6 +45,7 @@ class AdminController extends Controller
         if (Yii::$app->request->isPost){
             User::loginPost();
         }
+        return null;
     }
 
     public function actionLogout()
@@ -54,7 +56,7 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
-        Yii::$app->grest->render = 'index';
+        Order::initModel()->run();
         return Yii::$app->grest->render();
     }
 

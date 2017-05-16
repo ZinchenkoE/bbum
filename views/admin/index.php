@@ -1,5 +1,5 @@
-<div id="Index" data-objs="Index" style="padding: 50px;">
-	<h1 class="pageTitle">Товары</h1>
+<div id="Index" data-objs="Index">
+	<h1 class="pageTitle">Заказы</h1>
 	<table>
 		<thead>
 		<tr>
@@ -14,15 +14,21 @@
 		</tr>
 		</thead>
 		<tbody>
-        <?php foreach([1,1,1,] as $order): ?>
-			<tr order-id="1">
-				<td class="orderId"	    >1</td>
-				<td class="customerName">Женька</td>
-				<td class="email"		>e-mail@sdf.ua</td>
-				<td class="phone"		>38050505000</td>
-				<td class="city"		>Город</td>
-				<td class="stock"		>55</td>
-				<td class="status"		>Новый</td>
+        <?php foreach($data['orders'] as $order): ?>
+			<tr order-id="<?= $order['order_id'] ?>">
+				<td class="orderId"	    ><?= $order['order_id']      ?></td>
+				<td class="customerName"><?= $order['customer_name'] ?></td>
+				<td class="email"		><?= $order['email'] 		 ?></td>
+				<td class="phone"		><?= $order['phone'] 		 ?></td>
+				<td class="city"		><?= $order['city_name'] 	 ?></td>
+				<td class="stock"		><?= $order['stock'] 		 ?></td>
+				<td class="status"		>
+					<?
+							if($order['status'] == 0) echo 'новый'      ;
+						elseif($order['status'] == 1) echo 'принятый'   ;
+						elseif($order['status'] == 2) echo 'завершенный';
+					?>
+				</td>
 				<td class="btns"		><i class="material-icons">format_align_justify</i></td>
 			</tr>
         <?php endforeach; ?>

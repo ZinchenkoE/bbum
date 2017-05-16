@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\City;
 use app\models\User;
 use Yii;
 use yii\helpers\Url;
@@ -69,7 +70,6 @@ class SiteController extends Controller
         Order::initModel()->run($key, $id);
         return Yii::$app->grest->render();
     }
-
 
     public function actionError()
     {

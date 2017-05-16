@@ -13,9 +13,9 @@ class Order extends Model
 {
     const PAGE_LIMIT = 50;
 
-    const STATUS_NEW        = 0;
-    const STATUS_CONFIRMED  = 1;
-    const STATUS_DONE       = 2;
+    const STATUS_NEW        = 0; // новый
+    const STATUS_CONFIRMED  = 1; // принятый
+    const STATUS_DONE       = 2; // завершенный
 
     public $order_id;
     public $total_price;
@@ -69,25 +69,31 @@ class Order extends Model
 
     protected function get()
     {
-//        $search = (string)Yii::$app->request->get('search');
-//        $page   = (int)   Yii::$app->request->get('page');
-//        $offset = $page == 0 || $page == 1 ? '' : 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
-//        $search_part_query = $search ? " AND title_ru LIKE '%{$search}%' " : ' ';
-//        $count  = $this->db->createCommand(
-//            "SELECT COUNT(*) FROM bs_order " . $search_part_query )->queryScalar();
-//        $products = $this->db->createCommand("
-//                SELECT *
-//                FROM bs_order o
-//                LEFT JOIN bs_category c ON p.category = c.category_id
-//                LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id
-//                WHERE p.product_status != ".self::STATUS_DELETED." {$search_part_query}
-//                ORDER BY p.product_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset}
-//                ")->queryAll();
-//
-//        $this->grest->data['products'] = $products;
-//        $pages = new Pagination([ 'totalCount' => $count, 'pageSize' => self::PAGE_LIMIT ]);
-//        $this->grest->data['orders'] = $pages;
-//        $this->grest->render = 'admin/index';
+        $search = (string)Yii::$app->request->get('search');
+        $page   = (int)   Yii::$app->request->get('page', 1);
+        $search_part_query = $search ? " AND cstm.customer_name LIKE '%{$search}%' " : ' ';
+        $offset = 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
+        $count  = $this->db->createCommand("SELECT COUNT(*) FROM bs_order " . $search_part_query )->queryScalar();
+        $orders = $this->db->createCommand("
+                SELECT 
+                  o.order_id, 
+                  cstm.customer_name, 
+                  cstm.email, 
+                  cstm.phone, 
+                  ct.city_name, 
+                  o.stock, 
+                  o.status
+                FROM bs_order o
+                JOIN bs_customer cstm ON o.customer_id = cstm.customer_id
+                JOIN bs_city ct ON o.city = ct.city_id
+                WHERE 1 {$search_part_query}
+                ORDER BY o.order_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset}
+                ")->queryAll();
+
+        $pages = new Pagination([ 'totalCount' => $count, 'pageSize' => self::PAGE_LIMIT ]);
+        $this->grest->data['orders'] = $orders;
+        $this->grest->data['pages'] = $pages;
+        $this->grest->render = 'index';
     }
 
     protected function create()

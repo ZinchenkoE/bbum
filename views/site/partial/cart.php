@@ -31,7 +31,12 @@
             </div>
 			<div class="selectField inputBox">
                 <label class="title">Город</label>
-                <?= Yii::$app->controller->renderPartial('/site/partial/cart-city_select'); ?>
+				<select id="Cart-citySelect" name="city" class="searchSelect">
+					<option value=""></option>
+                    <?php foreach (\app\models\City::find()->all() ?? [] as $item): ?>
+						<option value="<?= $item['city_id'] ?>"><?= $item['city_name'] ?></option>
+                    <?php endforeach; ?>
+				</select>
             </div>
             <div class="selectField inputBox">
                 <label class="title">Отделение</label>
@@ -47,6 +52,7 @@
     </form>
     <script>
         var Cart = {
+            init: false,
             order: [
                 // { product_id, title_ru, title_uk, image, price, quantity}
             ],
@@ -81,6 +87,7 @@
                 $('#Cart-phone').val(Cart.orderInfo['Cart-phone']);
                 $('#Cart-delivery_id').setVal(Cart.orderInfo['Cart-delivery_id']);
                 $('#Cart-citySelect').setVal(Cart.orderInfo['Cart-citySelect']);
+                Cart.init = true;
             },
             show: function () {
                 $('#Cart, #overlay').fadeIn(200);
@@ -138,7 +145,7 @@
             },
             renderStockField: function ($citySelect) {
                 $('#Cart-stock').parent().remove();
-                if (+$('#Cart-delivery_id').val() === 1) {
+                if (+$('#Cart-delivery_id').val() === 111) {
                     var params = {
                         "modelName": "AddressGeneral",
                         "calledMethod": "getWarehouses",
@@ -172,6 +179,7 @@
                 }
             },
 			saveOrderInfo: function() {
+                if(!Cart.init) return;
                 Cart.orderInfo = {
                     'Cart-customer_name': 	$('#Cart-customer_name').val(),
 					'Cart-email': 			$('#Cart-email').val(),
