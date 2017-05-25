@@ -208,9 +208,9 @@
                 Cart.render();
 			},
             successSubmit: function () {
-//                Cart.order = [];
-//                localStorage.order = JSON.stringify(Cart.order);
-//                Cart.hide();
+                Cart.order = [];
+                localStorage.order = JSON.stringify(Cart.order);
+                Cart.hide();
             },
         };
     </script>
