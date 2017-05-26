@@ -6,10 +6,10 @@ use Yii;
 
 trait ModelTrait
 {
-    /** * @var \yii\db\Connection */
+    /** @var \yii\db\Connection */
     private $db;
    
-    /** * @var \app\components\extensions\Grest */
+    /** @var \app\components\extensions\Grest */
     private $grest;
 
     public function __construct()
@@ -31,7 +31,7 @@ trait ModelTrait
     public function run($key = null, $id = null)
     {
         if (!Yii::$app->request->isAjax && !Yii::$app->request->isGet){
-            throw new BadRequestHttpException('Request type denided');
+            throw new BadRequestHttpException('Не верный тип запроса');
         }
 
         $callMethod = 'get';

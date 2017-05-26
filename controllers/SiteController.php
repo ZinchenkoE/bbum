@@ -36,7 +36,6 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-
         SiteIndex::initModel()->run();
         return Yii::$app->grest->render();
     }

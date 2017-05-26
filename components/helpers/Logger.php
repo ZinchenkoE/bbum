@@ -66,6 +66,6 @@ final class Logger
     private static function conditions()
     {
         return "\nIP: {$_SERVER['REMOTE_ADDR']}\nRequest: \"{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}\"\nHTTP user agent: {$_SERVER['HTTP_USER_AGENT']}\nUSER: " .
-         ( Yii::$app->user->isGuest ? '<GUEST>' : (Yii::$app->user->identity->username . ", ID: " . Yii::$app->user->identity->getId()));
+         ( Yii::$app->user->isGuest ? '<GUEST>' : (Yii::$app->user->identity->login . ", ID: " . Yii::$app->user->identity->getId()));
     }
 }

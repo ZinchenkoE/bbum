@@ -13,25 +13,20 @@ define('AP', 'ap');
 class Grest
 {
     public $meta = [
-        'title' => 'Baby shop',
+        'title'       => 'Baby shop',
         'description' => 'Магазин детской одежды Baby shop',
-        'abstract' => 'Магазин детской одежды Baby shop'];
+        'abstract'    => 'Магазин детской одежды Baby shop'
+    ];
     public $isMeta = true;
     public $render = 'index';
     public $data=[];
     public $renders=[];
     public $backData=[];
 
-    public function init() {        
-        
-    }
-
-    public function setCode($code, $message, $url = false)
+    public function setCode(int $code = 200, string $message = '', $url = false)
     {
-        $code = (int)$code ? (int)$code : 200;
-
-        Yii::$app->response->statusCode = (int)$code;
-        Yii::$app->response->data['flash'] = (string)$message;
+        Yii::$app->response->statusCode = $code;
+        Yii::$app->response->data['flash'] = $message;
         if (301 == $code){
             Yii::$app->session->setFlash('error', $message);
         }

@@ -87,7 +87,7 @@ class Category extends Model
         $this->db->createCommand("
             INSERT INTO bs_category (category_title_ru, category_title_uk, image, parent_id) 
             VALUES (:category_title_ru, :category_title_uk, :image, :parent_id)")->bindValues($v)->execute();
-        $this->grest->setCode(302, 'Новая категория успешно добавлена', '/admin/category');
+        return $this->grest->setCode(302, 'Новая категория успешно добавлена', '/admin/category');
     }
 
     protected function put($key)
@@ -122,7 +122,7 @@ class Category extends Model
             image=" . (isset($src) ? "'{$src}'" : 'image') . " 
             WHERE category_id=:id")->bindValues($v)->execute();
         $code = Yii::$app->request->post('need_redirect') == 1 ? 302 : 200;
-        $this->grest->setCode($code, 'Данные успешно обновлены', '/admin/category');
+        return $this->grest->setCode($code, 'Данные успешно обновлены', '/admin/category');
     }
 
     protected function remove($key) 
@@ -153,7 +153,8 @@ class Category extends Model
         try{
             $category_id =  Yii::$app->request->get('key');
             $status =  Yii::$app->request->post('category_status');
-            $this->db->createCommand()->update('bs_category', ['category_status' => $status], 'category_id = '.$category_id)->execute();
+            $this->db->createCommand()->update('bs_category',
+                ['category_status' => $status], 'category_id = '.$category_id)->execute();
             $this->grest->setCode(200, 'Статус успешно обновлен');
         }catch (\Exception $e){
             $this->grest->setCode(400, 'Ошибка при изменении статуса');
