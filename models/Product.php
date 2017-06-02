@@ -172,11 +172,12 @@ class Product extends Model
         $this->grest->setCode(200, 'Продукт успешно обновлен');
     }
 
-     protected function changeStatusPost(){
+    protected function changeStatusPost(){
         $product_id =  Yii::$app->request->get('key');
         $status =  Yii::$app->request->post('product_status');
         $this->db->createCommand()->update('bs_product', ['product_status' => $status], 'product_id = '.$product_id)->execute();
         $this->grest->setCode(200, 'Статус успешно обновлен');
     }
+
 
 }

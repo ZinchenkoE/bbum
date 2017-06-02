@@ -138,7 +138,6 @@ class Order extends Model
             $this->grest->backData['errors'] = $this->errors;
             return $this->grest->setCode(400, 'N::Проверьте правильность заполнения полей.');
         }
-
         $transaction = $this->db->beginTransaction();
         try{
             $user_in_db = Customer::findByEmail($this->email);
@@ -186,6 +185,8 @@ class Order extends Model
                 'order_id = ' . $this->order_id)->execute();
 
             $transaction->commit();
+//            $this->sendMail();
+
             return $this->grest->setCode(302, 'S::Ваш заказ успешно оформлен.', Url::previous());
         }catch (Exception $e){
             $transaction->rollBack();
@@ -195,17 +196,36 @@ class Order extends Model
 
     }
 
-    protected function put($key)
-    {
+    protected function put(){
+        return $this->grest->setCode(302, '', '/admin');
     }
 
-    protected function remove($key)
-    {
-    }
+    protected function remove($key){}
 
     public static function getOrderById($id)
     {
         return Yii::$app->db->createCommand("SELECT * FROM bs_order WHERE order_id = {$id}")->queryOne();
     }
 
+    private function sendMail()
+    {
+        try{
+            Yii::$app->mailer->compose()
+                ->setFrom('sale@baby-bum.in.ua')
+                ->setTo('zinchenko.evgeniy@gmail.com')
+                ->setSubject('Оформлен новый заказ!')
+                ->setHtmlBody('<b>текст сообщения в формате HTML</b>')
+                ->send();
+
+//        Yii::$app->mailer->compose()
+//            ->setFrom('sale@baby-bum.in.ua')
+//            ->setTo('to@domain.com')
+//            ->setSubject('Тема сообщения')
+//            ->setTextBody('Текст сообщения')
+//            ->setHtmlBody('<b>текст сообщения в формате HTML</b>')
+//            ->send();
+        }catch(Exception $e){
+            Logger::logException($e, 'Ошибка при отправке письма');
+        }
+    }
 }
