@@ -1,0 +1,38 @@
+@import "./partials/reset";
+@import "./partials/preloader";
+@import "./partials/fonts";
+@import "./partials/home";
+@import "./partials/layout";
+@import "./partials/messageBox";
+@import "./partials/modal";
+@import "./partials/category";
+@import "./partials/product";
+@import "./partials/cart";
+@import "./partials/form_elements";
+
+i{ cursor: pointer; }
+.row:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.left{ float: left; }
+.right{ float: right; }
+
+.icon-msgBox-S{       background: url(/img/admin/msgBox-S.svg)       center center / contain no-repeat;}
+.icon-msgBox-N{  	  background: url(/img/admin/msgBox-N.svg)       center center / contain no-repeat;}
+.icon-msgBox-E{  	  background: url(/img/admin/msgBox-E.svg)       center center / contain no-repeat;}
+.icon-cross{          background: url(/img/admin/cross.svg)          center center / contain no-repeat;}
+
+ul.pagination{
+	margin: 50px 0 100px; text-align: center;
+	li{
+		display: inline-block; color: #141e29; line-height: 20px; font-size: 14px;
+		width: 28px; height: 20px; border-radius: 4px;
+		&.prev,&.next,&.active{
+			border: 1px solid #d7d7d7; box-shadow: 0 0 15px 0 rgba(1, 1, 1, 0.1); color: #ffc94b;
+		}
+		&.first, &.last{
+			width: auto; padding: 0 10px; cursor: pointer;
+			border: 1px solid #d7d7d7; box-shadow: 0 0 15px 0 rgba(1, 1, 1, 0.1);
+			&.disabled{ background: #dedede; color: #7b7b7b; }
+		}
+		&:active{ background: #f3f3f3; }
+	}
+}
