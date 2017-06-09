@@ -13,7 +13,10 @@ $w   = Yii::$app->lng->getDictionary();
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
 	<title>Alisa</title>
-	<link rel="stylesheet" href="../web/css/styles.css">
+
+	<link rel="stylesheet" href="./css/site.css">
+	<link  href="./plugins/scrollbar/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+
 	<script src="./js/lib/jquery-3.1.1.min.js"></script>
 	<script src="./js/menu.js"></script>
 	<script src="./js/bag.js"></script>
@@ -22,7 +25,16 @@ $w   = Yii::$app->lng->getDictionary();
 	<script src="./plugins/jquery_bxslider/jquery.bxslider.min.js"></script>
 	<script src="./js/script.js"></script>
 	<script src="./plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
-	<link  href="./plugins/scrollbar/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+
+	<script src="/js/a_site.js"></script>
+	<script>
+        a.params.lang = '<?= $lng ?>';
+	</script>
+
+	<script src="/js/a.Validator.js"></script>
+	<script src="/js/a.Select.js"></script>
+	<script src="/js/a.Query.js"></script>
+	<script src="/js/devTools.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -157,7 +169,7 @@ $w   = Yii::$app->lng->getDictionary();
 				<div class="boxProduct">
 					<div class="description">
 						<div class="colLeft productImg">
-							<img src="../web/images/img_prod1.png" alt="product model">
+							<img src="/images/img_prod1.png" alt="product model">
 						</div>
 						<ul class="characteristics">
 							<li class="itemCharacteristic titleProduct">Детские ботинки на шнурках</li>

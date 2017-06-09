@@ -1,4 +1,4 @@
-﻿<ul class="productCategory">
+<ul class="productCategory">
     <li class="category">
         <a href="catalog.html" class="locationCategory womenBoots"></a>
         <span class="titleCategory">женская <span class="wordWrap">обувь</span></span>

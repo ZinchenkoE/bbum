@@ -83,7 +83,6 @@ BagEdit.prototype.price = function() {
 };
 
 BagEdit.prototype.showHideBag = function(that) {
-
 	if ($(this.orderSum) == 0) {
 		$('.boxBag .fulBag').hide();
 		$('.boxBag .emptyBag').show();
@@ -91,13 +90,10 @@ BagEdit.prototype.showHideBag = function(that) {
 		$('.boxBag .fulBag').show();
 		$('.boxBag .emptyBag').hide();
 	}
-
 	if ($(that).parent().siblings().find('.goToMenu').hasClass('openMenu')) {
 		$(that).parent().siblings().find('.goToMenu').click();
 	}
-
 	$(that).toggleClass('openMenu');
-
 	if ($(that).hasClass('openMenu')) {
 		if ($(window).outerWidth() < 960) {
 			$('.overlay').hide();
@@ -123,14 +119,11 @@ BagEdit.prototype.showHideBag = function(that) {
 		}, 375, function () {
 			$('main.content').hide();
 		});
-
 	} else {
-
 		if ($(window).outerWidth() < 960) {
 			$('.boxBag, .boxOrder').stop().animate({
 				'left': -$('.boxBag').outerWidth()
 			}, 375);
-
 		} else {
 			$('.boxBag').stop().animate({
 				'left': -($('.boxBag').outerWidth() - $('.rightSitebar').outerWidth())

@@ -1,35 +1,37 @@
-﻿$medium:1280px;
+﻿@import "reset";
+
+$medium:1280px;
 $mobile: 959px;
 $bodyHeight: 100vh;
 $mobSitebarHeight: 12.71vh; 
 @font-face {
     font-family: 'AFuturicaBlack';
-    src: url('fonts/a_futuricablack-webfont.ttf');
-    src: url('fonts/a_futuricablack-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/a_futuricablack-webfont.woff2') format('woff2'),
-         url('fonts/a_futuricablack-webfont.woff') format('woff'),
-         url('fonts/a_futuricablack-webfont.ttf') format('truetype');
+    src: url('/fonts/a_futuricablack-webfont.ttf');
+    src: url('/fonts/a_futuricablack-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/a_futuricablack-webfont.woff2') format('woff2'),
+         url('/fonts/a_futuricablack-webfont.woff') format('woff'),
+         url('/fonts/a_futuricablack-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'Futuralightc';
-    src: url('fonts/futuralightc-webfont.otf');
-    src: url('fonts/futuralightc-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/futuralightc-webfont.woff2') format('woff2'),
-         url('fonts/futuralightc-webfont.woff') format('woff'),
-         url('fonts/futuralightc-webfont.ttf') format('truetype');
+    src: url('/fonts/futuralightc-webfont.otf');
+    src: url('/fonts/futuralightc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/futuralightc-webfont.woff2') format('woff2'),
+         url('/fonts/futuralightc-webfont.woff') format('woff'),
+         url('/fonts/futuralightc-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Futuramediumc';
-    src: url('fonts/futuramediumc-webfont.otf');
-    src: url('fonts/futuramediumc-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/futuramediumc-webfont.woff2') format('woff2'),
-         url('fonts/futuramediumc-webfont.woff') format('woff'),
-         url('fonts/futuramediumc-webfont.ttf') format('truetype');
+    src: url('/fonts/futuramediumc-webfont.otf');
+    src: url('/fonts/futuramediumc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/fonts/futuramediumc-webfont.woff2') format('woff2'),
+         url('/fonts/futuramediumc-webfont.woff') format('woff'),
+         url('/fonts/futuramediumc-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -112,7 +114,7 @@ strong, b { font-weight: bold; }
 			left: 50%; margin: -5.6315vw 0 0 -6.57%;
 		}
 		.logo {
-			display: block; width: 75px; height: 65px; background: url(images/logo.png) no-repeat;
+			display: block; width: 75px; height: 65px; background: url(/images/logo.png) no-repeat;
 			background-size: 100% 100%; margin: 0 auto;
 			@media screen and (min-width: $medium) { width: 58.9%; height: 4.844vw; }
 			@media screen and (max-width: $mobile) { width: 100%; height: 100%; }
@@ -144,26 +146,26 @@ strong, b { font-weight: bold; }
 					@media screen and (max-width: $mobile) { margin:0; width: 5.006vw; height: 5.528vw; }
 					&.goToMenu {
 						margin: 0 auto;
-						background-image: url(images/menu.png);
+						background-image: url(/images/menu.png);
 						background-size: 100% 100%;
 						background-repeat: no-repeat;
 						@media screen and (max-width: $mobile) { margin:0; }
 					}
 					&.goToLogin {
-						background-image: url(images/login.png); margin: 0 auto; background-size: 100% 100%;
+						background-image: url(/images/login.png); margin: 0 auto; background-size: 100% 100%;
 						background-repeat: no-repeat;
-						&.backBtn{ background-image: url(images/backBtnMob.png); width: 0.8vw; }
+						&.backBtn{ background-image: url(/images/backBtnMob.png); width: 0.8vw; }
 						@media screen and (max-width: $mobile) { margin:0; }
 					}
 					&.gotoPhone {
-						background: url(images/phone.png) no-repeat;
+						background: url(/images/phone.png) no-repeat;
 						margin: 0 auto;
 						background-size: 100% 100%;
 						@media screen and (max-width: $mobile) { margin:0; float: right; }
 					}
 
 					&.goToBag {
-						background: url(images/bag.png) no-repeat; margin: 0 auto; background-size: 100% 100%;
+						background: url(/images/bag.png) no-repeat; margin: 0 auto; background-size: 100% 100%;
 						.pulseBag { display: none; }
 						&.pulse {
 							position: relative;
@@ -179,8 +181,8 @@ strong, b { font-weight: bold; }
 							.pulseBag { width: 1.25vw; height: 1.25vw; bottom: -0.4vw; }
 						}
 					}
-					&.openMenu { background: url(images/close.png) no-repeat; background-size: 100% 100%; }
-					&.activePage { background: url(images/close.png) no-repeat; background-size: 100% 100%; }
+					&.openMenu { background: url(/images/close.png) no-repeat; background-size: 100% 100%; }
+					&.activePage { background: url(/images/close.png) no-repeat; background-size: 100% 100%; }
 				}
 			}
 		}
@@ -211,10 +213,10 @@ strong, b { font-weight: bold; }
 				.socialIcon {
 					display: block; text-decoration: none; margin: 0 auto; width: 84.4% !important; height: 100%; opacity: 0.5;
 					&:hover { opacity: 1; }
-					&.vkontakte { background: url(images/vkontakte.png) no-repeat; background-size: 100% 100%; }
-					&.facebook { background: url(images/facebook.png) no-repeat; background-size: 100% 100%; }
-					&.linkedin { background: url(images/linkedin.png) no-repeat; background-size: 100% 100%; }
-					&.instagram { background: url(images/instagram.png) no-repeat; background-size: 100% 100%; }
+					&.vkontakte { background: url(/images/vkontakte.png) no-repeat; background-size: 100% 100%; }
+					&.facebook { background: url(/images/facebook.png) no-repeat; background-size: 100% 100%; }
+					&.linkedin { background: url(/images/linkedin.png) no-repeat; background-size: 100% 100%; }
+					&.instagram { background: url(/images/instagram.png) no-repeat; background-size: 100% 100%; }
 				}
 			}
 		}
@@ -326,14 +328,14 @@ h2.title {
 			background-size: 100% 100%;
 			vertical-align: top;
 			&.prevCount {
-				background-image: url(images/prev_count.png);
+				background-image: url(/images/prev_count.png);
 				text-align: left;
 				&.noCount {
-					background-image: url(images/prev_count_notActive.png);
+					background-image: url(/images/prev_count_notActive.png);
 				}
 			}
 			&.nextCount {
-				background-image: url(images/next_count.png);
+				background-image: url(/images/next_count.png);
 			}
 		}
 	}
@@ -375,11 +377,11 @@ h2.title {
 			.countBtn {
 				width: 10.428vw; height: 10.428vw;
 				&.prevCount {
-					background-image: url(images/prev_count_mob.png);
-					&.noCount { background-image: url(images/prev_count_notActive_mob.png); }
+					background-image: url(/images/prev_count_mob.png);
+					&.noCount { background-image: url(/images/prev_count_notActive_mob.png); }
 				}
 				&.nextCount {
-					background-image: url(images/next_count_mob.png);
+					background-image: url(/images/next_count_mob.png);
 					text-align: right;
 				}
 			}
@@ -431,7 +433,7 @@ h2.title {
 	.boxBgBag {
 		width: 100%;
 		height: 22.315vw;
-		background-image: url(images/bag_bg.jpg);
+		background-image: url(/images/bag_bg.jpg);
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 		overflow: hidden;
@@ -592,7 +594,7 @@ h2.title {
 					margin: 0 auto;
 					width: 5.214vw;
 					height: 5.214vw;
-					background: url(images/bg_btn_addProd.png) center center / 100% no-repeat;
+					background: url(/images/bg_btn_addProd.png) center center / 100% no-repeat;
 				}
 			}
 		}
@@ -767,14 +769,14 @@ h2.title {
     				background-repeat: no-repeat;
     				background-size: 100% 100%;
     				&.prevCount {
-						background-image: url(images/prev_count_mob.png);
+						background-image: url(/images/prev_count_mob.png);
     					&.noCount {
-							background-image: url(images/prev_count_notActive_mob.png);
+							background-image: url(/images/prev_count_notActive_mob.png);
     					}
     				}
 
     				&.nextCount {
-    					background-image: url(images/next_count_mob.png);
+    					background-image: url(/images/next_count_mob.png);
     				}
 					
 					@media screen and (min-width: $medium) {
@@ -832,7 +834,7 @@ h2.title {
 			width: 22px;
 			height: 43.6px;
 			float: right;
-			background-image: url(images/remove_prod_btn.png);
+			background-image: url(/images/remove_prod_btn.png);
 			background-repeat: no-repeat;
 			background-size: 100% 100%;
 			box-sizing: border-box;
@@ -1013,34 +1015,34 @@ main.content {
 				}
 
 				.womenBoots {
-					background: url(images/womenboots.jpg) no-repeat;
+					background: url(/images/womenboots.jpg) no-repeat;
 
 					@media screen and (max-width: $mobile) {
-						background: url(images/womenbootsMobile.jpg) no-repeat;
+						background: url(/images/womenbootsMobile.jpg) no-repeat;
 					}
 				}
 
 				.teenBoots {
-					background: url(images/teenboots.jpg) no-repeat;
+					background: url(/images/teenboots.jpg) no-repeat;
 
 					@media screen and (max-width: $mobile) {
-						background: url(images/teenbootsMobile.jpg) no-repeat;
+						background: url(/images/teenbootsMobile.jpg) no-repeat;
 					}
 				}
 
 				.kidBoots {
-					background: url(images/kidboots.jpg) no-repeat;
+					background: url(/images/kidboots.jpg) no-repeat;
 
 					@media screen and (max-width: $mobile) {
-						background: url(images/kidbootsMobile.jpg) no-repeat;
+						background: url(/images/kidbootsMobile.jpg) no-repeat;
 					}
 				}
 
 				.menBoots {
-					background: url(images/menboots.jpg) no-repeat;
+					background: url(/images/menboots.jpg) no-repeat;
 
 					@media screen and (max-width: $mobile) {
-						background: url(images/menbootsMobile.jpg) no-repeat;
+						background: url(/images/menbootsMobile.jpg) no-repeat;
 					}
 				}
 
@@ -1103,7 +1105,7 @@ main.content {
 		
 		&.boxAutorization {
 			width: 535px;
-			background-image: url(images/bg_autorization.jpg);
+			background-image: url(/images/bg_autorization.jpg);
 			padding-bottom: 25px;
 
 			@media screen and (min-width: $medium) {
@@ -1155,7 +1157,7 @@ main.content {
 
 		&.boxRegistration {
 			width: 783px;
-			background-image: url(images/bg_reg.jpg);
+			background-image: url(/images/bg_reg.jpg);
 			padding-bottom: 25px;
 
 			@media screen and (min-width: $medium) {
@@ -1528,7 +1530,7 @@ main.content {
 							display: inline-block;
 							width: 22px;
 							height: 22px;
-							background: url(images/checkbox1.png) no-repeat;
+							background: url(/images/checkbox1.png) no-repeat;
 							background-size: 100% 100%;
 							position: absolute;
 							top: 0;
@@ -1547,7 +1549,7 @@ main.content {
 					}
 
 					input[type=checkbox]:checked + label:before {
-						background: url(images/checkbox_checked1.png) no-repeat;
+						background: url(/images/checkbox_checked1.png) no-repeat;
 						background-size: 100% 100%;
 					}
 				}
@@ -1623,7 +1625,7 @@ main.content {
 		
 		width: 535px;
 		padding: 68px 0 25px 0;
-		background-image: url(images/bg_ordering.jpg);
+		background-image: url(/images/bg_ordering.jpg);
 		background-size: 100% 100%;
 		background-position: -2px;
 
@@ -1718,7 +1720,7 @@ main.content {
 	&.pageContacts{
 
 		.boxContacts {
-			background-image: url(images/bg_contact.jpg);
+			background-image: url(/images/bg_contact.jpg);
 			background-repeat: no-repeat;
 			background-size: cover;
 			padding: 77px 0 63px 0;
@@ -1902,12 +1904,12 @@ main.content {
 				width: 27px;
 				height: 27px;
 				margin: 0 auto;
-				background-image: url(images/filter_btn.png);
+				background-image: url(/images/filter_btn.png);
 				background-repeat: no-repeat;
 				background-size: 100% 100%;
 			}
 			&.activeFilter {
-				a { background-image: url(images/filter_active_btn.png); }
+				a { background-image: url(/images/filter_active_btn.png); }
 			}
 			@media screen and (min-width: $medium) {
 				padding: 1.5625vw 0;
@@ -2018,7 +2020,7 @@ main.content {
 		.catalogBanner {
 			width: 100%;
 			height: 220px;
-			background-image: url(images/catalog_banner.jpg);
+			background-image: url(/images/catalog_banner.jpg);
 			background-repeat: no-repeat;
 			background-size: cover;
 			display: table;
@@ -2185,11 +2187,11 @@ main.content {
 					height: 3.65vw;
 					&.manyView {
 						margin-right: 1.5641vw;
-						background-image: url(images/manyView_bg.png);
+						background-image: url(/images/manyView_bg.png);
 						background-repeat: no-repeat;
 						background-size: 100% 100%;
 						&.activeView {
-							background-image: url(images/manyView_active_bg.png);
+							background-image: url(/images/manyView_active_bg.png);
 						}
 					}
 					&.singleView {
@@ -2213,7 +2215,7 @@ main.content {
 					h6.catFilterTitle {
 						border: none;
 						&:after {
-							background-image: url(images/remove_prod_btn.png);
+							background-image: url(/images/remove_prod_btn.png);
 							width: 3.546vw;
 							height: 8vw;
 						}	
@@ -2234,7 +2236,7 @@ main.content {
 					content: "";
 					width: 1.877vw;
 					height: 3.546vw;
-					background: url(images/dropFilter_btn.png) 0 0 / 100% no-repeat;
+					background: url(/images/dropFilter_btn.png) 0 0 / 100% no-repeat;
 					margin-top: -1.773vw;
 					position: absolute;
 					top: 50%;
@@ -2312,7 +2314,7 @@ main.content {
 				float: left;
 				width: 7px;
 				height: 15px;
-				background-image: url(images/backBtn.png);
+				background-image: url(/images/backBtn.png);
 				background-repeat: no-repeat;
 				background-size: 100% 100%;
 			}
@@ -2361,7 +2363,7 @@ main.content {
 			float: left; width: 70%; height: 100%;
 			li {
 				max-width: 90%; margin: 0 auto; float: none; height: auto;
-				img { cursor: url(images/cursor.png), pointer; height: auto; width: 100%; }
+				img { cursor: url(/images/cursor.png), pointer; height: auto; width: 100%; }
 				@media screen and (min-width: $medium) {
 					height: 100%;
 
@@ -2412,12 +2414,12 @@ main.content {
 			}
 
 			.bx-prev{
-				background-image: url(images/slider_backward_bg.png);
+				background-image: url(/images/slider_backward_bg.png);
 				left: 1.8476vw;
 			}
 			
 			.bx-next {
-				background-image: url(images/slider_forward_bg.png);
+				background-image: url(/images/slider_forward_bg.png);
 				right: 1.8476vw;
 			}
 	}
@@ -2552,7 +2554,7 @@ main.content {
 					cursor: pointer;
 					width: 16px;
 					height: 16px;
-					background-image: url(images/plus.png);
+					background-image: url(/images/plus.png);
 					background-repeat: no-repeat;
 					background-size: 100% 100%;
 			}
@@ -2566,7 +2568,7 @@ main.content {
 
 			&.active {
 				.titleDetail:before {
-					background-image: url(images/minus.png);
+					background-image: url(/images/minus.png);
 				}
 
 				.moreDetail {
@@ -2712,7 +2714,7 @@ main.content {
 
 					.backIcon {
 						margin-top: -2.6516vw;
-						background-image: url(images/backBtnMob.png);
+						background-image: url(/images/backBtnMob.png);
 						width: 2.97vw;
 						height: 5.303vw;
 					}
@@ -2803,7 +2805,6 @@ main.content {
 			.titleCharacteristic {
 				font-size: 8.7vw;
 				line-height: 1.1;
-
 				.priceProduct  {
 					padding: 13.3472vw 0;
 				}
@@ -2878,10 +2879,8 @@ div.cs-skin-underline {
 		.selecterField { display: none; }
 	}
 }
-
 .selecterField {
 	display: block; height: 44px; line-height: 44px; padding: 0 3.76%; color: #fff;
-
     @media screen and (min-width: $medium) {
 		height: 3.438vw; font-size: 1.5vw; line-height: 3.438vw;
     }
@@ -2962,10 +2961,8 @@ div.cs-skin-underline {
 		.availability {color: #feb101;}
 		.lengthSole {color: #ccc7bb; }
 	}
-
 	.counterProd {
 		overflow: hidden; cursor: default; width: 100%; margin: 0 auto;
-
 		li { display: inline-block; }
 		.numberCount {
 			font-size: 1.5vw; line-height: 1; text-align: center; width: 43%;
@@ -2978,10 +2975,10 @@ div.cs-skin-underline {
 			cursor: pointer; width: 28.2%; max-width: 2.052vw; height: 2.052vw; background-repeat: no-repeat; 
 			background-size: 100% 100%; vertical-align: top;
 			@media screen and (min-width: $medium) { max-width: 2.052vw; height: 2.052vw; }
-			&.prevCount { background-image: url(images/prev_count_mob.png); float: left;
-				&.noCount { background-image: url(images/prev_count_notActive_mob.png); }
+			&.prevCount { background-image: url(/images/prev_count_mob.png); float: left;
+				&.noCount { background-image: url(/images/prev_count_notActive_mob.png); }
 			}
-			&.nextCount { background-image: url(images/next_count_mob.png); float: right; }
+			&.nextCount { background-image: url(/images/next_count_mob.png); float: right; }
 		}
 	}
 	@media screen and (min-width: $medium) { font-size: 1.5vw; }
@@ -2999,14 +2996,11 @@ div.cs-skin-underline {
 		}
 	}
 }
-
-
 @keyframes animaciya {   
   from {background-color: #ed4a3e;}  
   to {background-color: #ffb5b0	;} 
 }
-
 .zoomBox{
-	cursor: url(images/cursorMinus.png), pointer;
+	cursor: url(/images/cursorMinus.png), pointer;
 	overflow: hidden;
 }

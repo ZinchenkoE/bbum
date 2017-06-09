@@ -56,7 +56,7 @@
     <? foreach ([1,1,1,1,1,1] as $item): ?>
         <a href="product.html" class="boxProduct">
             <div class="boxImgProduct">
-                <img src="../web/images/product2.png" class="imageProduct" alt="Product photo"/>
+                <img src="/images/product2.png" class="imageProduct" alt="Product photo"/>
             </div>
             <h3 class="nameProduct">Классические утепленные сапоги</h3>
             <div class="colorPoduct">Красные</div>
