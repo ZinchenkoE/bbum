@@ -10,6 +10,7 @@ class Lng
         'ru' => [
             'clothes-for-boy'  => 'Одежда для мальчиков',
             'clothes-for-girl' => 'Одежда для девочек',
+            'clothes-for-baby' => 'Одежда для малышей',
             'sleepwear'        => 'Пижамы',
             'dress'            => 'Платья',
             'recommend'        => 'Рекомендованные товары',
@@ -27,6 +28,7 @@ class Lng
         'uk' => [
             'clothes-for-boy'  => 'Одяг для хлопчиків',
             'clothes-for-girl' => 'Одяг для дівчаток',
+            'clothes-for-baby' => 'Одяг для немовлят',
             'sleepwear'        => 'Піжами',
             'dress'            => 'Плаття',
             'recommend'        => 'Рекомендовані товари',

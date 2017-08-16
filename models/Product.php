@@ -124,7 +124,7 @@ class Product extends Model
                 'category'        => $this->category,
                 'product_status'  => $this->product_status,
                 'producer'        => $this->producer,
-            ])->execute();
+        ])->execute();
         return $this->grest->setCode(302, 'Новый продукт успешно добавлен', '/admin/product');
     }
 
