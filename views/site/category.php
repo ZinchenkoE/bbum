@@ -1,105 +1,96 @@
-﻿<div class="headerCatalog">
-    <ul class="productMenu">
-        <li class="categoryProduct activeCategory"><a href="#">Женская <span class="wordWrap">обувь</span></a></li>
-        <li class="categoryProduct smallCategory"><a href="#">Подростковая <span class="wordWrap">обувь</span></a></li>
-        <li class="filterBtn"><a href="#"></a></li>
-        <li class="categoryProduct smallCategory"><a href="#">Детская <span class="wordWrap">обувь</span></a></li>
-        <li class="categoryProduct"><a href="#">Обувь для рыбалки <span class="wordWrap">и охоты</span></a></li>
-    </ul>
-    <div class="boxFilters">
-        <div class="boxSort">
-            <h5 class="filterTitle">Сортировать:</h5>
-            <div class="boxView">
-                <div class="viewBtn manyView"></div>
-                <div class="viewBtn singleView activeView"></div>
-            </div>
-        </div>
-        <div class="categoryFilter">
-            <h6 class="catFilterTitle">Тип</h6>
-            <ul class="paramFilter">
-                <li class="itemFilter activeItem">Cапоги на низком ходу</li>
-                <li class="itemFilter">Cапоги на высоком каблуке</li>
-                <li class="itemFilter">Полусапожки</li>
-            </ul>
-        </div>
-        <div class="categoryFilter">
-            <h6 class="catFilterTitle">Размер</h6>
-            <ul class="paramFilter">
-                <li class="itemFilter activeItem">37</li>
-                <li class="itemFilter">38</li>
-                <li class="itemFilter">39</li>
-                <li class="itemFilter">40</li>
-            </ul>
-        </div>
-        <div class="categoryFilter">
-            <h6 class="catFilterTitle">Цена</h6>
-            <ul class="paramFilter">
-                <li class="itemFilter activeItem">200 - 500 грн</li>
-                <li class="itemFilter">500 - 1000 грн</li>
-                <li class="itemFilter">100-1500 грн</li>
-            </ul>
-        </div>
-        <div class="btns">
-            <div class="boxBtn">
-                <button class="autorizationBtn applyBtn visibleBtn1" type="submit">Применить</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="catalogBanner">
-    <div class="boxInfo">
-        <h2 class="title">Женская обувь</h2>
-        <p class="specificationProduct">При создании каждой коллекции мы ориентируемся на последние мировые тенденции модной индустрии, а также на потребности широкого круга наших покупателей – от юных модниц до стильных деловых женщин.</p>
-    </div>
-</div>
-<div class="products">
-    <? foreach ([1,1,1,1,1,1] as $item): ?>
-        <a href="product.html" class="boxProduct">
-            <div class="boxImgProduct">
-                <img src="/images/product2.png" class="imageProduct" alt="Product photo"/>
-            </div>
-            <h3 class="nameProduct">Классические утепленные сапоги</h3>
-            <div class="colorPoduct">Красные</div>
-            <div class="priceProduct">
-                555 <span>грн</span>
-            </div>
-        </a>
-    <? endforeach; ?>
+<?
+$lng = Yii::$app->lng->getLng();
+$w   = Yii::$app->lng->getDictionary();
+
+$price_from = (int)Yii::$app->request->get('price_from');
+$price_to   = (int)Yii::$app->request->get('price_to');
+
+//echo '<pre>'; var_dump($data); die;
+?>
+<div id="CategoryPage" data-objs="CategoryPage">
+    <? if($data['show_gender_filter']): ?>
+		<div class="row" style="margin-bottom: 50px;">
+			<input class="genderFilter" type="checkbox" id="for_unisex"
+                <?= (bool)Yii::$app->request->get('for_unisex') ? 'checked' : '' ?>
+			><label for="forUnisex"><?= $w['unisex'] ?></label>
+			<input class="genderFilter" type="checkbox" id="for_boy"
+                <?= (bool)Yii::$app->request->get('for_boy')    ? 'checked' : '' ?>
+			><label for="forBoy"   ><?= $w['for-boy']  ?></label>
+			<input class="genderFilter" type="checkbox" id="for_girl"
+                <?= (bool)Yii::$app->request->get('for_girl')   ? 'checked' : '' ?>
+			><label for="forGirl"  ><?= $w['for-girl'] ?></label>
+		</div>
+    <? endif; ?>
+
+	<div class="row" style="margin-bottom: 50px;">
+		<div id="priceRange"
+			 style="width: 500px; margin-bottom: 20px;"
+			 data-min="<?= $data['min_price'] ?>"
+			 data-max="<?= $data['max_price'] ?>"
+			 data-value-min="<?= $price_from ? $price_from : 0 ?>"
+			 data-value-max="<?= $price_to   ? $price_to   : $data['max_price'] ?>"
+		></div>
+		<p>
+			<label for="amount">Укажите размах цен:</label>
+			<input type="text" id="amount" style="border:0; color:#f6931f; background:#fff;font-weight:bold;" disabled>
+		</p>
+	</div>
+
+	<div class="row">
+        <? foreach ($data['products'] as $product): ?>
+			<a href="/<?= $lng ?>/product/<?= $product['product_id'] ?>" class="productInCategory с-3" style="background: url(/<?= $product['img_src'] ?>) center center / cover no-repeat;">
+				<h2><?= $product['title_'.$lng] ?> <br> <?= $w['price'] ?> : <?= $product['price'] ?> грн </h2>
+			</a>
+        <? endforeach; ?>
+	</div>
+
+    <? if(isset($data['pages'])): ?>
+        <?= \yii\widgets\LinkPager::widget([
+            'pagination' => $data['pages'],
+            'maxButtonCount' => 10,
+            'lastPageLabel'  => false,
+            'firstPageLabel' => false,
+            'nextPageLabel'  => false,
+            'prevPageLabel'  => false,
+        ]);?>
+    <?php endif; ?>
+	<script>
+		var CategoryPage = {
+			handlers: {
+                ".genderFilter:change": function() { a.addGenderFilter(this); },
+			},
+			ready: function() {
+                CategoryPage.initRange();
+			},
+            initRange: function() {
+                var priceRange = $("#priceRange");
+                priceRange.slider({
+                    range: true,
+                    min: +priceRange.attr('data-min'),
+                    max: +priceRange.attr('data-max'),
+                    values: [ +priceRange.attr('data-value-min'), +priceRange.attr('data-value-max') ],
+                    slide: function( event, ui ) {
+                        $("#amount").val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
+                    },
+                    stop: function(event, ui) {
+                        a.Query.get({url: Url.setParam({
+                            price_from : ui.values[0],
+                            price_to   : ui.values[1]
+                        }), writeHistory: true });
+                    }
+                });
+                $("#amount").val( priceRange.slider( "values", 0 ) + " - " + priceRange.slider( "values", 1 ) + 'грн' );
+            },
+            addGenderFilter: function(el) {
+                if(el.checked){
+                    var p = {};
+                    p[el.id] = 1;
+                    a.Query.get({url: Url.setParam(p) || location.pathname, writeHistory: true });
+                }else{
+                    a.Query.get({url: Url.removeParam([el.id]) || location.pathname, writeHistory: true });
+                }
+            },
+		};
+	</script>
 </div>
 
-<script>
-    $('.boxFilters').css('top', $('.productMenu').outerHeight());
-    $('.categoryProduct').on('click', function () {
-        $(this).siblings().removeClass('activeCategory');
-        $(this).addClass('activeCategory');
-    });
-    $('.filterBtn').on('click', function () {
-        $(this).toggleClass('activeFilter');
-        if ($(this).hasClass('activeFilter')) { $('.boxFilters').show(); } else { $('.boxFilters').hide(); }
-    });
-    $('.boxView').on('click', function (e) {
-        if ( $(window).width() < 960 ) {
-            $(this).children().toggleClass('activeView');
-            if ($(this).children('.activeView').hasClass('manyView')) {
-                $(this).closest('.pageCatalog').find('.products').addClass('mobileManyViews');
-            }
-            else {
-                $(this).closest('.pageCatalog').find('.products').removeClass('mobileManyViews');
-            }
-        } else {
-            if ( $(e.target).hasClass('manyView') ) {
-                $(this).closest('.pageCatalog').find('.products').addClass('mobileManyViews');
-            } else {
-                $(this).closest('.pageCatalog').find('.products').removeClass('mobileManyViews');
-            }
-        }
-    });
-    $('.catFilterTitle').on('click', function () {
-        $(this).parent().toggleClass('activeFilterTitle');
-    });
-    $('.itemFilter').on('click', function () {
-        $(this).siblings().removeClass('activeItem');
-        $(this).addClass('activeItem');
-    });
-</script>
-<script>$('main').addClass('pageCatalog');</script>

@@ -4,23 +4,26 @@ $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
 
 ?>
+<div class="row">
+    <a href="/<?= $lng ?>/category/1" class="category half boy left">
+        <h2><?= $w['clothes-for-boy'] ?></h2>
+        <div class="btn">За покупками</div>
+    </a>
+    <a href="/<?= $lng ?>/category/2" class="category half girl right">
+        <h2><?= $w['clothes-for-girl'] ?></h2>
+        <div class="btn">За покупками</div>
+    </a>
+</div>
+<div class="row">
+    <a href="/<?= $lng ?>/category-tag/sleepwear" class="category toys с-3" style="background: url(/res/imgs/122_0.jpg) center center / contain no-repeat;">
+        <h2><?= $w['sleepwear'] ?></h2>
+    </a>
+    <a href="/<?= $lng ?>/category-tag/t-shirt" class="category winter с-3" style="background: url(/res/imgs/13_0.jpg) center center / cover no-repeat;" >
+        <h2>Футболки</h2>
+    </a>
+    <a href="/<?= $lng ?>/category/2/73" class="category linen с-3" style="background: url(/res/imgs/183_0.jpg) center center / cover no-repeat;">
+        <h2><?= $w['for-girl'] ?></h2>
+    </a>
+</div>
 
-<ul class="productCategory">
-    <li class="category">
-        <a href="/<?= $lng ?>/category/1" class="locationCategory womenBoots"></a>
-        <span class="titleCategory"><?= $w['clothes-for-girl'] ?></span>
-    </li>
-    <li class="category">
-        <a href="/<?= $lng ?>/category/2" class="locationCategory teenBoots"></a>
-        <span class="titleCategory"><?= $w['clothes-for-boy'] ?></span>
-    </li>
-    <li class="category">
-        <a href="/<?= $lng ?>/category/3" class="locationCategory kidBoots"></a>
-        <span class="titleCategory"><?= $w['clothes-for-baby'] ?></span>
-    </li>
-    <li class="category">
-        <a href="/<?= $lng ?>/category/4" class="locationCategory menBoots"></a>
-        <span class="titleCategory">Игрушки</span>
-    </li>
-</ul>
-<script>$('main').addClass('pageMain');</script>
+<?= Yii::$app->controller->renderPartial('/site/index/recommendBlock', ['data' => $data]); ?>

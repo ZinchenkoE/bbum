@@ -1,115 +1,95 @@
-﻿<?php
+<?php
 use yii\helpers\Html;
 /** * @var $content */
+$category = \app\models\SiteCategory::getCategoriesForMenu();
+$category_for_boy  = array_filter($category, function($i) { return ($i['parent_id'] == 1); });
+$category_for_girl = array_filter($category, function($i) { return ($i['parent_id'] == 2); });
+
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="<?= $lng ?>">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-	<title>Baby Bum in Ukraine</title>
+    <title>Baby Bum in Ukraine</title>
 
-	<link href="/css/site.css" rel="stylesheet">
-	<link href="/plugins/scrollbar/css/jquery.mCustomScrollbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/lightslider.min.css">
+    <link rel="stylesheet" href="/css/lightgallery.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/site.css">
 
-	<script src="/js/lib/jquery-3.1.1.min.js"></script>
-	<script src="/js/menu.js"></script>
-	<script src="/js/bag.js"></script>
-	<script src="/js/validForm.js"></script>
-	<script src="/plugins/responsiveSlides/js/responsiveslides.min.js"></script>
-	<script src="/plugins/jquery_bxslider/jquery.bxslider.min.js"></script>
-	<script src="/js/script.js"></script>
-	<script src="/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/js/lib/jquery-3.1.1.min.js"></script>
+    <script src="/js/lib/lightslider.min.js"></script>
+    <script src="/js/lib/maskedInput.js"></script>
+    <script src="/js/lib/lightgallery.min.js"></script>
+    <script src="/js/lib/jquery-ui.min.js"></script>
 
-	<script src="/js/a_site.js"></script>
+    <script src="/js/a_site.js"></script>
 	<script>
-        a.params.lang = '<?= $lng ?>';
+		a.params.lang = '<?= $lng ?>';
 	</script>
 
-	<script src="/js/a.Validator.js"></script>
-	<script src="/js/a.Select.js"></script>
+    <script src="/js/a.Validator.js"></script>
+    <script src="/js/a.Select.js"></script>
 	<script src="/js/a.Query.js"></script>
-	<script src="/js/devTools.js"></script>
+    <script src="/js/devTools.js"></script>
+
 </head>
 <body>
-	<div id="wrapper">
-		<div class="wrappMenu">
-			<div class="verticalPosition">
-				<ul class="menu">
-					<li class="itemMenu">
-						<a href="#" class="linkMenu">Категории товаров</a>
-                        <ul class="submenu">
-                            <li class="itemMenu itemSubmenu">
-                                <a href="#" class="linkMenu linkSubmenu">Для девочек</a>
-                            </li>
-                            <li class="itemMenu itemSubmenu">
-                                <a href="#" class="linkMenu linkSubmenu">Для мальчиков</a>
-                            </li>
-                            <li class="itemMenu itemSubmenu">
-                                <a href="#" class="linkMenu linkSubmenu">Для младенцев</a>
-                            </li>
-                            <li class="itemMenu itemSubmenu">
-                                <a href="#" class="linkMenu linkSubmenu">Игрушки</a>
-                            </li>
-                        </ul>
-                    </li>
-					<li class="itemMenu">
-						<a href="#" class="linkMenu">покупателям</a>
-						<ul class="submenu">
-							<li class="itemMenu itemSubmenu">
-								<a href="#" class="linkMenu linkSubmenu">как купить?</a>
-							</li>
-							<li class="itemMenu itemSubmenu">
-								<a href="#" class="linkMenu linkSubmenu">оплата и доставка</a>
-							</li>
-							<li class="itemMenu itemSubmenu">
-								<a href="#" class="linkMenu linkSubmenu">обмен и возврат</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="rightSitebar">
-			<div class="header">
-				<a href="index.html" class="logo"></a>
-			</div>
-			<nav class="pageMenu">
-				<ul class="mainMenu">
-					<li class="itemMainMenu">
-						<a href="#" class="linkMainMenu goToMenu"></a>
-					</li>
-<!--					<li class="itemMainMenu">-->
-<!--						<a href="autorization.html" class="linkMainMenu goToLogin"></a>-->
-<!--					</li>-->
-					<li class="itemMainMenu">
-						<a href="contacts.html" class="linkMainMenu gotoPhone"></a>
-					</li>
-					<li class="itemMainMenu">
-						<a href="#" class="linkMainMenu goToBag"><span class="pulseBag"></span></a>
-					</li>
-				</ul>
-			</nav>
-			<div class="boxBottomFix">
-				<ul class="checkLang">
-					<li class="lang langRu <?= $lng === 'ru' ? 'activeLang' : '' ?>"><a href="/ru">ru</a></li>
-					<li class="lang langUa <?= $lng === 'uk' ? 'activeLang' : '' ?>"><a href="/uk">ua</a></li>
-				</ul>
-				<ul class="social">
-					<li class="boxIconSocial"><a href="#" class="socialIcon vkontakte"></a></li>
-					<li class="boxIconSocial"><a href="#" class="socialIcon facebook"></a></li>
-					<li class="boxIconSocial"><a href="#" class="socialIcon instagram"></a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="overlay"></div>
-        <?= Yii::$app->controller->renderPartial('/site/cart')?>
-		<main class="content pageMain"><?= $content ?></main>
-	</div>
+    <header>
+        <div class="container row">
+            <a href="/<?= $lng ?>" id="logo"></a>
+            <div class="contacts row">
+                <div class="left">
+                    <p><img src="/img/site/phone-call.svg"><span>+380-66-323-05-29</span></p>
+                    <p><img src="/img/site/phone-call.svg"><span>+380-68-164-41-33</span></p>
+                </div>
+                <div class="right">
+                    <p><img src="/img/site/envelope.svg"><span>sale@baby-bum.in.ua</span></p>
+                </div>
+            </div>
+
+        </div>
+        <nav>
+            <ul class="container">
+                <li><a href="/<?= $lng ?>"><?= $w['home'] ?></a></li>
+                <li>
+                    <a href="#"><?= $w['for-boy'] ?></a>
+                    <ul>
+                        <? foreach ($category_for_boy as $boy_cat): ?>
+                        <li><a href="/<?= $lng ?>/category/<?= $boy_cat['parent_id']?>/<?= $boy_cat['category_id']?>"
+                            ><?= $boy_cat['category_title_'.$lng]?></a></li>
+                        <? endforeach; ?>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><?= $w['for-girl'] ?></a>
+                    <ul>
+                        <? foreach ($category_for_girl as $boy_girl): ?>
+                            <li><a href="/<?= $lng ?>/category/<?= $boy_girl['parent_id']?>/<?= $boy_girl['category_id']?>"
+                                ><?= $boy_girl['category_title_'.$lng]?></a></li>
+                        <? endforeach; ?>
+                    </ul>
+                </li>
+                <li><a href="/<?= $lng ?>/info"><?= $w['payment-delivery'] ?></a></li>
+                <li><a href="/<?= $lng ?>/contacts"><?= $w['contacts'] ?></a></li>
+				<i class="material-icons" onclick="Cart.show()"
+				   style="vertical-align: middle; cursor: pointer; margin-left: 20px; color: #545454;"
+				>shopping_cart</i>
+            </ul>
+
+        </nav>
+    </header>
+    <?= Yii::$app->controller->renderPartial('/site/partial/cart')?>
+	<main class="container"><?= $content ?></main>
+    <footer></footer>
+    <div id="overlay"></div>
+    <?= Yii::$app->controller->renderPartial('/site/partial/preloader')?>
+    <script> a.init(); </script>
 </body>
 </html>
