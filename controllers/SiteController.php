@@ -11,13 +11,25 @@ use app\models\Order;
 use app\models\SiteIndex;
 use app\models\SiteProduct;
 use app\models\SiteCategory;
+use yii\web\Response;
 
 class SiteController extends Controller
 {
     public $layout = 'site';
+    public $products = [];
+
+    public $meta = [
+        'title'       => 'Baby shop',
+        'description' => 'Магазин детской одежды Baby shop',
+        'abstract'    => 'Магазин детской одежды Baby shop'
+    ];
+    public $view;
+    public $data = [];
+    public $bd   = [];
 
     public function beforeAction($action)
     {
+        $this->view = $this->action->id;
         return parent::beforeAction($action);
     }
 
@@ -25,6 +37,25 @@ class SiteController extends Controller
     {
         if(Yii::$app->request->isGet) Url::remember();
         return parent::afterAction($action, $result);
+    }
+
+    private function xrender () {
+        $req = Yii::$app->request;
+        $res = Yii::$app->response;
+        if ($req->isAjax){
+            $res->format = Response::FORMAT_JSON;
+            if ($req->isGet){
+                $res->data['renders']['main'] = [
+                    'render' => $this->renderPartial($this->view, ['data' => $this->data]),
+                    'type'   => 'rp'
+                ];
+            }
+            if ($this->bd) $res->data['bd'] = $this->bd;
+
+            return $res;
+        } else {
+            return $this->render($this->view, ['data' => $this->data]);
+        }
     }
 
     public function actionLogJs()
@@ -36,43 +67,36 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        SiteIndex::initModel()->run();
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
     public function actionInfo()
     {
-        Yii::$app->grest->render = 'info';
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
     public function actionContacts()
     {
-        Yii::$app->grest->render = 'contacts';
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
     public function actionCategory($key = null, $id = null)
     {
         SiteCategory::initModel()->run($key, $id);
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
     public function actionProduct($key = null, $id = null)
     {
         SiteProduct::initModel()->run($key, $id);
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
     public function actionOrder($key = null, $id = null)
     {
         Order::initModel()->run($key, $id);
-        return Yii::$app->grest->render();
+        return $this->xrender();
     }
 
-//    public function actionError()
-//    {
-//        echo 'Произошла ошибка сервера!';
-////        return Yii::$app->grest->render();
-//    }
 }
+
