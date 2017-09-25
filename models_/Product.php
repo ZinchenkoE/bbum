@@ -76,13 +76,13 @@ class Product extends Model
 			$offset = $page == 0 || $page == 1 ? '' : 'OFFSET '. ($page-1)*self::PAGE_LIMIT;
             $search_part_query = $search ? " AND title_ru LIKE '%{$search}%' " : ' ';
 			$count  = $this->db->createCommand(
-			    "SELECT COUNT(*) FROM bs_product WHERE product_status != ".self::STATUS_DELETED. $search_part_query )->queryScalar();
+			    "SELECT COUNT(*) FROM bs_product WHERE status != ".self::STATUS_DELETED. $search_part_query )->queryScalar();
             $products = $this->db->createCommand("
                 SELECT *
                 FROM bs_product p
-                LEFT JOIN bs_category c ON p.category = c.category_id
+                LEFT JOIN bs_category c ON p.category_id = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id  
-                WHERE p.product_status != ".self::STATUS_DELETED." {$search_part_query}  
+                WHERE p.status != ".self::STATUS_DELETED." {$search_part_query}  
                 ORDER BY p.product_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset} 
                 ")->queryAll();
 
@@ -151,7 +151,7 @@ class Product extends Model
     protected function remove($key)
     {
         $result = $this->db->createCommand(
-            "UPDATE bs_product SET product_status = ".self::STATUS_DELETED." WHERE product_id = {$key}")->execute();
+            "UPDATE bs_product SET status = ".self::STATUS_DELETED." WHERE product_id = {$key}")->execute();
         if ($result) {
             $this->grest->setCode(302, 'Продукт успешно удален', '/admin/product');
         } else {
@@ -161,7 +161,7 @@ class Product extends Model
 
     public static function getProductById($id)
     {
-        return Yii::$app->db->createCommand("SELECT * FROM bs_product WHERE product_id = {$id}")->queryOne();
+        return Yii::$app->db->createCommand("SELECT * FROM bs_product WHERE id = {$id}")->queryOne();
     }
 
     protected function setCategoryPost(){ // Назначение категории к товару с таблицы

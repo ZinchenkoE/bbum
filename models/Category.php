@@ -1,26 +1,21 @@
 <?php
 namespace app\models;
-
-use Yii;
-use app\components\helpers\Logger;
 use yii\db\ActiveRecord;
-
 
 /**
  * Class Category
  * @package app\models
- * @property $id int
- * @property $title_ru string
- * @property $title_uk string
- * @property $image string
- * @property $parent_id int
- * @property $tag string
- * @property $status int
+ * @property integer $id
+ * @property string  $title_ru
+ * @property string  $title_uk
+ * @property string  $image
+ * @property integer $parent_id
+ * @property string  $tag
+ * @property integer $status
  */
 
 class Category extends ActiveRecord
 {
-
     const STATUS_NOT_ACTIVE = 0;
     const STATUS_ACTIVE     = 1;
     const STATUS_DELETED    = 2;
@@ -52,13 +47,19 @@ class Category extends ActiveRecord
         ];
     }
 
-    public function getChildren()
-    {
-        return Category::findAll(['parent_id' => $this->id]);
-    }
-
     public static function getRootCategory() {
         return static::findAll(['parent_id' => 0]);
     }
+
+    public function getChildren()
+    {
+        return Category::find()
+            ->innerJoin('bs_product', '`bs_product`.`category_id` = `bs_category`.`id`')
+            ->where(['parent_id' => $this->id])
+            ->all();
+    }
+
+
+
 
 }

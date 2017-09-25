@@ -2,11 +2,12 @@
 use yii\helpers\Html;
 /** *
  * @var $content
- * @var app\controllers\SiteController controller
+ * @var app\controllers\SiteController $controller
  */
 
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
+$lng        = Yii::$app->lng->getLng();
+$w          = Yii::$app->lng->getDictionary();
+$controller = Yii::$app->controller;
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lng ?>">
@@ -43,6 +44,9 @@ $w   = Yii::$app->lng->getDictionary();
     <header>
         <div class="container row">
             <a href="/<?= $lng ?>" id="logo"></a>
+            <i class="material-icons" onclick="Cart.show()"
+               style="vertical-align: middle; cursor: pointer; margin-left: 20px; color: #545454;line-height: 100px; float: right;"
+            >shopping_cart</i>
             <div class="contacts row">
                 <div class="left">
                     <p><img src="/img/site/phone-call.svg"><span>+380-66-323-05-29</span></p>
@@ -52,50 +56,25 @@ $w   = Yii::$app->lng->getDictionary();
                     <p><img src="/img/site/envelope.svg"><span>sale@baby-bum.in.ua</span></p>
                 </div>
             </div>
-
         </div>
         <nav>
             <ul class="container">
                 <li><a href="/<?= $lng ?>"><?= $w['home'] ?></a></li>
-                <? foreach (Yii::$app->controller->root_category as $cat): ?>
+                <? foreach ($controller->root_categories as $cat): ?>
                     <li>
                         <a href="#"><?= $cat->title_ru ?></a>
                         <ul>
-                            <? foreach ($cat-> as $boy_cat): ?>
-                                <li><a href="/<?= $lng ?>/category/<?= $boy_cat['parent_id']?>/<?= $boy_cat['category_id']?>"
-                                    ><?= $boy_cat['category_title_'.$lng]?></a></li>
+                            <? foreach ($cat->children as $children_cat): ?>
+                                <li><a href="/<?= $lng ?>/category?cat=<?= $children_cat->id ?>"
+                                    ><?= $children_cat->title_ru ?></a>
+                                </li>
                             <? endforeach; ?>
                         </ul>
                     </li>
-
-                    <li><a href="/<?= $lng ?>/category/<?= $cat->parent_id ?>/<?= $boy_cat['category_id']?>"
-                        ><?= $boy_cat['_'.$lng]?></a></li>
                 <? endforeach; ?>
-                <li>
-                    <a href="#"><?= $w['for-boy'] ?></a>
-                    <ul>
-                        <? foreach ($category_for_boy as $boy_cat): ?>
-                        <li><a href="/<?= $lng ?>/category/<?= $boy_cat['parent_id']?>/<?= $boy_cat['category_id']?>"
-                            ><?= $boy_cat['category_title_'.$lng]?></a></li>
-                        <? endforeach; ?>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><?= $w['for-girl'] ?></a>
-                    <ul>
-                        <? foreach ($category_for_girl as $boy_girl): ?>
-                            <li><a href="/<?= $lng ?>/category/<?= $boy_girl['parent_id']?>/<?= $boy_girl['category_id']?>"
-                                ><?= $boy_girl['category_title_'.$lng]?></a></li>
-                        <? endforeach; ?>
-                    </ul>
-                </li>
                 <li><a href="/<?= $lng ?>/info"><?= $w['payment-delivery'] ?></a></li>
                 <li><a href="/<?= $lng ?>/contacts"><?= $w['contacts'] ?></a></li>
-				<i class="material-icons" onclick="Cart.show()"
-				   style="vertical-align: middle; cursor: pointer; margin-left: 20px; color: #545454;"
-				>shopping_cart</i>
             </ul>
-
         </nav>
     </header>
     <?= Yii::$app->controller->renderPartial('/site/partial/cart')?>

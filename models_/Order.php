@@ -71,8 +71,8 @@ class Order extends Model
         if ($order_id) {
             $order = $this->db->createCommand("
                 SELECT 
-                  o.order_id, 
-                  cstm.customer_name, 
+                  o.id, 
+                  cstm.name, 
                   cstm.email, 
                   cstm.phone, 
                   ct.city_name, 
@@ -80,15 +80,15 @@ class Order extends Model
                   o.total_price, 
                   o.status
                 FROM bs_order o
-                JOIN bs_customer cstm ON o.customer_id = cstm.customer_id
+                JOIN bs_customer cstm ON o.customer_id = cstm.id
                 JOIN bs_city ct ON o.city = ct.city_id
-                JOIN bs_order_product op ON o.order_id = op.order_id
-                WHERE o.order_id = {$order_id}
+                JOIN bs_order_product op ON o.id = op.order_id
+                WHERE o.id = {$order_id}
                 ")->queryOne();
             $order_products = $this->db->createCommand("
                 SELECT op.*, p.title_ru, p.price
                 FROM bs_order_product op
-                JOIN bs_product p ON op.product_id = p.product_id
+                JOIN bs_product p ON op.product_id = p.id
                 WHERE op.order_id = {$order_id}
                 ")->queryAll();
             $this->grest->data['order']           = $order;
@@ -102,8 +102,8 @@ class Order extends Model
             $count  = $this->db->createCommand("SELECT COUNT(*) FROM bs_order " . $search_part_query )->queryScalar();
             $orders = $this->db->createCommand("
                 SELECT 
-                  o.order_id, 
-                  cstm.customer_name, 
+                  o.id, 
+                  cstm.name, 
                   cstm.email, 
                   cstm.phone, 
                   ct.city_name, 
@@ -111,7 +111,7 @@ class Order extends Model
                   o.total_price, 
                   o.status
                 FROM bs_order o
-                JOIN bs_customer cstm ON o.customer_id = cstm.customer_id
+                JOIN bs_customer cstm ON o.customer_id = cstm.id
                 JOIN bs_city ct ON o.city = ct.city_id
                 WHERE 1 {$search_part_query}
                 ORDER BY o.order_id DESC LIMIT " . self::PAGE_LIMIT. " {$offset}
@@ -202,7 +202,7 @@ class Order extends Model
 
     public static function getOrderById($id)
     {
-        return Yii::$app->db->createCommand("SELECT * FROM bs_order WHERE order_id = {$id}")->queryOne();
+        return Yii::$app->db->createCommand("SELECT * FROM bs_order WHERE id = {$id}")->queryOne();
     }
 
     private function sendMail()

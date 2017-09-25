@@ -1,4 +1,5 @@
 <?
+/** @var array $data **/
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
 
@@ -38,8 +39,9 @@ $price_to   = (int)Yii::$app->request->get('price_to');
 
 	<div class="row">
         <? foreach ($data['products'] as $product): ?>
-			<a href="/<?= $lng ?>/product/<?= $product['product_id'] ?>" class="productInCategory с-3" style="background: url(/<?= $product['img_src'] ?>) center center / cover no-repeat;">
-				<h2><?= $product['title_'.$lng] ?> <br> <?= $w['price'] ?> : <?= $product['price'] ?> грн </h2>
+			<a href="/<?= $lng ?>/product/<?= $product->id ?>" class="productInCategory с-3"
+               style="background: url(/<?= $product->imgs[0] ?>) center center / cover no-repeat;">
+				<h2><?= $product->title_ru ?> <br> <?= $w['price'] ?> : <?= $product->price ?> грн </h2>
 			</a>
         <? endforeach; ?>
 	</div>

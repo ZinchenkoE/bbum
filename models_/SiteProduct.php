@@ -13,7 +13,7 @@ class SiteProduct extends Model
         if ($key) {
             $product = $this->db->createCommand("
                 SELECT p.*, c.*  FROM bs_product p
-                LEFT JOIN bs_category c ON p.category = c.category_id
+                LEFT JOIN bs_category c ON p.category_id = c.category_id
                 WHERE p.product_id = {$key} AND p.product_status = ".Product::STATUS_ACTIVE )->queryOne();
             if($product){
                 $this->grest->data['product'] = $product;

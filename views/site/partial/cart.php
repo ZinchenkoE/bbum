@@ -33,8 +33,8 @@
                 <label class="title">Город</label>
 				<select id="Cart-citySelect" name="city" class="searchSelect">
 					<option value=""></option>
-                    <?php foreach (\app\models\City::find()->all() ?? [] as $item): ?>
-						<option value="<?= $item['city_id'] ?>"><?= $item['city_name'] ?></option>
+                    <?php foreach (\app\models\City::find()->all() ?? [] as $city): ?>
+						<option value="<?= $city->id ?>"><?= $city->name ?></option>
                     <?php endforeach; ?>
 				</select>
             </div>

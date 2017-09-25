@@ -1,30 +1,31 @@
 <?
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
+$product = $data['product'];
 ?>
 
 <div id="ProductPage" data-objs="ProductPage">
     <div class="row">
         <div class="leftPart">
             <ul id="imageGallery">
-                <? foreach ($data['images'] as $img): ?>
-                    <li data-thumb="/<?= $img['src'] ?>" data-src="/<?= $img['src'] ?>">
-                        <img src="/<?= $img['src'] ?>" />
+                <? foreach ($product->imgs as $img): ?>
+                    <li data-thumb="/<?= $img ?>" data-src="/<?= $img ?>">
+                        <img src="/<?= $img ?>" />
                     </li>
                 <? endforeach; ?>
             </ul>
         </div>
         <div class="rightPart">
-            <p>Артикул: 100-<?= $data['product']['product_id'] ?></p>
-            <p><?= $w['title'] ?>: <?= $data['product']['title_'.$lng] ?></p>
-            <p><?= $w['description'] ?>: <?= $data['product']['description_'.$lng] ?></p>
-            <p><?= $w['price'] ?>: <?= $data['product']['price'] ?> грн</p>
+            <p>Артикул: 100-<?= $product->id ?></p>
+            <p><?= $w['title'] ?>: <?= $product->title_ru ?></p>
+            <p><?= $w['description'] ?>: <?= $product->description_ru ?></p>
+            <p><?= $w['price'] ?>: <?= $product->price ?> грн</p>
 			<button class="blackBtn addProductToCart"><?= $w['bay'] ?></button>
         </div>
     </div>
 	<script>
         var ProductPage = {
-            product: <?= json_encode($data['product']) ?>,
+            product: <?= json_encode($product->attributes) ?>,
             handlers: {
                 "#ProductPage .addProductToCart:click" : function() { ProductPage.addProductToCart($(this));  },
                 "#ProductPage .goToCart:click" 		   : function() { Cart.show(); },

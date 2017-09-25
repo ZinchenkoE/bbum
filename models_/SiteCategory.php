@@ -52,18 +52,18 @@ class SiteCategory extends Model
                   MIN(p.price) AS min_price, 
                   MAX(p.price) AS max_price
                 FROM bs_product p
-                LEFT JOIN bs_category c         ON p.category = c.category_id
+                LEFT JOIN bs_category c         ON p.category_id = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryOne();
         $where .= $gender_filter.$price_filter;
 
         $count = $this->db->createCommand("
                 SELECT  COUNT(p.product_id)     FROM bs_product p
-                LEFT JOIN bs_category c         ON p.category = c.category_id
+                LEFT JOIN bs_category c         ON p.category_id = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id $where")->queryScalar();
 
         $products = $this->db->createCommand("
                 SELECT p.*, MIN(p_i.src) AS img_src, c.*  FROM bs_product p
-                LEFT JOIN bs_category c         ON p.category = c.category_id
+                LEFT JOIN bs_category c         ON p.category_id = c.category_id
                 LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id
                 LEFT JOIN bs_product_img p_i    ON p.product_id  = p_i.product_id 
                 $where AND p.product_status = ".Product::STATUS_ACTIVE."
@@ -90,7 +90,7 @@ class SiteCategory extends Model
             SELECT pc.*,  c.*, c.parent_id, c.category_id, COUNT(p.product_id) AS count_product  
             FROM bs_category c 
             LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id 
-            INNER JOIN bs_product p ON p.category = c.category_id  
+            INNER JOIN bs_product p ON p.category_id = c.category_id  
             WHERE c.category_status = ".Category::STATUS_ACTIVE."
             GROUP BY c.category_id
             ORDER BY c.category_title_ru")->queryAll();
