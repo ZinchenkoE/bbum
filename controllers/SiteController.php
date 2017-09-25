@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\Category;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -10,7 +11,7 @@ use yii\web\Response;
 class SiteController extends Controller
 {
     public $layout = 'site';
-    public $menu;
+    public $root_categories;
     public $categories;
     public $products = [];
 
@@ -26,18 +27,8 @@ class SiteController extends Controller
     public function beforeAction($action)
     {
         $this->view = $this->action->id;
-        $this->categories = 55;
-        $this->menu;
-//        $category = Yii::$app->db->createCommand("
-//            SELECT pc.*,  c.*, c.parent_id, c.category_id, COUNT(p.product_id) AS count_product
-//            FROM bs_category c
-//            LEFT JOIN bs_parent_category pc ON c.parent_id = pc.parent_category_id
-//            INNER JOIN bs_product p ON p.category = c.category_id
-//            GROUP BY c.category_id
-//            ORDER BY c.category_title_ru")->queryAll();
+        $this->root_categories = Category::getRootCategory();
 
-//        $category_for_boy  = array_filter($category, function($i) { return ($i['parent_id'] == 1); });
-//        $category_for_girl = array_filter($category, function($i) { return ($i['parent_id'] == 2); });
         return parent::beforeAction($action);
     }
 

@@ -1,10 +1,12 @@
 <?php
 use yii\helpers\Html;
-/** * @var $content */
+/** *
+ * @var $content
+ * @var app\controllers\SiteController controller
+ */
 
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
-
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lng ?>">
@@ -55,6 +57,20 @@ $w   = Yii::$app->lng->getDictionary();
         <nav>
             <ul class="container">
                 <li><a href="/<?= $lng ?>"><?= $w['home'] ?></a></li>
+                <? foreach (Yii::$app->controller->root_category as $cat): ?>
+                    <li>
+                        <a href="#"><?= $cat->title_ru ?></a>
+                        <ul>
+                            <? foreach ($cat-> as $boy_cat): ?>
+                                <li><a href="/<?= $lng ?>/category/<?= $boy_cat['parent_id']?>/<?= $boy_cat['category_id']?>"
+                                    ><?= $boy_cat['category_title_'.$lng]?></a></li>
+                            <? endforeach; ?>
+                        </ul>
+                    </li>
+
+                    <li><a href="/<?= $lng ?>/category/<?= $cat->parent_id ?>/<?= $boy_cat['category_id']?>"
+                        ><?= $boy_cat['_'.$lng]?></a></li>
+                <? endforeach; ?>
                 <li>
                     <a href="#"><?= $w['for-boy'] ?></a>
                     <ul>

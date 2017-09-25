@@ -8,8 +8,8 @@ use app\components\traits\ModelTrait;
 use yii\db\ActiveRecord;
 
 /**
- * Class User
- * @package app\models\user
+ * Class Product
+ * @package app\models
  * @property $product_id int
  * @property $title_ru string
  * @property $title_uk string
@@ -27,14 +27,10 @@ use yii\db\ActiveRecord;
 
 class Product extends ActiveRecord
 {
-    const PAGE_LIMIT = 50;
-
     const STATUS_NOT_ACTIVE = 0;
     const STATUS_ACTIVE     = 1;
     const STATUS_DELETED    = 2;
 
-
-    use ModelTrait;
 
     public function rules()
     {
