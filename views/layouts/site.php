@@ -1,9 +1,6 @@
 <?php
 use yii\helpers\Html;
 /** * @var $content */
-$category = \app\models\SiteCategory::getCategoriesForMenu();
-$category_for_boy  = array_filter($category, function($i) { return ($i['parent_id'] == 1); });
-$category_for_girl = array_filter($category, function($i) { return ($i['parent_id'] == 2); });
 
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();

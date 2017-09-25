@@ -1,6 +1,4 @@
 <?php
-namespace app\models;
-
 use Yii;
 use app\components\traits\ModelTrait;
 

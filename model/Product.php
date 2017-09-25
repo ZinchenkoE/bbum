@@ -2,13 +2,30 @@
 namespace app\models;
 
 use Yii;
-use yii\base\Model;
 use yii\data\Pagination;
 use app\components\helpers\File;
 use app\components\traits\ModelTrait;
+use yii\db\ActiveRecord;
 
+/**
+ * Class User
+ * @package app\models\user
+ * @property $product_id int
+ * @property $title_ru string
+ * @property $title_uk string
+ * @property $description_ru string
+ * @property $description_uk string
+ * @property $images string
+ * @property $price int
+ * @property $gender int
+ * @property $category int
+ * @property $update_time int
+ * @property $product_status int
+ * @property $producer int
+ *
+ */
 
-class Product extends Model
+class Product extends ActiveRecord
 {
     const PAGE_LIMIT = 50;
 
@@ -16,16 +33,6 @@ class Product extends Model
     const STATUS_ACTIVE     = 1;
     const STATUS_DELETED    = 2;
 
-    public $title_ru;
-    public $title_uk;
-    public $description_ru;
-    public $description_uk;
-    public $price;
-    public $gender;
-    public $category;
-    public $product_status;
-    public $producer;
-    public $removeImg;
 
     use ModelTrait;
 

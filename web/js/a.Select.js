@@ -69,6 +69,12 @@
                     var $t = $(this);
                     if ($t.text().toLowerCase().indexOf(searchStr) === -1) $t.hide();
                     else $t.show();
+
+                    $('div').show();
+                    document.querySelectorAll('div').forEach(function(el){
+                        el.style.display = 'block';
+                    });
+
                 });
             });
 
