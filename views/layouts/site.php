@@ -1,13 +1,11 @@
 <?php
 use yii\helpers\Html;
+use app\models\Category;
 /** *
  * @var $content
- * @var app\controllers\SiteController $controller
  */
-
-$lng        = Yii::$app->lng->getLng();
-$w          = Yii::$app->lng->getDictionary();
-$controller = Yii::$app->controller;
+$lng = Yii::$app->lng->getLng();
+$w   = Yii::$app->lng->getDictionary();
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lng ?>">
@@ -60,7 +58,7 @@ $controller = Yii::$app->controller;
         <nav>
             <ul class="container">
                 <li><a href="/<?= $lng ?>"><?= $w['home'] ?></a></li>
-                <? foreach ($controller->root_categories as $cat): ?>
+                <? foreach (Category::getRootCategory() as $cat): ?>
                     <li>
                         <a href="#"><?= $cat->title_ru ?></a>
                         <ul>

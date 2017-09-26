@@ -3,9 +3,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\data\Pagination;
-use yii\helpers\Url;
 use yii\web\Controller;
-use yii\web\Response;
 use app\components\helpers\Logger;
 use app\models\Product;
 use app\models\Category;
@@ -18,59 +16,23 @@ use app\models\Category;
 class SiteController extends Controller
 {
     public $layout = 'site';
-    public $root_categories;
-    public $view;
-    public $data = [];
-    public $bd   = [];
     public $meta = [
         'title'       => 'Baby shop',
         'description' => 'Магазин детской одежды Baby shop',
         'abstract'    => 'Магазин детской одежды Baby shop'
     ];
 
+    use ControllerTrait;
+
     public function beforeAction($action)
     {
         $this->view = $this->action->id;
-        $this->root_categories = Category::getRootCategory();
-
         return parent::beforeAction($action);
     }
 
-    public function afterAction($action, $result)
-    {
-        if(Yii::$app->request->isGet) Url::remember();
-        return parent::afterAction($action, $result);
-    }
-
-    private function xrender () {
-        $req = Yii::$app->request;
-        $res = Yii::$app->response;
-        if ($req->isAjax){
-            $res->format = Response::FORMAT_JSON;
-            if ($req->isGet){
-                $res->data['renders']['main'] = [
-                    'render' => $this->renderPartial($this->view, ['data' => $this->data]),
-                    'type'   => 'rp'
-                ];
-            }
-            if ($this->bd) $res->data['bd'] = $this->bd;
-
-            return $res;
-        } else {
-            return $this->render($this->view, ['data' => $this->data]);
-        }
-    }
-
-    public function actionLogJs()
-    {
-        if(!Yii::$app->request->isAjax) return;
-        Logger::logJs(Yii::$app->request->post('var'));
-        return null;
-    }
-
+    /** ___________________________________________________________________________________________________________ */
     public function actionIndex()
     {
-//        echo '<pre>'; var_dump($this->root_categories[0]->children); die;
         $this->data['product_recommend'] = Product::findAll(['recommended' =>  1]);
         return $this->xrender();
     }
@@ -85,9 +47,6 @@ class SiteController extends Controller
         return $this->xrender();
     }
 
-//    public function actionCategory(
-//        string $key, int $page = 1, $perpage = 20, int $price_from = 0, int $price_to, string $search, string $sort = 'id'
-//    )
     public function actionCategory()
     {
         $req  = Yii::$app->request;

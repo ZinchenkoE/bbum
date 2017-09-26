@@ -4,7 +4,7 @@ $isPut = $data['action'] == 'put';
 $category = $isPut ? $data['category'] : null;
 ?>
 <div class="formPage row">
-    <form action="/admin/category/<?= $isPut ? $category['category_id'] : 'new' ?>" method="<?= $data['action'] ?>">
+    <form action="/admin/category/<?= $isPut ? $category->id : 'new' ?>" method="<?= $data['action'] ?>">
         <input name="need_redirect" type="hidden" value="1">
         <h1 class="pageTitle"><?= $isPut ? 'Редактирование' : 'Добавление' ?> категории</h1>
         <div class="col m6">

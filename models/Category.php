@@ -1,5 +1,6 @@
 <?php
 namespace app\models;
+use Yii;
 use yii\db\ActiveRecord;
 
 /**
@@ -59,7 +60,9 @@ class Category extends ActiveRecord
             ->all();
     }
 
-
-
+    public function getTitle()
+    {
+        return Yii::$app->request->get('lng') === 'uk' ? $this->title_uk : $this->title_ru;
+    }
 
 }

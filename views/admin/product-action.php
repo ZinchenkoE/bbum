@@ -23,19 +23,19 @@ $product    = $is_put ? $data['product'] : $new_product;
         <h1 class="pageTitle"><?= $is_put ? 'Редактирование товара №'.$product['product_id'] : 'Добавление товара' ?></h1>
         <div class="leftCol">
             <div class="textField inputBox">
-                <input placeholder="Название RU" id="title_ru" name="title_ru" type="text" value="<?= $product['title_ru'] ?>" pattern="text" required>
+                <input placeholder="Название RU" id="title_ru" name="title_ru" value="<?= $product->title ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Название UA" id="title_uk" name="title_uk" type="text" value="<?= $product['title_uk'] ?>" pattern="text" required>
+                <input placeholder="Название UA" id="title_uk" name="title_uk" value="<?= $product->title ?>" pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $product['description_ru'] ?></textarea>
+                <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $product->description ?></textarea>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание UA" id="description_uk" name="description_uk" pattern="text" required><?= $product['description_uk'] ?></textarea>
+                <textarea placeholder="Описание UA" id="description_uk" name="description_uk" pattern="text" required><?= $product->description ?></textarea>
             </div>
 			<div class="textField inputBox">
-				<input placeholder="Цена" id="price" name="price" type="text" value="<?= $product['price'] ?>" pattern="integer" required>
+				<input placeholder="Цена" id="price" name="price" value="<?= $product['price'] ?>" pattern="integer" required>
 			</div>
 			<div class="switch withLabel">
 				<label>
@@ -62,9 +62,9 @@ $product    = $is_put ? $data['product'] : $new_product;
 				<select name="category">
 					<option value="0" <?= $product['category'] == 0 ? 'selected' : '' ?>> --- категория не выбрана --- </option>
                     <?php foreach ($data['categories'] ?? [] as $category): ?>
-						<option value="<?= $category['category_id'] ?>"
+						<option value="<?= $category->id ?>"
 								class="parentCategory_<?= $category['parent_id'] ?>"
-                            <?= $product['category'] == $category['category_id'] ? 'selected' : '' ?>
+                            <?= $product['category'] == $category->id ? 'selected' : '' ?>
 						><?= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?></option>
                     <?php endforeach; ?>
 				</select>

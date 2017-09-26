@@ -1,5 +1,5 @@
 <?php
-/** @var $data array **/
+/** @var array $data  */
 $lng = Yii::$app->lng->getLng();
 $w   = Yii::$app->lng->getDictionary();
 ?>

@@ -18,23 +18,23 @@
                 <tbody>
                     <?php foreach($data['categories'] ?? [] as $category): ?>
                         <?php if ($category['parent_id'] == $parent['parent_category_id']): ?>
-                            <tr category-id="<?= $category['category_id'] ?>" parent-id="<?=$category['parent_id']?>">
-								<td><?=$category['category_id']?></td>
-                                <td class="categoryName"><?= $category['parent_title_ru'] . ' > ' . $category['title_ru'] ?></td>
-                                <td><input class="js-categoryTitle" name="title_ru" value="<?= $category['title_ru'] ?>"></td>
-                                <td><input class="js-categoryTitle" name="title_uk" value="<?= $category['title_uk'] ?>"></td>
+                            <tr category-id="<?= $category->id ?>" parent-id="<?=$category['parent_id']?>">
+								<td><?= $category->id ?></td>
+                                <td class="categoryName"><?= $category['parent_title_ru'] . ' > ' . $category->title ?></td>
+                                <td><input class="js-categoryTitle" name="title_ru" value="<?= $category->title_ru ?>"></td>
+                                <td><input class="js-categoryTitle" name="title_uk" value="<?= $category->title_uk ?>"></td>
 								<td class="status">
 									<div class="switch">
 										<label>
 											<input class="js-changeStatus" type="checkbox"
-                                                <?= $category['category_status'] == \app\models\Category::STATUS_ACTIVE ? 'checked' : '' ?>
+                                                <?= $category->status == \app\models\Category::STATUS_ACTIVE ? 'checked' : '' ?>
 											>
 											<span class="lever"></span>
 										</label>
 									</div>
 								</td>
                                 <td class="btns">
-                                    <i class="icon icon-settings-black" href="/admin/category/<?= $category['category_id'] ?>"></i>
+                                    <i class="icon icon-settings-black" href="/admin/category/<?= $category->id ?>"></i>
                                     <i class="icon icon-trash-black js-delCategory"></i>
                                 </td>
                             </tr>

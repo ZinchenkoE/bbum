@@ -19,7 +19,7 @@
             <?php foreach($data['products'] ?? [] as $product): ?>
                 <tr product-id="<?= $product['product_id'] ?>">
                     <td><?= $product['product_id'] ?></td>
-                    <td><?= $product['title_ru'] ?></td>
+                    <td><?= $product->title ?></td>
                     <td>
                         <?
                             switch ($product['gender']) {
@@ -38,8 +38,8 @@
                                         <?php foreach ($data['categories'] ?? [] as $category): ?>
                                             <?php if (($product['gender']== 1 && $category['parent_category_id'] == 1) ||
                                                 ($product['gender']== 2 && $category['parent_category_id'] == 2) || $product['gender'] == 0 ): ?>
-                                                <option value="<?= $category['category_id'] ?>"
-                                                    <?= $product['category'] == $category['category_id'] ? 'selected' : '' ?>
+                                                <option value="<?= $category->id ?>"
+                                                    <?= $product['category'] == $category->id ? 'selected' : '' ?>
                                                 ><?= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?></option>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
