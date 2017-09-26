@@ -1,3 +1,7 @@
+<?
+/** @var array $data  */
+?>
+
 <div id="Index" data-objs="Index">
 	<h1 class="pageTitle">Заказы</h1>
 	<table>

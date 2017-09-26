@@ -1,5 +1,5 @@
 <?php
-/** @var $data array */
+/** @var array $data  */
 $is_put = $data['action'] == 'put';
 $new_product = [
 		'product_id'     => '',

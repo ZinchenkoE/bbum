@@ -1,4 +1,5 @@
 <?php
+/** @var array $data  */
 //echo '<pre>'; print_r($data['products'] );die;
 ?>
 <div id="ProductTablePage" data-objs="ProductTablePage">
@@ -100,7 +101,7 @@
                     fd.append('category', this.value);
                     a.Query.post({url: '/admin/product/' + productId, data: fd});
                 }
-            },
+            }
         };
     </script>
 </div>

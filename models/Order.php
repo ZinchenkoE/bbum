@@ -1,29 +1,34 @@
 <?php
+namespace app\models;
+
 use Yii;
-use yii\base\Model;
 use yii\data\Pagination;
+use yii\db\ActiveRecord;
 use yii\db\Exception;
 use yii\helpers\Url;
 use app\components\helpers\Logger;
 use app\components\traits\ModelTrait;
 
-class Order extends Model
-{
-    const PAGE_LIMIT = 50;
 
+/**
+ * Class Order
+ * @package app\models
+ * @property integer  $id
+ * @property integer  $customer_id
+ * @property integer  $status
+ * @property integer  $delivery_id
+ * @property integer  $city
+ * @property string   $stock
+ * @property integer  $total_price
+ * @property integer  $create_time
+ * @property integer  $update_time
+ */
+
+class Order extends ActiveRecord
+{
     const STATUS_NEW        = 0; // новый
     const STATUS_CONFIRMED  = 1; // принятый
     const STATUS_DONE       = 2; // завершенный
-
-    public $order_id;
-    public $total_price;
-    public $customer_id;
-    public $status;
-    public $delivery_id;
-    public $city;
-    public $stock;
-    public $create_time;
-    public $update_time;
 
     public $products;
     public $quantity;
@@ -31,9 +36,6 @@ class Order extends Model
     public $email;
     public $phone;
     public $customer_name;
-
-
-    use ModelTrait;
 
     public function scenarios()
     {
@@ -194,17 +196,6 @@ class Order extends Model
 
     }
 
-    protected function put(){
-        return $this->grest->setCode(302, '', '/admin');
-    }
-
-    protected function remove($key){}
-
-    public static function getOrderById($id)
-    {
-        return Yii::$app->db->createCommand("SELECT * FROM bs_order WHERE id = {$id}")->queryOne();
-    }
-
     private function sendMail()
     {
         try{
@@ -215,13 +206,6 @@ class Order extends Model
                 ->setHtmlBody('<b>текст сообщения в формате HTML</b>')
                 ->send();
 
-//        Yii::$app->mailer->compose()
-//            ->setFrom('sale@baby-bum.in.ua')
-//            ->setTo('to@domain.com')
-//            ->setSubject('Тема сообщения')
-//            ->setTextBody('Текст сообщения')
-//            ->setHtmlBody('<b>текст сообщения в формате HTML</b>')
-//            ->send();
         }catch(Exception $e){
             Logger::logException($e, 'Ошибка при отправке письма');
         }

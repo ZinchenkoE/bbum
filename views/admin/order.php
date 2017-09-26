@@ -1,5 +1,5 @@
 <?php
-/** @var $data array */
+/** @var array $data  */
 ?>
 <div class="formPage" data-objs="Order" id="Order">
     <form action="/admin/order/<?= $data['order']['order_id'] ?>" method="put">

@@ -1,4 +1,5 @@
 <?php
+/** @var array $data  */
 $isPut = $data['action'] == 'put';
 $category = $isPut ? $data['category'] : null;
 ?>
