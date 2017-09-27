@@ -1,6 +1,5 @@
 <?php
-
-namespace app\components\helpers;
+namespace app\components;
 
 use Yii;
 

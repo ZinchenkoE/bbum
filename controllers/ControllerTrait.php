@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\components\helpers\Logger;
+use app\components\Logger;
 use yii\helpers\Url;
 use yii\web\Response;
 

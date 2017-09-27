@@ -1,7 +1,6 @@
 <?
 /** @var array $data  */
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
+use app\components\Lng;
 $product = $data['product'];
 ?>
 
@@ -18,10 +17,10 @@ $product = $data['product'];
         </div>
         <div class="rightPart">
             <p>Артикул: 100-<?= $product->id ?></p>
-            <p><?= $w['title'] ?>: <?= $product->title_ru ?></p>
-            <p><?= $w['description'] ?>: <?= $product->description_ru ?></p>
-            <p><?= $w['price'] ?>: <?= $product->price ?> грн</p>
-			<button class="blackBtn addProductToCart"><?= $w['bay'] ?></button>
+            <p><?= Lng::t('Название') ?>: <?= $product->title_ru ?></p>
+            <p><?= Lng::t('Описание') ?>: <?= $product->description_ru ?></p>
+            <p><?= Lng::t('Цена') ?>: <?= $product->price ?> грн</p>
+			<button class="blackBtn addProductToCart"><?= Lng::t('Купить') ?></button>
         </div>
     </div>
 	<script>

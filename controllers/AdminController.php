@@ -3,7 +3,7 @@ namespace app\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-use app\components\helpers\Logger;
+use app\components\Logger;
 use app\models\Product;
 use app\models\Category;
 use app\models\User;

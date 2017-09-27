@@ -1,24 +1,27 @@
 <?php
 /** @var array $data  */
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
+use app\components\Lng;
+$lng = Yii::$app->request->get('lng');
+
 ?>
 
 <div class="recommend" data-objs="RecommendBlock">
-    <h3><?= $w['recommend'] ?></h3>
+    <h3><?= Lng::t('Рекомендованные товары') ?></h3>
     <div class="slider" data-last-page="3" data-position="0">
         <div class="prev sliderBtn"></div>
         <div class="sliderInner row">
-            <? foreach ($data['product_recommend'] as $product): ?>
+            <? foreach ($data['product_recommend'] as $product):
+//                echo '<pre>'; print_r($product->category->title); die;
+                ?>
                 <a href="/<?= $lng ?>/product/<?= $product->id?>"
                    class="item <?= $product->id % 2 == 0  ? 'new' : '' ?>">
                     <div class="imgBox" style="background: url(/<?= $product->imgs[0] ?>) center center / contain no-repeat;">
                         <div class="substrate">
-                            <button class="blackBtn"><?= $w['bay'] ?></button>
+                            <button class="blackBtn"><?= Lng::t('Купить') ?></button>
                         </div>
                     </div>
-                    <h4 class="title"><?= $product->title_ru ?></h4>
-                    <h5 class="subTitle"><?= $product->category->title_ru ?></h5>
+                    <h4 class="title"><?= $product->title ?></h4>
+                    <h5 class="subTitle"><?= $product->category->title ?? 555 ?></h5>
                     <div class="price"><?= $product->price ?> грн</div>
                 </a>
             <? endforeach; ?>

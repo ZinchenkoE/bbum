@@ -1,6 +1,5 @@
 <?
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
+use app\components\Lng;
 ?>
 <h3>Страница оплата и доставка</h3>
 

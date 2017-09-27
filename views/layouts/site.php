@@ -4,8 +4,10 @@ use app\models\Category;
 /** *
  * @var $content
  */
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
+use app\components\Lng;
+
+$lng = Yii::$app->request->get('lng');
+
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lng ?>">
@@ -57,7 +59,7 @@ $w   = Yii::$app->lng->getDictionary();
         </div>
         <nav>
             <ul class="container">
-                <li><a href="/<?= $lng ?>"><?= $w['home'] ?></a></li>
+                <li><a href="/<?= $lng ?>"><?= Lng::t('Главная') ?></a></li>
                 <? foreach (Category::getRootCategory() as $cat): ?>
                     <li>
                         <a href="#"><?= $cat->title_ru ?></a>
@@ -70,8 +72,8 @@ $w   = Yii::$app->lng->getDictionary();
                         </ul>
                     </li>
                 <? endforeach; ?>
-                <li><a href="/<?= $lng ?>/info"><?= $w['payment-delivery'] ?></a></li>
-                <li><a href="/<?= $lng ?>/contacts"><?= $w['contacts'] ?></a></li>
+                <li><a href="/<?= $lng ?>/info"><?= Lng::t('Доставка и оплата') ?></a></li>
+                <li><a href="/<?= $lng ?>/contacts"><?= Lng::t('Контакты') ?></a></li>
             </ul>
         </nav>
     </header>

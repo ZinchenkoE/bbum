@@ -2,8 +2,6 @@
 namespace app\models;
 
 use Yii;
-use yii\data\Pagination;
-use app\components\helpers\File;
 use yii\db\ActiveRecord;
 
 /**
@@ -55,12 +53,22 @@ class Product extends ActiveRecord
 
     public function getCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'id']);
+        return $this->hasOne(Category::className(), ['id' => 'category_id']);
     }
 
     public function getImgs()
     {
         return json_decode($this->images);
+    }
+
+    public function getTitle(): string
+    {
+        return Yii::$app->request->get('lng') === 'uk' ? $this->title_uk : $this->title_ru;
+    }
+
+    public function getDescription(): string
+    {
+        return Yii::$app->request->get('lng') === 'uk' ? $this->description_uk : $this->description_ru;
     }
 
 

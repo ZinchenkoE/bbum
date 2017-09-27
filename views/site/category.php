@@ -1,25 +1,24 @@
 <?
 /** @var array $data **/
-$lng = Yii::$app->lng->getLng();
-$w   = Yii::$app->lng->getDictionary();
-
+use app\components\Lng;
+$lng        = Yii::$app->request->get('lng');
 $price_from = (int)Yii::$app->request->get('price_from');
 $price_to   = (int)Yii::$app->request->get('price_to');
 
 //echo '<pre>'; var_dump($data); die;
 ?>
 <div id="CategoryPage" data-objs="CategoryPage">
-    <? if($data['show_gender_filter']): ?>
+    <? if(true): ?>
 		<div class="row" style="margin-bottom: 50px;">
 			<input class="genderFilter" type="checkbox" id="for_unisex"
                 <?= (bool)Yii::$app->request->get('for_unisex') ? 'checked' : '' ?>
-			><label for="forUnisex"><?= $w['unisex'] ?></label>
+			><label for="forUnisex"><?= Lng::t('Унисекс') ?></label>
 			<input class="genderFilter" type="checkbox" id="for_boy"
                 <?= (bool)Yii::$app->request->get('for_boy')    ? 'checked' : '' ?>
-			><label for="forBoy"   ><?= $w['for-boy']  ?></label>
+			><label for="forBoy"   ><?= Lng::t('Для мальчиков')  ?></label>
 			<input class="genderFilter" type="checkbox" id="for_girl"
                 <?= (bool)Yii::$app->request->get('for_girl')   ? 'checked' : '' ?>
-			><label for="forGirl"  ><?= $w['for-girl'] ?></label>
+			><label for="forGirl"  ><?= Lng::t('Для девочек') ?></label>
 		</div>
     <? endif; ?>
 
@@ -41,7 +40,7 @@ $price_to   = (int)Yii::$app->request->get('price_to');
         <? foreach ($data['products'] as $product): ?>
 			<a href="/<?= $lng ?>/product/<?= $product->id ?>" class="productInCategory с-3"
                style="background: url(/<?= $product->imgs[0] ?>) center center / cover no-repeat;">
-				<h2><?= $product->title_ru ?> <br> <?= $w['price'] ?> : <?= $product->price ?> грн </h2>
+				<h2><?= $product->title_ru ?> <br> <?= Lng::t('Цена') ?> : <?= $product->price ?> грн </h2>
 			</a>
         <? endforeach; ?>
 	</div>

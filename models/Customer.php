@@ -8,7 +8,7 @@ use yii\web\Response;
 /**
  * Class User
  * @package app\models\user
- * @property integer $customer_id
+ * @property integer $id
  * @property string  $email
  * @property string  $customer_name
  * @property string  $phone
@@ -17,16 +17,9 @@ use yii\web\Response;
 
 class Customer extends ActiveRecord
 {
-    public static function tableName() { return 'bs_customer'; }
-
     public static function findByEmail($email)
     {
         return static::findOne(['email' => $email]);
-    }
-
-    public function getId()
-    {
-        return $this->user_id;
     }
 
 }
