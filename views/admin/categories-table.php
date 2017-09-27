@@ -8,7 +8,7 @@
                 <thead>
                     <tr>
 						<th class="categoryId">id</th>
-                        <th><?= $parent['parent_title_ru'] ?></th>
+                        <th style="width: 200px;"><?= $parent->title ?></th>
                         <th>ru</th>
                         <th>uk</th>
 						<th class="status">СТАТУС</th>
@@ -16,29 +16,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($data['categories'] ?? [] as $category): ?>
-                        <?php if ($category['parent_id'] == $parent['parent_category_id']): ?>
-                            <tr category-id="<?= $category->id ?>" parent-id="<?=$category['parent_id']?>">
-								<td><?= $category->id ?></td>
-                                <td class="categoryName"><?= $category['parent_title_ru'] . ' > ' . $category->title ?></td>
-                                <td><input class="js-categoryTitle" name="title_ru" value="<?= $category->title_ru ?>"></td>
-                                <td><input class="js-categoryTitle" name="title_uk" value="<?= $category->title_uk ?>"></td>
-								<td class="status">
-									<div class="switch">
-										<label>
-											<input class="js-changeStatus" type="checkbox"
-                                                <?= $category->status == \app\models\Category::STATUS_ACTIVE ? 'checked' : '' ?>
-											>
-											<span class="lever"></span>
-										</label>
-									</div>
-								</td>
-                                <td class="btns">
-                                    <i class="icon icon-settings-black" href="/admin/category/<?= $category->id ?>"></i>
-                                    <i class="icon icon-trash-black js-delCategory"></i>
-                                </td>
-                            </tr>
-                        <?php endif; ?>
+                    <?php foreach($parent->children ?? [] as $category): ?>
+                        <tr category-id="<?= $category->id ?>" parent-id="<?= $category->parent_id ?>">
+                            <td><?= $category->id ?></td>
+                            <td class="categoryName">>> <?= $category->title ?></td>
+                            <td><input class="js-categoryTitle" name="title_ru" value="<?= $category->title_ru ?>"></td>
+                            <td><input class="js-categoryTitle" name="title_uk" value="<?= $category->title_uk ?>"></td>
+                            <td class="status">
+                                <div class="switch">
+                                    <label>
+                                        <input class="js-changeStatus" type="checkbox"
+                                            <?= $category->status == \app\models\Category::STATUS_ACTIVE ? 'checked' : '' ?>
+                                        >
+                                        <span class="lever"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="btns">
+                                <i class="icon icon-settings-black" href="/admin/category/<?= $category->id ?>"></i>
+                                <i class="icon icon-trash-black js-delCategory"></i>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>

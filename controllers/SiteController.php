@@ -2,10 +2,13 @@
 namespace app\controllers;
 use Yii;
 use yii\data\Pagination;
+use yii\helpers\Url;
 use yii\web\Controller;
 use app\components\Logger;
 use app\models\Product;
 use app\models\Category;
+use app\models\Customer;
+use app\models\Order;
 
 
 /**
@@ -33,6 +36,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->data['product_recommend'] = Product::findAll(['recommended' =>  1]);
+//        $user = new Customer();
+//        $user->email         = 'sfdsdf';
+//        $user->save();
+        echo '<pre>'; var_dump(Customer::findOne(['phone' => '+38 (034) 534 53 77'])); die;
         return $this->xrender();
     }
 
@@ -51,10 +58,14 @@ class SiteController extends Controller
         $req  = Yii::$app->request;
         $cat  = $req->get('cat');
         $sort = $req->get('sort');
+
+        $cat_arr = array_map(function ($v){ return $v->id; }, Category::findOne($cat)->getChildren());
+        array_push($cat_arr, $cat);
+
         $query = Product::find()
             ->where([
                 'status' => Product::STATUS_ACTIVE,
-                'category_id' => $cat
+                'category_id' => $cat_arr
             ]);
         $countQuery    = clone $query;
         $minPriceQuery = clone $query;
@@ -81,9 +92,14 @@ class SiteController extends Controller
         return $this->xrender();
     }
 
-    public function actionOrder()
+    public function actionCreateOrder()
     {
-        return $this->xrender();
+        $order = new Order();
+        if ($order->create(Yii::$app->request->post())) {
+            return $this->setCode(302, 'S::Ваш заказ успешно оформлен.', Url::previous());
+        } else {
+            return $this->setCode(499, 'Ошибка при обработке заказа');
+        }
     }
 
 }

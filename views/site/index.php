@@ -1,7 +1,7 @@
 <?php
 /** @var array $data  */
 use app\components\Lng;
-$lng = Yii::$app->request->get('lng');
+$lng = Lng::getLng();
 ?>
 <div class="row">
     <a href="/<?= $lng ?>/category?cat=1" class="category half boy left">

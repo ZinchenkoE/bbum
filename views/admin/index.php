@@ -20,22 +20,23 @@
 		</thead>
 		<tbody>
         <?php foreach($data['orders'] as $order): ?>
-			<tr order-id="<?= $order['order_id'] ?>">
-				<td class="orderId"	     ><?= $order['order_id']     ?></td>
-				<td class="customer_name"><?= $order['customer_name']?></td>
-				<td class="email"		 ><?= $order['email'] 		 ?></td>
-				<td class="phone"		 ><?= $order['phone'] 		 ?></td>
-				<td class="city"		 ><?= $order['city_name'] 	 ?></td>
-				<td class="stock"		 ><?= $order['stock'] 		 ?></td>
-				<td class="total_price"	 ><?= $order['total_price']  ?></td>
+			<tr order-id="<?= $order->id ?>">
+				<td class="orderId"	     ><?= $order->id       ?></td>
+				<td class="customer_name"><?= $order->customer_name  ?></td>
+				<td class="email"		 ><?= $order->email 		 ?></td>
+				<td class="phone"		 ><?= $order->phone 		 ?></td>
+				<td class="city"		 ><?= $order->city_name 	 ?></td>
+				<td class="stock"		 ><?= $order->stock 		 ?></td>
+				<td class="total_price"	 ><?= $order->total_price    ?></td>
 				<td class="status"		 >
 					<?
-							if($order['status'] == 0) echo 'новый'      ;
-						elseif($order['status'] == 1) echo 'принятый'   ;
-						elseif($order['status'] == 2) echo 'завершенный';
+							if($order->status === 0) echo 'новый'      ;
+						elseif($order->status === 1) echo 'принятый'   ;
+						elseif($order->status === 2) echo 'завершенный';
 					?>
 				</td>
-				<td class="btns"><i class="material-icons" href="/admin/order/<?= $order['order_id']?>">format_align_justify</i></td>
+				<td class="btns"><i class="material-icons"
+                                    href="/admin/order/<?= $order->id ?>">format_align_justify</i></td>
 			</tr>
         <?php endforeach; ?>
 		</tbody>

@@ -44,8 +44,8 @@ use yii\helpers\Html;
             </div>
             <ul>
                 <li><a href="/admin/"><i class="icon material-icons">shopping_cart</i><span>Заказы</span></a></li>
-                <li><a href="/admin/product"><i class="icon icon-product"></i><span>Товары</span></a></li>
-                <li><a href="/admin/category"><i class="icon icon-page"></i><span>Категории</span></a></li>
+                <li><a href="/admin/products-table"><i class="icon icon-product"></i><span>Товары</span></a></li>
+                <li><a href="/admin/categories-table"><i class="icon icon-page"></i><span>Категории</span></a></li>
             </ul>
             <div class="userMenuBox">
                 <div class="js-openUserMenuBtn openUserMenuBtn"><i class="icon icon-user"></i></div>

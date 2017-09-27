@@ -13,23 +13,7 @@ class User extends Object implements IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
-
-//    private static $users = [
-//        '100' => [
-//            'id'          => '100',
-//            'login'       => 'admin@ww.ww',
-//            'password'    => 'admin@ww.ww',
-//            'authKey'     => 'test100key',
-//            'accessToken' => '100-token',
-//        ]
-//    ];
-
-    private static $users;
-
-    public function init()
-    {
-        self::$users = Yii::$app->params['users'];
-    }
+    public static $users;
 
     public static function findIdentity($id)
     {
@@ -79,3 +63,5 @@ class User extends Object implements IdentityInterface
         }
     }
 }
+
+User::$users = Yii::$app->params['users'];

@@ -1,9 +1,6 @@
 <?php
-
-use Yii;
+namespace app\models;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
-use yii\web\Response;
 
 /**
  * Class User

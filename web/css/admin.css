@@ -1206,7 +1206,7 @@ table {
       transition: all .2s;
       background: #ececec; }
   table th, table td {
-    padding: 10px 20px; }
+    padding: 0 20px; }
   table thead tr {
     height: 70px; }
   table thead th {

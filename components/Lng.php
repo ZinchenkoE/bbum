@@ -31,6 +31,11 @@ class Lng
         'Унисекс'                => 'Унісекс',
     ];
 
+    public static function getLng()
+    {
+        return Yii::$app->request->get('lng') ?? 'ru';
+    }
+
     public static function t(string $s)
     {
         $isUk = Yii::$app->request->get('lng') == 'uk';

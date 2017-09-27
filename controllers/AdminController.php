@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 use Yii;
+use yii\data\Pagination;
 use yii\helpers\Url;
 use yii\web\Controller;
 use app\components\Logger;
@@ -41,6 +42,21 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
+        $req   = Yii::$app->request;
+        $sort  = $req->get('sort');
+        $query = Order::find();
+        $countQuery    = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $orders = $query
+            ->offset($pages->offset)
+            ->orderBy($sort)
+            ->limit($pages->limit)
+            ->all();
+
+        $this->data = [
+            'pages'     => $pages,
+            'orders'    => $orders,
+        ];
         return $this->xrender();
     }
 
@@ -49,24 +65,41 @@ class AdminController extends Controller
         return $this->xrender();
     }
 
-    public function actionProductTable()
+    public function actionProductsTable()
     {
-        $this->data['products'] = Product::find()->all();
+        $req  = Yii::$app->request;
+        $search = $req->get('search', '');
+        $sort   = $req->get('sort');
+
+        $query = Product::find()
+            ->where(['LIKE', 'title_ru', $search]);
+        $countQuery    = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $products = $query
+            ->offset($pages->offset)
+            ->orderBy($sort)
+            ->limit($pages->limit)
+            ->all();
+
+        $this->data = [
+            'pages'     => $pages,
+            'products'  => $products,
+        ];
         return $this->xrender();
     }
-    public function actionProductAction(int $id)
+    public function actionProduct(int $id)
     {
         $this->data['product'] = Product::findOne($id);
         return $this->xrender();
     }
 
-    public function actionCategoryTable()
+    public function actionCategoriesTable()
     {
         $this->data['parent_categories'] = Category::getRootCategory();
         return $this->xrender();
     }
 
-    public function actionCategoryAction(string $id)
+    public function actionCategory(string $id)
     {
         return $this->xrender();
     }

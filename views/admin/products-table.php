@@ -17,48 +17,48 @@
         </thead>
         <tbody>
             <?php foreach($data['products'] ?? [] as $product): ?>
-                <tr product-id="<?= $product['product_id'] ?>">
-                    <td><?= $product['product_id'] ?></td>
+                <tr product-id="<?= $product->id ?>">
+                    <td><?= $product->id ?></td>
                     <td><?= $product->title ?></td>
                     <td>
                         <?
-                            switch ($product['gender']) {
+                            switch ($product->gender) {
                                 case 0: echo 'Унисекс'; break;
                                 case 1: echo 'Для мальчиков'; break;
                                 case 2: echo 'Для девочек'; break;
                             }
                         ?>
                     </td>
-                    <td><?= $product['parent_category_title_ru'] . ' > ' . $product['category_title_ru'] ?></td>
+                    <td><?= $product->category->title . ' > ' . $product->category->title ?></td>
                     <? if(!'Режим назначения категории'): ?>
                         <td>
-                            <div class="selectField inputBox">
-                                <select name="category">
-                                    <option value="0" <?= $product['category'] == 0 ? 'selected' : '' ?>> --- категория не выбрана --- </option>
-                                        <?php foreach ($data['categories'] ?? [] as $category): ?>
-                                            <?php if (($product['gender']== 1 && $category['parent_category_id'] == 1) ||
-                                                ($product['gender']== 2 && $category['parent_category_id'] == 2) || $product['gender'] == 0 ): ?>
-                                                <option value="<?= $category->id ?>"
-                                                    <?= $product['category'] == $category->id ? 'selected' : '' ?>
-                                                ><?= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                </select>
-                            </div>
+<!--                            <div class="selectField inputBox">-->
+<!--                                <select name="category">-->
+<!--                                    <option value="0" --><?//= $product['category'] == 0 ? 'selected' : '' ?><!--> --- категория не выбрана --- </option>-->
+<!--                                        --><?php //foreach ($data['categories'] ?? [] as $category): ?>
+<!--                                            --><?php //if (($product->gender== 1 && $category['parent_category_id'] == 1) ||
+//                                                ($product->gender== 2 && $category['parent_category_id'] == 2) || $product->gender == 0 ): ?>
+<!--                                                <option value="--><?//= $category->id ?><!--"-->
+<!--                                                    --><?//= $product['category'] == $category->id ? 'selected' : '' ?>
+<!--                                                >--><?//= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?><!--</option>-->
+<!--                                            --><?php //endif; ?>
+<!--                                        --><?php //endforeach; ?>
+<!--                                </select>-->
+<!--                            </div>-->
                         </td>
                     <? endif; ?>
                     <td class="status">
                        <div class="switch">
                            <label>
                                <input class="js-changeStatus" type="checkbox"
-								   <?= $product['product_status'] == \app\models\Product::STATUS_ACTIVE ? 'checked' : '' ?>
+								   <?= $product->status== \app\models\Product::STATUS_ACTIVE ? 'checked' : '' ?>
 							   >
                                <span class="lever"></span>
                            </label>
                        </div>
                     </td>
 					<td class="btns">
-                        <a href="/admin/product/<?= $product['product_id'] ?>"><i class="icon icon-settings-black"></i></a>
+                        <a href="/admin/product/<?= $product->id ?>"><i class="icon icon-settings-black"></i></a>
                         <i class="icon icon-trash-black js-delProduct"></i>
 					</td>
                 </tr>

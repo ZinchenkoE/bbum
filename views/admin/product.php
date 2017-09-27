@@ -23,16 +23,20 @@ $product    = $is_put ? $data['product'] : $new_product;
         <h1 class="pageTitle"><?= $is_put ? 'Редактирование товара №'.$product['product_id'] : 'Добавление товара' ?></h1>
         <div class="leftCol">
             <div class="textField inputBox">
-                <input placeholder="Название RU" id="title_ru" name="title_ru" value="<?= $product->title ?>" pattern="text" required>
+                <input placeholder="Название RU" name="title_ru" value="<?= $product->title ?>"
+                       pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <input placeholder="Название UA" id="title_uk" name="title_uk" value="<?= $product->title ?>" pattern="text" required>
+                <input placeholder="Название UA" name="title_uk" value="<?= $product->title ?>"
+                       pattern="text" required>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание RU" id="description_ru" name="description_ru" pattern="text" required><?= $product->description ?></textarea>
+                <textarea placeholder="Описание RU" name="description_ru" pattern="text"
+                          required><?= $product->description ?></textarea>
             </div>
             <div class="textField inputBox">
-                <textarea placeholder="Описание UA" id="description_uk" name="description_uk" pattern="text" required><?= $product->description ?></textarea>
+                <textarea placeholder="Описание UA" name="description_uk" pattern="text"
+                          required><?= $product->description ?></textarea>
             </div>
 			<div class="textField inputBox">
 				<input placeholder="Цена" id="price" name="price" value="<?= $product['price'] ?>" pattern="integer" required>
@@ -72,9 +76,9 @@ $product    = $is_put ? $data['product'] : $new_product;
 			<div class="selectField inputBox">
 				<label class="title">Пол</label>
 				<select name="gender">
-					<option value="0" <?= $product['gender'] == 0 ? 'selected' : '' ?>>Унисекс</option>
-					<option value="1" <?= $product['gender'] == 1 ? 'selected' : '' ?>>Для мальчика</option>
-					<option value="2" <?= $product['gender'] == 2 ? 'selected' : '' ?>>Для девочки</option>
+					<option value="0" <?= $product->gender === 0 ? 'selected' : '' ?>>Унисекс</option>
+					<option value="1" <?= $product->gender === 1 ? 'selected' : '' ?>>Для мальчика</option>
+					<option value="2" <?= $product->gender === 2 ? 'selected' : '' ?>>Для девочки</option>
 				</select>
 			</div>
 			<div class="selectField inputBox">
