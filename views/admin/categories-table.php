@@ -52,9 +52,9 @@
                         action: '/admin/category/' + categoryId
                     });
                 },
-                "#CategoryTablePage js-categoryTitle:change" : function() {
+                "#CategoryTablePage .js-categoryTitle:change" : function() {
                     var categoryId = $(this).closest('tr').attr('category-id');
-                    var parentId = $(this).closest('tr').attr('parent-id');
+                    var parentId   = $(this).closest('tr').attr('parent-id');
                     var fd = new FormData();
                     fd.append('title_ru', $(this).closest('tr').find('[name="title_ru"]').val());
                     fd.append('title_uk', $(this).closest('tr').find('[name="title_uk"]').val());

@@ -1,19 +1,8 @@
 <?php
 /** @var array $data  */
 $is_put = $data['action'] == 'put';
-$new_product = [
-		'product_id'     => '',
-		'title_ru'       => '',
-		'title_uk'       => '',
-		'description_ru' => '',
-		'description_uk' => '',
-		'product_status' => 1,
-		'gender'         => 0,
-		'producer'       => 0,
-		'price'          => '',
-		'category'       => 0
-];
-$product    = $is_put ? $data['product'] : $new_product;
+
+$product = $data['product'];
 ?>
 <style>
     .fileField{ display: inline-block; }
@@ -44,7 +33,7 @@ $product    = $is_put ? $data['product'] : $new_product;
 			<div class="switch withLabel">
 				<label>
 					<span class="title">Статус</span>
-					<input name="product_status" type="checkbox" <?= $product['product_status'] ? 'checked' : '' ?>>
+					<input name="status" type="checkbox" <?= $product['status'] ? 'checked' : '' ?>>
 					<span class="lever"></span>
 				</label>
 			</div>

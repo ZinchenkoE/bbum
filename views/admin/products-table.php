@@ -91,7 +91,7 @@
                     var fd = new FormData();
                     var status = +$(this).prop('checked');
                     fd.append('_prm', 'changeStatus');
-                    fd.append('product_status', status);
+                    fd.append('status', status);
                     a.Query.post({url: '/admin/product/' + productId, data: fd});
 				},
                 "#ProductTablePage [name='category']:change": function() {

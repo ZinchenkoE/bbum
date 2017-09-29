@@ -39,7 +39,7 @@ class SiteController extends Controller
 //        $user = new Customer();
 //        $user->email         = 'sfdsdf';
 //        $user->save();
-        echo '<pre>'; var_dump(Customer::findOne(['phone' => '+38 (034) 534 53 77'])); die;
+//        echo '<pre>'; var_dump(Customer::findOne(['phone' => '+38 (034) 534 53 77'])); die;
         return $this->xrender();
     }
 

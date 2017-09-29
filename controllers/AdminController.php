@@ -28,8 +28,8 @@ class AdminController extends Controller
 
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest)  return $this->redirect('/login', 301);
-        if (Yii::$app->request->isGet)  return $this->render('login');
+        if (!Yii::$app->user->isGuest) return $this->redirect('/login', 301);
+        if (Yii::$app->request->isGet) return $this->render('login');
         if (Yii::$app->request->isPost) User::loginPost();
         return null;
     }
@@ -42,6 +42,8 @@ class AdminController extends Controller
 
     public function actionIndex()
     {
+//        Product::saveProduct(['title_ru' => 'test', 'description_ru' => 'testtest', 'price' => 55]);
+//
         $req   = Yii::$app->request;
         $sort  = $req->get('sort');
         $query = Order::find();
@@ -67,7 +69,7 @@ class AdminController extends Controller
 
     public function actionProductsTable()
     {
-        $req  = Yii::$app->request;
+        $req    = Yii::$app->request;
         $search = $req->get('search', '');
         $sort   = $req->get('sort');
 
@@ -89,7 +91,7 @@ class AdminController extends Controller
     }
     public function actionProduct(int $id)
     {
-        $this->data['product'] = Product::findOne($id);
+        $this->data['product'] = Product::findOne($id) || new Product();
         return $this->xrender();
     }
 
@@ -101,6 +103,7 @@ class AdminController extends Controller
 
     public function actionCategory(string $id)
     {
+        Yii::$app->request->isGet ? Category::get() : Category::post();
         return $this->xrender();
     }
 

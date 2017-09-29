@@ -35,7 +35,8 @@ use yii\helpers\Html;
                 <li><a href="<?= Yii::$app->request->hostInfo ?>" target="_blank"><i class="icon icon-home"></i><span>Ваш сайт</span></a></li>
             </ul>
             <div class="textField inputBox search">
-                <input placeholder="Найти ..." id="search" value="<?= Yii::$app->request->get('search') ?? '' ?>" pattern="text" class="initialized">
+                <input placeholder="Найти ..." id="search" value="<?= Yii::$app->request->get('search') ?? '' ?>"
+                       pattern="text" class="initialized">
             </div>
         </header>
         <nav>
@@ -56,7 +57,7 @@ use yii\helpers\Html;
             </div>
         </nav>
         <?php endif; ?>
-        <main id="contentBox"><?= $content ?></main>
+        <main><?= $content ?></main>
 
         <?php if(Yii::$app->session->hasFlash('error')): ?>
             <span class="flashError" hidden><?=Yii::$app->session->getFlash('error'); ?></span>

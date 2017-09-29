@@ -2,7 +2,6 @@
 namespace app\components;
 use Yii;
 
-
 /**
 
 use app\components\Lng;
@@ -38,7 +37,7 @@ class Lng
 
     public static function t(string $s)
     {
-        $isUk = Yii::$app->request->get('lng') == 'uk';
+        $isUk = Yii::$app->request->get('lng') === 'uk';
         return $isUk ? (self::$dictionary[$s] ?? $s) : $s;
     }
  }

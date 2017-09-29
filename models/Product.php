@@ -1,6 +1,5 @@
 <?php
 namespace app\models;
-
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -15,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string   $images
  * @property integer  $price
  * @property integer  $gender
+ * @property integer  $category_id
  * @property integer  $category
  * @property integer  $update_time
  * @property integer  $status
@@ -36,7 +36,7 @@ class Product extends ActiveRecord
             [
                 [
                     'title_ru', 'title_uk', 'description_ru', 'description_uk', 'price', 'gender',
-                    'category', 'product_status', 'producer'
+                    'category', 'status', 'producer'
                 ], 'filter',
                 'filter' => 'trim',
             ],
@@ -45,15 +45,26 @@ class Product extends ActiveRecord
                 'tooShort' => 'Длина не менее 3-х символов',
                 'tooLong' => 'Длина не более 50 символов',
             ],
-            [ ['title_ru', 'title_uk', 'description_ru', 'description_uk', 'price'], 'required',
-                'message' => 'Поле не может быть пустым' ],
-            [ 'removeImg', 'each', 'rule' => ['string'] ]
+            [ ['title_ru', 'description_ru', 'price'], 'required', 'message' => 'Поле не может быть пустым' ],
         ];
+    }
+
+    public static function get() {
+
+    }
+
+    public static function post() {
+
     }
 
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+
+    public function setCategory()
+    {
+
     }
 
     public function getImgs()
@@ -70,6 +81,17 @@ class Product extends ActiveRecord
     {
         return Yii::$app->request->get('lng') === 'uk' ? $this->description_uk : $this->description_ru;
     }
+
+    public static function saveProduct($data) {
+        $p = new static();
+//        $p->load($data);
+        $p->title_ru       = $data['title_ru'];
+        $p->description_ru = $data['description_ru'];
+        $p->price          = $data['price'];
+        $p->loadDefaultValues();
+        $p->save();
+    }
+
 
 
 }

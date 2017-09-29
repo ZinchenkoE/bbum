@@ -48,6 +48,14 @@ class Category extends ActiveRecord
         ];
     }
 
+    public static function get() {
+
+    }
+
+    public static function post() {
+
+    }
+
     public static function getRootCategory() {
         return static::findAll(['parent_id' => 0]);
     }
