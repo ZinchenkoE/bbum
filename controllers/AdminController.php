@@ -91,7 +91,7 @@ class AdminController extends Controller
     }
     public function actionProduct(int $id)
     {
-        $this->data['product'] = Product::findOne($id) || new Product();
+        $this->data['product'] = Product::findOne($id) ?? new Product();
         return $this->xrender();
     }
 

@@ -1,6 +1,5 @@
 <?php
 /** @var array $data  */
-$is_put = $data['action'] == 'put';
 
 $product = $data['product'];
 ?>
@@ -8,8 +7,8 @@ $product = $data['product'];
     .fileField{ display: inline-block; }
 </style>
 <div class="formPage" data-objs="ActionProduct" id="ActionProduct">
-    <form action="/admin/product/<?= $is_put ? $product['product_id'] : 'new' ?>" method="<?= $data['action'] ?>">
-        <h1 class="pageTitle"><?= $is_put ? 'Редактирование товара №'.$product['product_id'] : 'Добавление товара' ?></h1>
+    <form action="/admin/product" method="post">
+        <h1 class="pageTitle"><?= $product->id ? 'Редактирование товара №'. $product->id : 'Добавление товара' ?></h1>
         <div class="leftCol">
             <div class="textField inputBox">
                 <input placeholder="Название RU" name="title_ru" value="<?= $product->title ?>"
@@ -21,47 +20,47 @@ $product = $data['product'];
             </div>
             <div class="textField inputBox">
                 <textarea placeholder="Описание RU" name="description_ru" pattern="text"
-                          required><?= $product->description ?></textarea>
+                          required><?= $product->description_ru ?></textarea>
             </div>
             <div class="textField inputBox">
                 <textarea placeholder="Описание UA" name="description_uk" pattern="text"
-                          required><?= $product->description ?></textarea>
+                          required><?= $product->description_uk ?></textarea>
             </div>
 			<div class="textField inputBox">
-				<input placeholder="Цена" id="price" name="price" value="<?= $product['price'] ?>" pattern="integer" required>
+				<input placeholder="Цена" id="price" name="price" value="<?= $product->price ?>" pattern="integer" required>
 			</div>
 			<div class="switch withLabel">
 				<label>
 					<span class="title">Статус</span>
-					<input name="status" type="checkbox" <?= $product['status'] ? 'checked' : '' ?>>
+					<input name="status" type="checkbox" <?= $product->status ? 'checked' : '' ?>>
 					<span class="lever"></span>
 				</label>
 			</div>
         </div>
         <div class="rightCol">
-			<div class="selectField inputBox">
-				<label class="title">Родительская категория</label>
-				<select id="parentCategory">
-					<option value="0" selected> --- категория не выбрана --- </option>
-                    <?php foreach ($data['parent_categories'] ?? [] as $parent_category): ?>
-						<option value="<?= $parent_category['parent_category_id'] ?>">
-							<?= $parent_category['parent_category_title_ru'] ?>
-						</option>
-                    <?php endforeach; ?>
-				</select>
-			</div>
-			<div class="selectField inputBox" id="childCategory">
-				<label class="title">Категория</label>
-				<select name="category">
-					<option value="0" <?= $product['category'] == 0 ? 'selected' : '' ?>> --- категория не выбрана --- </option>
-                    <?php foreach ($data['categories'] ?? [] as $category): ?>
-						<option value="<?= $category->id ?>"
-								class="parentCategory_<?= $category['parent_id'] ?>"
-                            <?= $product['category'] == $category->id ? 'selected' : '' ?>
-						><?= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?></option>
-                    <?php endforeach; ?>
-				</select>
-			</div>
+<!--			<div class="selectField inputBox">-->
+<!--				<label class="title">Родительская категория</label>-->
+<!--				<select id="parentCategory">-->
+<!--					<option value="0" selected> --- категория не выбрана --- </option>-->
+<!--                    --><?php //foreach ($data['parent_categories'] ?? [] as $parent_category): ?>
+<!--						<option value="--><?//= $parent_category['parent_category_id'] ?><!--">-->
+<!--							--><?//= $parent_category['parent_category_title_ru'] ?>
+<!--						</option>-->
+<!--                    --><?php //endforeach; ?>
+<!--				</select>-->
+<!--			</div>-->
+<!--			<div class="selectField inputBox" id="childCategory">-->
+<!--				<label class="title">Категория</label>-->
+<!--				<select name="category">-->
+<!--					<option value="0" --><?//= $product['category'] == 0 ? 'selected' : '' ?><!-- --- категория не выбрана --- </option>-->
+<!--                    --><?php //foreach ($data['categories'] ?? [] as $category): ?>
+<!--						<option value="--><?//= $category->id ?><!--"-->
+<!--								class="parentCategory_--><?//= $category['parent_id'] ?><!--"-->
+<!--                            --><?//= $product['category'] == $category->id ? 'selected' : '' ?>
+<!--						>--><?//= $category['parent_category_title_ru'] . ' > ' . $category['category_title_ru'] ?><!--</option>-->
+<!--                    --><?php //endforeach; ?>
+<!--				</select>-->
+<!--			</div>-->
 			<div class="selectField inputBox">
 				<label class="title">Пол</label>
 				<select name="gender">
@@ -73,29 +72,29 @@ $product = $data['product'];
 			<div class="selectField inputBox">
 				<label class="title">Производитель</label>
 				<select name="producer">
-					<option value="0" <?= $product['producer'] == 0 ? 'selected' : '' ?>>Не указан</option>
-					<option value="1" <?= $product['producer'] == 1 ? 'selected' : '' ?>>Солнышко (Комсомольск, Украина) </option>
+					<option value="0" <?= $product->producer == 0 ? 'selected' : '' ?>>Не указан</option>
+					<option value="1" <?= $product->producer == 1 ? 'selected' : '' ?>>Солнышко (Комсомольск, Украина) </option>
 				</select>
 			</div>
             <h2>Фотографии</h2>
-            <?php for ($i = 0; $i < 6; $i++): ?>
+            <?php foreach ($product->imgs as $img): ?>
                 <div class="fileField">
                     <label>
-                        <input name="images_<?= $i ?>" type="file" data-crop-img="1200"
-                               data-img-src="<?= isset($data['images'][$i]) ? '/' . $data['images'][$i]['src'] : '' ?>">
+                        <input name="images[]" type="file" data-crop-img="1200"
+                               data-img-src="/<?= $img ?>">
                     </label>
                 </div>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </div>
-        <button class="fixedSubmit" type="submit"><?= $is_put ? 'Редактировать' : 'Добавить' ?></button>
+        <button class="fixedSubmit" type="submit"><?= $product->id ? 'Редактировать' : 'Добавить' ?></button>
     </form>
 	<script>
 		var ActionProduct = {
 		    handlers: {
 		        "#parentCategory:change": function() {
-                   $('#childCategory li').hide();
-                   $('#childCategory .parentCategory_' + this.value).show();
-                    console.log('#childCategory .parentCategory_'+this.value);
+		            var childCategory = $('#childCategory');
+                    childCategory.find('li').hide();
+                    childCategory.find('.parentCategory_' + this.value).show();
 				},
 			}
 		}
