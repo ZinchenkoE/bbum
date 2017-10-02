@@ -550,12 +550,13 @@ a.productInCategory {
     position: absolute;
     bottom: 130px;
     left: 50px;
-    color: #191919;
+    color: #fff;
     text-transform: uppercase;
     font-family: latobold, sans-serif;
     font-size: 20px;
     width: 260px;
-    line-height: 1.2; }
+    line-height: 1.2;
+    text-shadow: 2px 2px 20px #000; }
   a.productInCategory .btn {
     position: absolute;
     bottom: 50px;

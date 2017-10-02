@@ -7,8 +7,9 @@ a.productInCategory{
 		box-shadow: 0 4px 5px 2px rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
 	}
 	h2{
-		position: absolute; bottom: 130px; left: 50px; color: #191919; text-transform: uppercase;
+		position: absolute; bottom: 130px; left: 50px; color: #fff; text-transform: uppercase;
 		font-family: latobold, sans-serif; font-size: 20px; width: 260px; line-height: 1.2;
+		text-shadow: 2px 2px 20px #000;
 	}
 	.btn{
 		position: absolute; bottom: 50px; left: 50px; text-align: center; text-transform: uppercase; font-size: 14px;

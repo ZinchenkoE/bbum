@@ -6,7 +6,7 @@ use app\models\Category;
  */
 use app\components\Lng;
 
-$lng = Yii::$app->request->get('lng');
+$lng = Lng::getLng();
 
 ?>
 <!DOCTYPE html>
@@ -79,7 +79,9 @@ $lng = Yii::$app->request->get('lng');
     </header>
     <?= Yii::$app->controller->renderPartial('/site/partial/cart')?>
 	<main class="container"><?= $content ?></main>
-    <footer></footer>
+    <footer>
+        u>li
+    </footer>
     <div id="overlay"></div>
     <?= Yii::$app->controller->renderPartial('/site/partial/preloader')?>
     <script> a.init(); </script>

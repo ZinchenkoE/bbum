@@ -32,7 +32,7 @@ $price_to   = (int)Yii::$app->request->get('price_to');
 		></div>
 		<p>
 			<label for="amount">Укажите размах цен:</label>
-			<input type="text" id="amount" style="border:0; color:#f6931f; background:#fff;font-weight:bold;" disabled>
+			<input id="amount" style="border:0; color:#f6931f; background:#fff;font-weight:bold;" disabled>
 		</p>
 	</div>
 
@@ -58,7 +58,7 @@ $price_to   = (int)Yii::$app->request->get('price_to');
 	<script>
 		var CategoryPage = {
 			handlers: {
-                ".genderFilter:change": function() { a.addGenderFilter(this); },
+                ".genderFilter:change": function() { CategoryPage.addGenderFilter(this); },
 			},
 			ready: function() {
                 CategoryPage.initRange();
