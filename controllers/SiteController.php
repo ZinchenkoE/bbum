@@ -36,10 +36,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->data['product_recommend'] = Product::findAll(['recommended' =>  1]);
-//        $user = new Customer();
-//        $user->email         = 'sfdsdf';
-//        $user->save();
-//        echo '<pre>'; var_dump(Customer::findOne(['phone' => '+38 (034) 534 53 77'])); die;
         return $this->xrender();
     }
 

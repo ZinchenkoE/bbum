@@ -1,9 +1,9 @@
 <?php
 namespace app\controllers;
 use Yii;
-use app\components\Logger;
-use yii\helpers\Url;
 use yii\web\Response;
+use yii\helpers\Url;
+use app\components\Logger;
 
 trait ControllerTrait
 {
